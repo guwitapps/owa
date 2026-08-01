@@ -119,25 +119,26 @@
   .stat-num{ font-family:'Bricolage Grotesque',sans-serif; font-size:1.6rem; font-weight:700; color:var(--cream); }
   .stat-label{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:rgba(255,248,237,0.6); text-transform:uppercase; letter-spacing:0.05em; }
 
-  /* Waterway signature visual */
+  /* Rider signature visual */
   .waterway-box{ position:relative; }
   .waterway-svg{ width:100%; height:auto; }
   .wave-path{
     fill:none; stroke:rgba(255,248,237,0.35); stroke-width:2; stroke-dasharray:6 8;
   }
-  .boat{
+  .bike{
     offset-path:path('M20,150 C 90,60 150,220 220,120 S 340,40 380,110');
-    animation:sailAlong 9s linear infinite;
+    offset-rotate:auto;
+    animation:rideAlong 9s linear infinite;
   }
-  @keyframes sailAlong{
+  @keyframes rideAlong{
     0%{ offset-distance:0%; }
     100%{ offset-distance:100%; }
   }
   .pin-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--cream); text-transform:uppercase; letter-spacing:0.05em;}
   @media (prefers-reduced-motion: reduce){
-    .boat{ animation:none; offset-distance:38%; }
+    .bike{ animation:none; offset-distance:38%; }
   }
-
+  
   section{ padding:88px 0; }
   .section-head{ max-width:640px; margin-bottom:52px; }
   .section-head .eyebrow{ color:var(--clay); }
@@ -264,7 +265,7 @@
     <div class="section-head">
       <div class="eyebrow">How it works</div>
       <h2>Three steps, one route.</h2>
-      <p>Owa runs on the same waterways and back roads that move Badagry every day — we've just made the route yours.</p>
+      <p>Owa uses the same roads and local routes people travel every day—we've simply made shopping and delivery easier for you.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -302,7 +303,7 @@
       <div class="dish">
         <div class="dish-tag">Swallow</div>
         <h3>Amala & Ewedu</h3>
-        <p>Smooth yam flour swallow with ewedu and gbegiri from a family kitchen in Ajara.</p>
+        <p>Smooth yam flour swallow with ewedu and gbegiri from a family kitchen in Mowo.</p>
       </div>
       <div class="dish">
         <div class="dish-tag">Rice</div>
