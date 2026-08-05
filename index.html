@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owa Delivery Services | Food Delivery in Lagos, Nigeria</title>
-<meta name="description" content="Owa Delivery Services connects customers with local food vendors and provides reliable food delivery services across Badagry, Lagos, Nigeria.">
+<title>Owa Delivery Services — Fast Food & Local Delivery in Lagos</title>
+<meta name="description" content="Owa Delivery Services connects customers with local vendors and provides fast, reliable delivery services within Lagos, Nigeria.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
     --bg-1:#141414;
     --card:#1B1B1B;
     --teal:#12A797;
-    --teal-deep:#0E8C82;
     --white:#FFFFFF;
     --text-soft:rgba(255,255,255,0.72);
     --text-soft-2:rgba(255,255,255,0.55);
@@ -23,122 +22,50 @@
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    margin:0;
-    background:var(--bg-0);
-    color:var(--white);
-    font-family:'Literata', serif;
-    line-height:1.5;
+    margin:0; background:var(--bg-0); color:var(--white);
+    font-family:'Literata', serif; line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.display{
-    font-family:'Bricolage Grotesque', sans-serif;
-    letter-spacing:-0.02em;
-    margin:0;
-  }
-  .mono{
-    font-family:'IBM Plex Mono', monospace;
-    letter-spacing:0.03em;
-    text-transform:uppercase;
-  }
+  h1,h2,h3,.display{ font-family:'Bricolage Grotesque', sans-serif; letter-spacing:-0.02em; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.03em; text-transform:uppercase; }
   a{color:inherit;}
   img,svg{display:block;max-width:100%;}
-  :focus-visible{outline:3px solid var(--teal); outline-offset:3px;}
   .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
 
-  /* ---------- Header ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(11,11,11,0.85);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 24px;
-  }
-  .logo{ display:flex; align-items:center; gap:10px; }
-  .logo img{ height:42px; width:auto; object-fit:contain; display:block; }
-  .nav-links{ display:flex; gap:28px; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;}
-  .nav-links a{ text-decoration:none; color:var(--white); opacity:0.7; }
-  .nav-links a:hover{opacity:1;}
+  header{ position:sticky; top:0; z-index:50; background:rgba(11,11,11,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:1.4rem; color:var(--white); }
+  .logo img{ height:38px; width:auto; object-fit:contain; }
+  .nav-links{ display:flex; gap:24px; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; }
+  .nav-links a{ text-decoration:none; color:var(--white); opacity:0.75; }
+  .nav-links a:hover, .nav-links a.active{ opacity:1; color:var(--teal); }
   .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--teal); color:#06110F;
-    padding:11px 20px; border-radius:100px;
-    font-family:'IBM Plex Mono',monospace; font-size:0.8rem;
-    font-weight:500;
-    text-transform:uppercase; letter-spacing:0.05em;
-    text-decoration:none; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; background:var(--teal); color:#06110F;
+    padding:11px 20px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.8rem;
+    font-weight:500; text-transform:uppercase; text-decoration:none; border:none; cursor:pointer;
     transition:transform 0.15s ease, background 0.15s ease;
   }
   .btn:hover{ background:#17c4b1; transform:translateY(-1px); }
-  .btn-ghost{
-    background:transparent; border:1.5px solid var(--teal); color:var(--white);
-  }
+  .btn-ghost{ background:transparent; border:1.5px solid var(--teal); color:var(--white); }
   .btn-ghost:hover{ background:var(--teal); color:#06110F; }
 
-  /* ---------- Hero ---------- */
-  .hero{
-    background:var(--bg-0);
-    color:var(--white);
-    position:relative;
-    overflow:hidden;
-    padding:72px 0 0;
-  }
-  .hero-grid{
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
-    color:var(--teal); text-transform:uppercase; letter-spacing:0.12em;
-    display:flex; align-items:center; gap:10px; margin-bottom:20px;
-  }
-  .eyebrow::before{
-    content:''; width:26px; height:1px; background:var(--teal); display:inline-block;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 5vw, 3.6rem);
-    font-weight:700;
-    line-height:1.05;
-    max-width:11ch;
-  }
+  .hero{ background:var(--bg-0); color:var(--white); padding:72px 0 0; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.12em; display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--teal); display:inline-block; }
+  .hero h1{ font-size:clamp(2.4rem, 5vw, 3.6rem); font-weight:700; line-height:1.05; }
   .hero h1 em{ font-style:normal; color:var(--teal); }
-  .hero p{
-    font-size:1.08rem; max-width:46ch; margin-top:22px; color:var(--text-soft);
-  }
+  .hero p{ font-size:1.08rem; max-width:46ch; margin-top:22px; color:var(--text-soft); }
   .hero-cta{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; align-items:center; }
-  .hero-stats{
-    display:flex; gap:32px; margin-top:52px; padding-top:28px; border-top:1px solid var(--line);
-  }
+  .hero-stats{ display:flex; gap:32px; margin-top:52px; padding-top:28px; border-top:1px solid var(--line); }
   .stat-num{ font-family:'Bricolage Grotesque',sans-serif; font-size:1.6rem; font-weight:700; color:var(--white); }
-  .stat-label{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--text-soft-2); text-transform:uppercase; letter-spacing:0.05em; }
-
-  /* Rider signature visual */
-  .waterway-box{ position:relative; }
-  .waterway-svg{ width:100%; height:auto; }
-  .wave-path{
-    fill:none; stroke:rgba(255,255,255,0.28); stroke-width:2; stroke-dasharray:6 8;
-  }
-  .bike{
-    offset-path:path('M20,150 C 90,60 150,220 220,120 S 340,40 380,110');
-    offset-rotate:auto;
-    animation:rideAlong 9s linear infinite;
-  }
-  @keyframes rideAlong{
-    0%{ offset-distance:0%; }
-    100%{ offset-distance:100%; }
-  }
-  .pin-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--white); text-transform:uppercase; letter-spacing:0.05em;}
-  @media (prefers-reduced-motion: reduce){
-    .bike{ animation:none; offset-distance:38%; }
-  }
+  .stat-label{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--text-soft-2); text-transform:uppercase; }
 
   section{ padding:88px 0; }
   .section-head{ max-width:640px; margin-bottom:52px; }
   .section-head h2{ font-size:clamp(1.7rem,3.4vw,2.3rem); color:var(--white); }
   .section-head p{ margin-top:14px; color:var(--text-soft); max-width:52ch; }
 
-  /* ---------- How it works ---------- */
   .how-section{ background:var(--bg-1); }
   .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   .step{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:32px 28px; }
@@ -146,49 +73,35 @@
   .step h3{ font-size:1.25rem; margin-top:16px; color:var(--white); }
   .step p{ margin-top:10px; font-size:0.96rem; color:var(--text-soft); }
 
-  /* ---------- Dishes ---------- */
   .dishes-section{ background:var(--bg-0); }
   .dish-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border-radius:18px; overflow:hidden; }
   .dish{ background:var(--card); padding:30px 26px; }
-  .dish-tag{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.06em; }
+  .dish-tag{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--teal); text-transform:uppercase; }
   .dish h3{ font-size:1.2rem; margin-top:12px; color:var(--white); }
   .dish p{ margin-top:8px; font-size:0.92rem; color:var(--text-soft); }
 
-  /* ---------- Coverage ---------- */
   .coverage-section{ background:var(--bg-1); }
   .coverage-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
   .badge-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
-  .badge{
-    font-family:'IBM Plex Mono',monospace; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em;
-    padding:8px 16px; border-radius:100px; border:1px solid rgba(18,167,151,0.5); color:var(--white);
-  }
+  .badge{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; text-transform:uppercase; padding:8px 16px; border-radius:100px; border:1px solid rgba(18,167,151,0.5); color:var(--white); }
   .coverage-note{ background:var(--card); border-left:3px solid var(--teal); padding:20px 24px; border-radius:6px; margin-top:28px; font-size:0.92rem; color:var(--text-soft);}
 
-  /* ---------- Vendor CTA ---------- */
-  .vendor-band{
-    background:var(--teal); color:#06110F; border-radius:24px; padding:52px 48px;
-    display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
-  }
+  .vendor-band{ background:var(--teal); color:#06110F; border-radius:24px; padding:52px 48px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
   .vendor-band h2{ font-size:clamp(1.5rem,3vw,2rem); max-width:16ch; color:#06110F; }
   .vendor-band p{ margin-top:10px; max-width:42ch; color:rgba(6,17,15,0.8); }
   .vendor-band .btn{ background:#06110F; color:var(--white); }
-  .vendor-band .btn:hover{ background:#111; }
 
-  /* ---------- Footer ---------- */
   footer{ background:var(--bg-0); color:var(--text-soft); padding:56px 0 28px; border-top:1px solid var(--line); }
-  .footer-logo{ height:48px; width:auto; object-fit:contain; display:block; margin-bottom:14px; }
-  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:32px; padding-bottom:36px; border-bottom:1px solid var(--line); }
-  footer h4{ font-family:'IBM Plex Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--white); margin-bottom:14px; }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; padding-bottom:36px; border-bottom:1px solid var(--line); }
+  footer h4{ font-family:'IBM Plex Mono',monospace; font-size:0.75rem; text-transform:uppercase; color:var(--white); margin-bottom:14px; }
   footer a{ text-decoration:none; }
   footer ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.92rem; }
   footer ul a:hover{ color:var(--teal); }
   .footer-bottom{ display:flex; justify-content:space-between; padding-top:22px; font-size:0.8rem; flex-wrap:wrap; gap:8px; color:var(--text-soft-2); }
 
   @media (max-width: 860px){
-    .hero-grid{ grid-template-columns:1fr; }
-    .steps, .dish-grid, .coverage-grid, .footer-grid{ grid-template-columns:1fr; }
+    .hero-grid, .steps, .dish-grid, .coverage-grid, .footer-grid{ grid-template-columns:1fr; }
     .nav-links{ display:none; }
-    .vendor-band{ flex-direction:column; align-items:flex-start; }
   }
 </style>
 </head>
@@ -196,15 +109,15 @@
 
 <header>
   <div class="nav wrap">
-    <div class="logo">
-      <img src="assets/owa-logo.png" alt="Owa — Order. Get. Done.">
-    </div>
+    <a href="index.html" class="logo">
+      <img src="assets/owa-logo.png" alt="Owa Delivery Services" onerror="this.style.display='none'">
+      <span>OWA</span>
+    </a>
     <nav class="nav-links">
-      <a href="#about">About</a>
-      <a href="#how">How it works</a>
-      <a href="#dishes">What's cooking</a>
-      <a href="#coverage">Coverage</a>
-      <a href="#vendors">Sell with Owa</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
     <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">Order on WhatsApp</a>
   </div>
@@ -213,181 +126,56 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Badagry, Lagos</div>
-      <h1>From Badagry's kitchens to <em>your</em> door.</h1>
-      <p>Owa picks up hot meals, fresh fish, and local favourites from trusted vendors across Badagry and brings them straight to you — no long queues, no guesswork.</p>
+      <div class="eyebrow">Lagos, Nigeria</div>
+      <h1>Connecting Lagos kitchens to <em>your</em> door.</h1>
+      <p>Owa Delivery Services connects customers with local food vendors and provides fast, reliable delivery services within Badagry and across Lagos.</p>
       <div class="hero-cta">
         <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.04 1.6 5.77L2 22l4.45-1.67a9.8 9.8 0 0 0 5.59 1.75h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.64-1.03-5.13-2.9-7-1.87-1.87-4.36-2.9-7-2.9zm0 18.05h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.98.99-3.05-.2-.31a8.15 8.15 0 0 1-1.24-4.33c0-4.5 3.66-8.16 8.16-8.16 2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.77c0 4.5-3.66 8.16-8.15 8.16zm4.48-6.1c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.03s.87 2.36.99 2.52c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z"/></svg>
           <span>Order · 0705-359-4258</span>
         </a>
-        <a class="btn btn-ghost" href="#vendors">Become a vendor</a>
+        <a class="btn btn-ghost" href="about.html">Learn More</a>
       </div>
       <div class="hero-stats">
         <div>
           <div class="stat-num">30+</div>
-          <div class="stat-label">Vendors on Owa</div>
+          <div class="stat-label">Local Vendors</div>
         </div>
         <div>
           <div class="stat-num">45 min</div>
-          <div class="stat-label">Average delivery</div>
+          <div class="stat-label">Average Delivery</div>
         </div>
         <div>
-          <div class="stat-num">8</div>
-          <div class="stat-label">Areas covered</div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Reliable Service</div>
         </div>
       </div>
-    </div>
-
-    <div class="waterway-box">
-      <svg class="waterway-svg" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a delivery rider on a bike travelling a route across Badagry, from a vendor to a home">
-        <path class="wave-path" d="M20,150 C 90,60 150,220 220,120 S 340,40 380,110" />
-        <circle cx="20" cy="150" r="6" fill="#12A797"/>
-        <text class="pin-label" x="0" y="178">Vendor</text>
-        <circle cx="380" cy="110" r="6" fill="#12A797"/>
-        <text class="pin-label" x="360" y="141">You</text>
-        <g class="bike" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="-8" cy="6" r="5" fill="none"/>
-          <circle cx="8" cy="6" r="5" fill="none"/>
-          <path d="M-8,6 L-2,-4 L6,-4 M-2,-4 L2,6 M6,-4 L8,6 M6,-4 L3,-9 L7,-9" fill="none"/>
-          <circle cx="3" cy="-9" r="1.6" fill="#FFFFFF" stroke="none"/>
-        </g>
-      </svg>
     </div>
   </div>
 </section>
 
-<section id="how" class="how-section">
+<section class="how-section">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">How it works</div>
-      <h2>Three steps, one route.</h2>
-      <p>Owa uses the same roads and routes that people in Badagry use every day—we've simply made shopping and delivery easier for you.</p>
+      <h2>Simple three-step delivery.</h2>
+      <p>We streamline local vendor ordering and logistics so your meals and packages arrive quickly.</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
         <h3>Order on WhatsApp</h3>
-        <p>Open our automated WhatsApp chat and follow the guided steps to select your items, confirm your order, and pay securely.</p>
+        <p>Select your items and place your order directly through our automated WhatsApp channel.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>We collect it hot</h3>
-        <p>An Owa rider picks up your order straight from the vendor and confirms it with you before heading out.</p>
+        <h3>We Pick Up Hot</h3>
+        <p>Our dedicated riders collect your order directly from the vendor's kitchen.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>It reaches your door</h3>
-        <p>Track your order on WhatsApp and receive it at your doorstep after your payment is confirmed.</p>
+        <h3>Doorstep Delivery</h3>
+        <p>Receive your fresh meal or parcel delivered straight to your door in Lagos.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="dishes" class="dishes-section">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">What's cooking</div>
-      <h2>Local favourites, delivered.</h2>
-      <p>A taste of what Badagry's vendors are making this week.</p>
-    </div>
-    <div class="dish-grid">
-      <div class="dish">
-        <div class="dish-tag">Grilled</div>
-        <h3>Fresh Fish & Pepper Sauce</h3>
-        <p>Straight off the lagoon, grilled and served with onions and scotch bonnet sauce.</p>
-      </div>
-      <div class="dish">
-        <div class="dish-tag">Swallow</div>
-        <h3>Amala & Ewedu</h3>
-        <p>Smooth yam flour swallow with ewedu and gbegiri from a family kitchen in Mowo.</p>
-      </div>
-      <div class="dish">
-        <div class="dish-tag">Rice</div>
-        <h3>Coconut Jollof Rice</h3>
-        <p>Party-style jollof finished with fresh coconut milk, a Badagry vendor signature.</p>
-      </div>
-      <div class="dish">
-        <div class="dish-tag">Soup</div>
-        <h3>Seafood Pepper Soup</h3>
-        <p>Crayfish, catfish, and periwinkle in a peppery broth, best delivered piping hot.</p>
-      </div>
-      <div class="dish">
-        <div class="dish-tag">Snack</div>
-        <h3>Akara & Custard</h3>
-        <p>Bean cakes fried to order, paired with warm custard for breakfast or a quick bite.</p>
-      </div>
-      <div class="dish">
-        <div class="dish-tag">Grill</div>
-        <h3>Suya Platter</h3>
-        <p>Spiced beef skewers with onions and yaji, wrapped fresh for the road.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="coverage" class="coverage-section">
-  <div class="wrap coverage-grid">
-    <div>
-      <div class="section-head" style="margin-bottom:0;">
-        <div class="eyebrow">Coverage</div>
-        <h2>Where Owa delivers</h2>
-        <p>We're growing street by street across Badagry. Message us to check if your area is covered yet.</p>
-      </div>
-      <div class="badge-row">
-        <span class="badge">Age-Mowo</span>
-        <span class="badge">Mowo</span>
-        <span class="badge">Ikoga</span>
-        <span class="badge">Oko-Afo</span>
-        <span class="badge">Ajara</span>
-        <span class="badge">Aradagun</span>
-        <span class="badge">Imeke</span>
-        <span class="badge">Badagry Township</span>
-      </div>
-    </div>
-    <div class="coverage-note">
-      <strong style="color:var(--white); font-family:'Bricolage Grotesque',sans-serif;">Not seeing your street?</strong>
-      <p style="margin-top:8px;">We're adding new routes every month as more vendors join Owa. Send us your location on WhatsApp and we'll let you know when we get there.</p>
-    </div>
-  </div>
-</section>
-<section id="about">
-  <div class="wrap">
-
-    <div class="section-head">
-
-      <div class="eyebrow">
-        About Owa Delivery Services
-      </div>
-
-      <h2>
-        Connecting Lagos customers with local food vendors.
-      </h2>
-
-      <p>
-        Owa Delivery Services is a Nigerian food delivery company based in Lagos,
-        connecting customers with local food vendors and providing reliable meal
-        delivery services.
-      </p>
-
-      <p>
-        We support restaurants, home cooks, and independent food vendors by helping
-        them reach more customers while providing convenient food ordering and
-        delivery solutions.
-      </p>
-
-    </div>
-
-  </div>
-</section>
-<section id="vendors">
-  <div class="wrap">
-    <div class="vendor-band">
-      <div>
-        <h2>Cooking in Badagry? Sell with Owa.</h2>
-        <p>Join our vendor network and reach customers across Badagry without hiring your own delivery riders.</p>
-      </div>
-      <a class="btn" href="https://forms.gle/U2SgtPoJWPJqrmXQ7" target="_blank" rel="noopener">Register your kitchen</a>
     </div>
   </div>
 </section>
@@ -396,52 +184,38 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <img class="footer-logo" src="assets/owa-logo.png" alt="Owa — Order. Get. Done.">
-        <p style="max-width:34ch; margin-top:14px; font-size:0.92rem;">Owa Delivery Services connects Badagry's food vendors to customers across the town, one order at a time.</p>
+        <h4 style="color:var(--teal);">Owa Delivery Services</h4>
+        <p style="max-width:34ch; margin-top:14px; font-size:0.92rem;">Registered business entity connecting local vendors to customers with fast delivery services in Lagos, Nigeria.</p>
       </div>
       <div>
-        <h4>Explore</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#dishes">What's cooking</a></li>
-          <li><a href="#coverage">Coverage areas</a></li>
-          <li><a href="#vendors">Sell with Owa</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal & Compliance</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="account-deletion.html">Account Deletion</a></li>
         </ul>
       </div>
       <div>
         <h4>Contact</h4>
         <ul>
-          <li><a href="https://wa.me/2347053594258" target="_blank" rel="noopener">WhatsApp: +234 705 359 4258</a></li>
-          <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
-          <li>Badagry, Lagos, Nigeria</li>
+          <li>Phone: +234 705 359 4258</li>
+          <li>Email: info@owadelivery.com</li>
+          <li>Lagos, Nigeria</li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-
-  <span>
-    © 2026 Owa Delivery Services. All rights reserved.
-  </span>
-
-  <span>
-    <a href="privacy-policy.html">
-      Privacy Policy
-    </a>
-    |
-    <a href="terms.html">
-      Terms of Service
-    </a>
-    |
-    <a href="account-deletion.html">
-      Account Deletion
-    </a>
-  </span>
-
-  <span class="mono" style="font-size:0.72rem;">
-    Order. Get. Done.
-  </span>
-
-</div>
+      <span>© 2026 Owa Delivery Services (CAC Registered). All rights reserved.</span>
+      <span class="mono">owadelivery.com</span>
+    </div>
   </div>
 </footer>
 
