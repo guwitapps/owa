@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Owa Delivery Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Literata:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg-0:#0B0B0B; --card:#1B1B1B; --teal:#12A797; --white:#FFFFFF; --text-soft:rgba(255,255,255,0.72); --line:rgba(255,255,255,0.12); }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg-0); color:var(--white); font-family:'Literata', serif; line-height:1.6; }
+  h1,h2,h3{ font-family:'Bricolage Grotesque', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  header{ position:sticky; top:0; z-index:50; background:rgba(11,11,11,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
+  .logo{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:1.4rem; color:var(--white); }
+  .nav-links{ display:flex; gap:24px; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; }
+  .nav-links a:hover, .nav-links a.active{ color:var(--teal); }
+  .content-section{ padding:80px 0; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:30px; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:36px; }
+  .info-item{ margin-bottom:24px; }
+  .info-item h4{ font-family:'IBM Plex Mono',monospace; color:var(--teal); margin:0 0 6px 0; font-size:0.85rem; text-transform:uppercase; }
+  footer{ background:var(--bg-0); color:var(--text-soft); padding:40px 0 20px; border-top:1px solid var(--line); margin-top:60px; font-size:0.9rem; }
+  @media(max-width:768px){ .grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav wrap">
+    <a href="index.html" class="logo">OWA</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap content-section">
+  <h1 style="font-size:2.8rem;">Contact Verification Info</h1>
+  <p style="font-size:1.1rem; color:var(--text-soft);">Official business communication channels for Owa Delivery Services.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Business Information</h2>
+      <div class="info-item">
+        <h4>Registered Business Name</h4>
+        <p style="font-size:1.1rem; margin:0;">Owa Delivery Services</p>
+      </div>
+      <div class="info-item">
+        <h4>Business Category</h4>
+        <p style="margin:0;">Food Delivery & Local Logistics</p>
+      </div>
+      <div class="info-item">
+        <h4>Official Email</h4>
+        <p style="margin:0;"><a href="mailto:info@owadelivery.com" style="color:var(--teal);">info@owadelivery.com</a></p>
+      </div>
+      <div class="info-item">
+        <h4>Business Telephone</h4>
+        <p style="margin:0;">+234 705 359 4258</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Operating Location</h2>
+      <div class="info-item">
+        <h4>Physical Location</h4>
+        <p style="margin:0;">Badagry, Lagos State, Nigeria</p>
+      </div>
+      <div class="info-item">
+        <h4>Website Domain</h4>
+        <p style="margin:0;">https://owadelivery.com</p>
+      </div>
+      <div class="info-item">
+        <h4>WhatsApp Business Support</h4>
+        <p style="margin:0;">+234 705 359 4258</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Owa Delivery Services. All rights reserved.</span>
+    <span>info@owadelivery.com</span>
+  </div>
+</footer>
+</body>
+</html>
