@@ -3,59 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us — Owa Delivery Services</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Literata:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{ --bg-0:#0B0B0B; --bg-1:#141414; --card:#1B1B1B; --teal:#12A797; --white:#FFFFFF; --text-soft:rgba(255,255,255,0.72); --line:rgba(255,255,255,0.12); }
-  *{box-sizing:border-box;}
-  body{ margin:0; background:var(--bg-0); color:var(--white); font-family:'Literata', serif; line-height:1.6; }
-  h1,h2,h3{ font-family:'Bricolage Grotesque', sans-serif; }
-  a{ color:inherit; text-decoration:none; }
-  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
-  header{ position:sticky; top:0; z-index:50; background:rgba(11,11,11,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .logo img{ height:38px; width:auto; object-fit:contain; display:block; }
-  .nav-links{ display:flex; gap:24px; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; }
-  .nav-links a:hover, .nav-links a.active{ color:var(--teal); }
-  .content-section{ padding:80px 0; }
-  .card{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:40px; margin-top:30px; }
-  footer{ background:var(--bg-0); color:var(--text-soft); padding:40px 0 20px; border-top:1px solid var(--line); margin-top:60px; font-size:0.9rem; }
-</style>
+<title>About Owa Delivery Services — local delivery in Badagry, Lagos</title>
+<meta name="description" content="Owa Delivery Services is a registered Nigerian business delivering food, gas, pharmacy items, groceries and parcels across Badagry and Lagos.">
+<link rel="canonical" href="https://owadelivery.com/about.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Owa Delivery Services — local delivery in Badagry, Lagos">
+<meta property="og:description" content="Owa Delivery Services is a registered Nigerian business delivering food, gas, pharmacy items, groceries and parcels across Badagry and Lagos.">
+<meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+
 <header>
   <div class="nav wrap">
     <a href="index.html" class="logo">
-      <img src="assets/owa-logo.png" alt="Owa Delivery Services" onerror="this.style.display='none'">
+      <img src="assets/owa-logo.png" alt="Owa Delivery Services"
+           onerror="this.onerror=null;this.src='assets/owa-logo.svg'">
+      <span>Owa</span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="about.html" class="active">About Us</a>
+      <a href="index.html#services">What we deliver</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
     </nav>
+    <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">Order on WhatsApp</a>
   </div>
 </header>
 
-<div class="wrap content-section">
-  <h1 style="font-size:2.8rem;">About Owa Delivery Services</h1>
-  <p style="font-size:1.2rem; color:var(--text-soft); max-width:65ch;">Connecting local food vendors, kitchens, and merchants directly with customers across Badagry, Lagos, Nigeria.</p>
+<main>
+
+<section class="page-head">
+  <div class="wrap narrow">
+    <div class="eyebrow">About us</div>
+    <h1>We move what the day needs.</h1>
+    <p class="lede">Owa Delivery Services began by carrying meals from Badagry kitchens.
+      The riders were already on the road, so we started carrying everything else too.</p>
+  </div>
+</section>
+
+<div class="wrap prose">
+  <h2>What we do</h2>
+  <p>Owa connects customers with local vendors and delivers the result. That covers cooked food,
+    cooking gas refills, pharmacy and chemist items, groceries and market runs, and point-to-point
+    parcels within our coverage area. One conversation on WhatsApp handles all of it.</p>
+
+  <h2>Why WhatsApp, not an app</h2>
+  <p>Most of our customers already have WhatsApp open, and most have limited phone storage and
+    patchy data. Asking them to download an app, create an account and remember a password would
+    lose more people than it served. So the whole order runs as a chat: pick what you need, tap
+    through the options, share your location with one tap, and get told when your rider is on the way.</p>
+
+  <h2>How an order runs</h2>
+  <ol>
+    <li>You choose a service, your area, a vendor and your items.</li>
+    <li>We confirm with the vendor that everything is available before you pay.</li>
+    <li>You get the full price broken down — items, packaging, service charge and delivery.</li>
+    <li>You pay by transfer, quoting your order number, and send the receipt.</li>
+    <li>We confirm payment, the vendor prepares, and a rider in your zone collects it.</li>
+    <li>You get the rider's name and number, and a message when the order arrives.</li>
+  </ol>
+
+  <h2>For vendors</h2>
+  <p>Vendors receive orders on their own phone, confirm availability with one tap, and mark an order
+    ready when it is. There is nothing to install and no dashboard to learn. If a vendor runs their
+    own dispatch rider, that rider is offered the job first.</p>
+
+  <h2>For riders</h2>
+  <p>Riders are assigned by zone, so jobs land with someone already nearby. Every job carries the
+    pickup address, the vendor's phone number, the drop-off address and a map pin shared by the
+    customer. Riders confirm delivery in the same chat.</p>
+
+  <h2>Who we are</h2>
+  <p>Owa Delivery Services is registered in Nigeria under business name
+    <strong>Owa Delivery Services</strong> (BN 9517031), operating from Badagry, Lagos State.
+    Our aim is narrow and practical: make local vendors reachable, and make delivery dependable
+    enough that people stop planning their day around errands.</p>
 
   <div class="card">
-    <h2>Our Mission</h2>
-    <p>Owa Delivery Services was established to bridge the gap between hard-working local food vendors and customers seeking fast, trustworthy delivery. We provide on-demand food logistics, ensuring meals are picked up fresh and delivered safely to households and offices.</p>
-    
-    <h2 style="margin-top:30px;">Who We Are</h2>
-    <p>Operating under CAC registered business name <strong>Owa Delivery Services</strong>, we specialize in food delivery logistics within Badagry, Lagos State. By empowering small and medium vendors with delivery technology and rider networks, we allow local businesses to expand their customer reach seamlessly.</p>
+    <h2 style="font-size:1.15rem;">Want to work with us?</h2>
+    <p style="margin-top:10px;">We're onboarding vendors and riders across Badagry.
+      Message us and we'll take it from there.</p>
+    <p style="margin-top:18px;">
+      <a class="btn" href="https://wa.me/2347053594258?text=I%20want%20to%20partner%20with%20Owa"
+         target="_blank" rel="noopener">Message us on WhatsApp</a>
+    </p>
   </div>
 </div>
+</main>
 
 <footer>
-  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-    <span>© 2026 Owa Delivery Services. All rights reserved.</span>
-    <span>Official Domain: owadelivery.com</span>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4 style="color:var(--teal);">Owa Delivery Services</h4>
+        <p style="max-width:36ch; margin-top:14px;">A registered Nigerian business connecting local
+          vendors and riders with customers across Badagry, Lagos State.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="account-deletion.html">Delete my data</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+2347053594258">+234 705 359 4258</a></li>
+          <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
+          <li>House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Lagos State</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Owa Delivery Services (BN 9517031). All rights reserved.</span>
+      <span class="mono">owadelivery.com</span>
+    </div>
   </div>
 </footer>
+
 </body>
 </html>
