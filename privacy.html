@@ -4,72 +4,178 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — Owa Delivery Services</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Literata:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{ --bg-0:#0B0B0B; --card:#1B1B1B; --teal:#12A797; --white:#FFFFFF; --text-soft:rgba(255,255,255,0.72); --line:rgba(255,255,255,0.12); }
-  *{box-sizing:border-box;}
-  body{ margin:0; background:var(--bg-0); color:var(--white); font-family:'Literata', serif; line-height:1.6; }
-  h1,h2,h3{ font-family:'Bricolage Grotesque', sans-serif; }
-  a{ color:var(--teal); text-decoration:none; }
-  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
-  header{ position:sticky; top:0; z-index:50; background:rgba(11,11,11,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .logo img{ height:38px; width:auto; object-fit:contain; display:block; }
-  .nav-links{ display:flex; gap:24px; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; }
-  .nav-links a{ color:var(--white); text-decoration:none; }
-  .nav-links a.active{ color:var(--teal); }
-  .content-section{ padding:80px 0; max-width:800px; }
-  footer{ background:var(--bg-0); color:var(--text-soft); padding:40px 0 20px; border-top:1px solid var(--line); margin-top:60px; font-size:0.9rem; }
-</style>
+<meta name="description" content="How Owa Delivery Services collects, uses, stores and deletes customer information, including WhatsApp messages and location data.">
+<link rel="canonical" href="https://owadelivery.com/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy — Owa Delivery Services">
+<meta property="og:description" content="How Owa Delivery Services collects, uses, stores and deletes customer information, including WhatsApp messages and location data.">
+<meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+
 <header>
   <div class="nav wrap">
     <a href="index.html" class="logo">
-      <img src="assets/owa-logo.png" alt="Owa Delivery Services" onerror="this.style.display='none'">
+      <img src="assets/owa-logo.png" alt="Owa Delivery Services"
+           onerror="this.onerror=null;this.src='assets/owa-logo.svg'">
+      <span>Owa</span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
+      <a href="index.html#services">What we deliver</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="privacy.html" class="active">Privacy</a>
     </nav>
+    <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">Order on WhatsApp</a>
   </div>
 </header>
 
-<div class="wrap content-section">
-  <h1>Privacy Policy</h1>
-  <p><strong>Effective Date:</strong> January 1, 2026<br>
-  <strong>Business Entity:</strong> Owa Delivery Services ("we", "us", "our")<br>
-  <strong>Website:</strong> https://owadelivery.com</p>
+<main>
 
-  <h2>1. Information We Collect</h2>
-  <p>We collect personal information necessary to fulfill food and delivery orders in Badagry, Lagos, Nigeria. This includes your name, phone number, delivery address, and order specifics transmitted via our website or WhatsApp interface.</p>
+<section class="page-head">
+  <div class="wrap narrow">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy policy</h1>
+    <p class="lede">What we collect, why we collect it, how long we keep it, and how to get it deleted.</p>
+    <p class="updated" style="margin-top:20px;">Last updated: 1 January 2026</p>
+  </div>
+</section>
 
-  <h2>2. How We Use Your Information</h2>
-  <p>Your information is strictly used for order processing, rider assignment, customer support communications, and service improvements. We do not sell your personal data to third parties.</p>
+<div class="wrap prose">
+  <p><strong>Owa Delivery Services</strong> ("we", "us", "our") operates owadelivery.com and a WhatsApp
+    ordering service for customers in Badagry and Lagos State, Nigeria. This policy explains how we
+    handle personal information.</p>
 
-  <h2>3. Third-Party Services & Meta Platform Integration</h2>
-  <p>We utilize messaging frameworks such as WhatsApp Business (Meta Platforms) to process customer requests. Information shared during interactions is subject to our privacy standards and Meta's infrastructure policies.</p>
+  <h2>1. Information we collect</h2>
+  <h3>You give us</h3>
+  <ul>
+    <li><strong>Your WhatsApp phone number</strong> — this identifies your order and is how we reply.</li>
+    <li><strong>Your WhatsApp profile name</strong>, if you have set one, so we can greet you properly.</li>
+    <li><strong>Your delivery address</strong>, typed by you.</li>
+    <li><strong>Your location pin</strong>, only if you choose to share it. Sharing is optional and
+      there is a button to continue with your typed address instead.</li>
+    <li><strong>Your order details</strong> — the vendor, items, quantities and any instructions.</li>
+    <li><strong>Your ratings</strong> of the rider, the item and our service, if you choose to give them.</li>
+  </ul>
+  <h3>We generate</h3>
+  <ul>
+    <li>An order number, order status and timestamps.</li>
+    <li>The amounts charged: items, packaging, service charge and delivery fee.</li>
+    <li>Which rider and which vendor handled your order.</li>
+  </ul>
+  <p>We do <strong>not</strong> collect or store your bank details, card numbers or payment
+    credentials. Payment is made by bank transfer directly to our account, and we only see the
+    receipt you choose to send us.</p>
 
-  <h2>4. Data Retention and Security</h2>
-  <p>We store order records and contact details securely for operational and legal compliance. We implement appropriate physical and electronic measures to protect customer information.</p>
+  <h2>2. How we use it</h2>
+  <ul>
+    <li>To take, price, confirm and deliver your order.</li>
+    <li>To give the assigned rider the address and pin needed to find you.</li>
+    <li>To give the vendor the items to prepare — vendors are not shown your prices.</li>
+    <li>To contact you about that order, including delivery updates.</li>
+    <li>To resolve complaints, refunds and disputed deliveries.</li>
+    <li>To review rider and vendor performance using the ratings you give.</li>
+  </ul>
+  <p>We do not use your information for advertising, and we do not sell or rent it to anyone.</p>
 
-  <h2>5. Your Rights & Data Deletion</h2>
-  <p>You have the right to request access to or deletion of your personal data held by Owa Delivery Services. Please visit our <a href="account-deletion.html">Account & Data Deletion Page</a> or email <a href="mailto:info@owadelivery.com">info@owadelivery.com</a>.</p>
+  <h2>3. Who we share it with</h2>
+  <ul>
+    <li><strong>The vendor</strong> preparing your order — the items and quantities only.</li>
+    <li><strong>The rider</strong> delivering it — your name, phone number, address and pin.</li>
+    <li><strong>Meta Platforms (WhatsApp)</strong>, which carries the messages between us. Their
+      handling of message data is governed by their own privacy policy.</li>
+    <li><strong>Google</strong>, whose services we use to store operational records securely.</li>
+  </ul>
+  <p>We may also disclose information where we are required to by Nigerian law.</p>
 
-  <h2>6. Contact Us</h2>
-  <p>For questions regarding this policy:<br>
-  Email: <a href="mailto:info@owadelivery.com">info@owadelivery.com</a><br>
-  Phone: +234 705 359 4258<br>
-  Address: House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Badagry, Lagos State, Nigeria</p>
+  <h2>4. Location data</h2>
+  <p>Sharing a location pin is always optional. When you share one, it is attached to that order and
+    used to help the rider find you. It is not tracked continuously, not used to follow you between
+    orders, and not shared with anyone beyond the rider handling that delivery.</p>
+
+  <h2>5. How long we keep it</h2>
+  <ul>
+    <li><strong>Active order data</strong> — until the order is completed or cancelled.</li>
+    <li><strong>Order records</strong> — retained for accounting and dispute resolution.</li>
+    <li><strong>Chat history</strong> — held in WhatsApp under Meta's retention rules and on your own device.</li>
+  </ul>
+  <p>You can ask us to delete your records at any time, subject to any legal obligation to keep
+    accounting records.</p>
+
+  <h2>6. Security</h2>
+  <p>Order records are held in access-controlled systems, and only staff who need them can reach them.
+    No system is perfectly secure, but we do not store payment credentials, which removes the most
+    sensitive category of data entirely.</p>
+
+  <h2>7. Your rights</h2>
+  <p>Under the Nigeria Data Protection Act you may ask us to show you the personal data we hold about
+    you, correct anything inaccurate, delete your data, or stop using it for a particular purpose.
+    Use our <a href="account-deletion.html">data deletion page</a> or email
+    <a href="mailto:info@owadelivery.com">info@owadelivery.com</a>. We respond within 30 days and
+    usually much sooner.</p>
+
+  <h2>8. Children</h2>
+  <p>Our service is intended for people aged 18 and over. We do not knowingly collect information
+    from children.</p>
+
+  <h2>9. Changes</h2>
+  <p>If we change this policy we will update the date at the top of this page. Material changes will
+    be announced in the WhatsApp channel before they take effect.</p>
+
+  <h2>10. Contact</h2>
+  <p>
+    Owa Delivery Services (BN 9517031)<br>
+    Email: <a href="mailto:info@owadelivery.com">info@owadelivery.com</a><br>
+    Phone: <a href="tel:+2347053594258">+234 705 359 4258</a><br>
+    House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Lagos State, Nigeria
+  </p>
 </div>
+</main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Owa Delivery Services. All rights reserved.</span>
+    <div class="footer-grid">
+      <div>
+        <h4 style="color:var(--teal);">Owa Delivery Services</h4>
+        <p style="max-width:36ch; margin-top:14px;">A registered Nigerian business connecting local
+          vendors and riders with customers across Badagry, Lagos State.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="account-deletion.html">Delete my data</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+2347053594258">+234 705 359 4258</a></li>
+          <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
+          <li>House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Lagos State</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Owa Delivery Services (BN 9517031). All rights reserved.</span>
+      <span class="mono">owadelivery.com</span>
+    </div>
   </div>
 </footer>
+
 </body>
 </html>
