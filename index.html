@@ -3,185 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owa Delivery Services — Fast Food & Local Delivery in Badagry, Lagos</title>
-<meta name="description" content="Owa Delivery Services connects customers with local vendors and provides fast, reliable delivery services within Lagos, Nigeria.">
+<title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Errands Delivered in Badagry</title>
+<meta name="description" content="Owa Delivery Services delivers food, cooking gas, pharmacy items, groceries and parcels across Badagry and Lagos. Order on WhatsApp and track it to your door.">
+<link rel="canonical" href="https://owadelivery.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Owa Delivery Services — order anything local on WhatsApp">
+<meta property="og:description" content="Food, cooking gas, pharmacy items, groceries and errands delivered across Badagry and Lagos.">
+<meta property="og:url" content="https://owadelivery.com/">
+<meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-0:#0B0B0B;
-    --bg-1:#141414;
-    --card:#1B1B1B;
-    --teal:#12A797;
-    --white:#FFFFFF;
-    --text-soft:rgba(255,255,255,0.72);
-    --text-soft-2:rgba(255,255,255,0.55);
-    --line:rgba(255,255,255,0.12);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0; background:var(--bg-0); color:var(--white);
-    font-family:'Literata', serif; line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,.display{ font-family:'Bricolage Grotesque', sans-serif; letter-spacing:-0.02em; margin:0; }
-  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.03em; text-transform:uppercase; }
-  a{color:inherit;}
-  img,svg{display:block;max-width:100%;}
-  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
-
-  header{ position:sticky; top:0; z-index:50; background:rgba(11,11,11,0.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
-  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:1.4rem; color:var(--white); }
-  .logo img{ height:38px; width:auto; object-fit:contain; }
-  .nav-links{ display:flex; gap:24px; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; text-transform:uppercase; }
-  .nav-links a{ text-decoration:none; color:var(--white); opacity:0.75; }
-  .nav-links a:hover, .nav-links a.active{ opacity:1; color:var(--teal); }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px; background:var(--teal); color:#06110F;
-    padding:11px 20px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.8rem;
-    font-weight:500; text-transform:uppercase; text-decoration:none; border:none; cursor:pointer;
-    transition:transform 0.15s ease, background 0.15s ease;
-  }
-  .btn:hover{ background:#17c4b1; transform:translateY(-1px); }
-  .btn-ghost{ background:transparent; border:1.5px solid var(--teal); color:var(--white); }
-  .btn-ghost:hover{ background:var(--teal); color:#06110F; }
-
-  .hero{ background:var(--bg-0); color:var(--white); padding:72px 0 0; }
-  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center; }
-  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.12em; display:flex; align-items:center; gap:10px; margin-bottom:20px; }
-  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--teal); display:inline-block; }
-  .hero h1{ font-size:clamp(2.4rem, 5vw, 3.6rem); font-weight:700; line-height:1.05; }
-  .hero h1 em{ font-style:normal; color:var(--teal); }
-  .hero p{ font-size:1.08rem; max-width:46ch; margin-top:22px; color:var(--text-soft); }
-  .hero-cta{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; align-items:center; }
-  .hero-stats{ display:flex; gap:32px; margin-top:52px; padding-top:28px; border-top:1px solid var(--line); }
-  .stat-num{ font-family:'Bricolage Grotesque',sans-serif; font-size:1.6rem; font-weight:700; color:var(--white); }
-  .stat-label{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--text-soft-2); text-transform:uppercase; }
-
-  /* Rider signature visual */
-  .waterway-box{ position:relative; }
-  .waterway-svg{ width:100%; height:auto; }
-  .wave-path{
-    fill:none; stroke:rgba(255,255,255,0.28); stroke-width:2; stroke-dasharray:6 8;
-  }
-  .bike{
-    offset-path:path('M20,150 C 90,60 150,220 220,120 S 340,40 380,110');
-    offset-rotate:auto;
-    animation:rideAlong 9s linear infinite;
-  }
-  @keyframes rideAlong{
-    0%{ offset-distance:0%; }
-    100%{ offset-distance:100%; }
-  }
-  .pin-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--white); text-transform:uppercase; letter-spacing:0.05em;}
-  @media (prefers-reduced-motion: reduce){
-    .bike{ animation:none; offset-distance:38%; }
-  }
-
-  section{ padding:88px 0; }
-  .section-head{ max-width:640px; margin-bottom:52px; }
-  .section-head h2{ font-size:clamp(1.7rem,3.4vw,2.3rem); color:var(--white); }
-  .section-head p{ margin-top:14px; color:var(--text-soft); max-width:52ch; }
-
-  .how-section{ background:var(--bg-1); }
-  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-  .step{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:32px 28px; }
-  .step-num{ font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color:var(--teal); }
-  .step h3{ font-size:1.25rem; margin-top:16px; color:var(--white); }
-  .step p{ margin-top:10px; font-size:0.96rem; color:var(--text-soft); }
-
-  .dishes-section{ background:var(--bg-0); }
-  .dish-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border-radius:18px; overflow:hidden; }
-  .dish{ background:var(--card); padding:30px 26px; }
-  .dish-tag{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--teal); text-transform:uppercase; }
-  .dish h3{ font-size:1.2rem; margin-top:12px; color:var(--white); }
-  .dish p{ margin-top:8px; font-size:0.92rem; color:var(--text-soft); }
-
-  .coverage-section{ background:var(--bg-1); }
-  .coverage-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
-  .badge-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
-  .badge{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; text-transform:uppercase; padding:8px 16px; border-radius:100px; border:1px solid rgba(18,167,151,0.5); color:var(--white); }
-  .coverage-note{ background:var(--card); border-left:3px solid var(--teal); padding:20px 24px; border-radius:6px; margin-top:28px; font-size:0.92rem; color:var(--text-soft);}
-
-  .vendor-band{ background:var(--teal); color:#06110F; border-radius:24px; padding:52px 48px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
-  .vendor-band h2{ font-size:clamp(1.5rem,3vw,2rem); max-width:16ch; color:#06110F; }
-  .vendor-band p{ margin-top:10px; max-width:42ch; color:rgba(6,17,15,0.8); }
-  .vendor-band .btn{ background:#06110F; color:var(--white); }
-
-  footer{ background:var(--bg-0); color:var(--text-soft); padding:56px 0 28px; border-top:1px solid var(--line); }
-  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; padding-bottom:36px; border-bottom:1px solid var(--line); }
-  footer h4{ font-family:'IBM Plex Mono',monospace; font-size:0.75rem; text-transform:uppercase; color:var(--white); margin-bottom:14px; }
-  footer a{ text-decoration:none; }
-  footer ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.92rem; }
-  footer ul a:hover{ color:var(--teal); }
-  .footer-bottom{ display:flex; justify-content:space-between; padding-top:22px; font-size:0.8rem; flex-wrap:wrap; gap:8px; color:var(--text-soft-2); }
-
-  @media (max-width: 860px){
-    .hero-grid, .steps, .dish-grid, .coverage-grid, .footer-grid{ grid-template-columns:1fr; }
-    .nav-links{ display:none; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"Owa Delivery Services",
+  "url":"https://owadelivery.com",
+  "telephone":"+2347053594258",
+  "email":"info@owadelivery.com",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N",
+    "addressLocality":"Badagry",
+    "addressRegion":"Lagos State",
+    "addressCountry":"NG"
+  },
+  "areaServed":"Badagry, Lagos State, Nigeria"
+}
+</script>
 </head>
 <body>
 
 <header>
   <div class="nav wrap">
     <a href="index.html" class="logo">
-      <img src="assets/owa-logo.png" alt="Owa Delivery Services" onerror="this.style.display='none'">
+      <img src="assets/owa-logo.png" alt="Owa Delivery Services"
+           onerror="this.onerror=null;this.src='assets/owa-logo.svg'">
+      <span>Owa</span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main">
       <a href="index.html" class="active">Home</a>
-      <a href="about.html">About Us</a>
+      <a href="#services">What we deliver</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
     </nav>
     <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">Order on WhatsApp</a>
   </div>
 </header>
 
+<main>
+
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Badagry, Lagos</div>
-      <h1>Connecting Badagry's kitchens to <em>your</em> door.</h1>
-      <p>Owa Delivery Services connects customers with local food vendors and provides fast, reliable delivery services within Badagry and across Lagos.</p>
+      <div class="eyebrow">Badagry &amp; Lagos</div>
+      <h1>One rider for <em>everything</em> you need today.</h1>
+      <p class="lede">Food from local kitchens. Cooking gas. Pharmacy items. Groceries and parcels.
+        Tell us on WhatsApp what you need — we pick it up and bring it to your door.</p>
       <div class="hero-cta">
-        <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">
-          <span>Order · 0705-359-4258</span>
-        </a>
-        <a class="btn btn-ghost" href="about.html">Learn More</a>
+        <a class="btn" href="https://wa.me/2347053594258" target="_blank" rel="noopener">Order · 0705 359 4258</a>
+        <a class="btn btn-ghost" href="#how">How it works</a>
       </div>
       <div class="hero-stats">
         <div>
           <div class="stat-num">30+</div>
-          <div class="stat-label">Local Vendors</div>
+          <div class="stat-label">Local vendors</div>
         </div>
         <div>
-          <div class="stat-num">30 min</div>
-          <div class="stat-label">Average Delivery</div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Service types</div>
         </div>
         <div>
-          <div class="stat-num">100%</div>
-          <div class="stat-label">Reliable Service</div>
+          <div class="stat-num">~30 min</div>
+          <div class="stat-label">Typical delivery</div>
         </div>
       </div>
     </div>
 
-    <!-- Restored Rider Signature Visual -->
-    <div class="waterway-box">
-      <svg class="waterway-svg" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a delivery rider on a bike travelling a route across Badagry, from a vendor to a home">
-        <path class="wave-path" d="M20,150 C 90,60 150,220 220,120 S 340,40 380,110" />
-        <circle cx="20" cy="150" r="6" fill="#12A797"/>
-        <text class="pin-label" x="0" y="178">Vendor</text>
-        <circle cx="380" cy="110" r="6" fill="#12A797"/>
-        <text class="pin-label" x="360" y="141">You</text>
+    <!-- Signature: one route, several kinds of stop. This is the whole business in one image. -->
+    <div class="route-box">
+      <svg class="route-svg" viewBox="0 0 410 250" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="A single delivery route passing a kitchen, a pharmacy, a gas depot and a market before arriving at the customer's door.">
+        <path class="route-line" d="M24,196 C 88,150 96,74 156,66 S 250,132 292,86 S 356,52 384,104" />
+
+        <circle class="route-stop" cx="24"  cy="196" r="6"/>
+        <text class="stop-label" x="6"   y="218">Kitchen</text>
+
+        <circle class="route-stop" cx="156" cy="66"  r="6"/>
+        <text class="stop-label" x="132" y="50">Pharmacy</text>
+
+        <circle class="route-stop" cx="292" cy="86"  r="6"/>
+        <text class="stop-label" x="276" y="70">Gas</text>
+
+        <circle class="route-stop-end" cx="384" cy="104" r="7"/>
+        <text class="stop-label stop-label-end" x="358" y="130">Your door</text>
+
         <g class="bike" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="-8" cy="6" r="5" fill="none"/>
-          <circle cx="8" cy="6" r="5" fill="none"/>
-          <path d="M-8,6 L-2,-4 L6,-4 M-2,-4 L2,6 M6,-4 L8,6 M6,-4 L3,-9 L7,-9" fill="none"/>
+          <circle cx="-8" cy="6" r="5"/>
+          <circle cx="8"  cy="6" r="5"/>
+          <path d="M-8,6 L-2,-4 L6,-4 M-2,-4 L2,6 M6,-4 L8,6 M6,-4 L3,-9 L7,-9"/>
           <circle cx="3" cy="-9" r="1.6" fill="#FFFFFF" stroke="none"/>
         </g>
       </svg>
@@ -189,62 +113,165 @@
   </div>
 </section>
 
-<section class="how-section">
+<section id="services">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">How it works</div>
-      <h2>Simple three-step delivery.</h2>
-      <p>We streamline local vendor ordering and logistics so your meals and packages arrive quickly.</p>
+      <div class="eyebrow">What we deliver</div>
+      <h2>More than meals.</h2>
+      <p>Owa started with food and now covers the errands that eat up a working day.
+        Same chat, same riders, same flat delivery fee for your area.</p>
     </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Order on WhatsApp</h3>
-        <p>Select your items and place your order directly through our automated WhatsApp channel.</p>
+    <div class="service-grid">
+      <div class="service">
+        <div class="tag">Food</div>
+        <h3>Restaurants &amp; kitchens</h3>
+        <p>Browse menus from vendors that deliver to your area, build an order and pay on confirmation.</p>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>We Pick Up Hot</h3>
-        <p>Our dedicated riders collect your order directly from the vendor's kitchen.</p>
+      <div class="service">
+        <div class="tag">Gas</div>
+        <h3>Cooking gas refills</h3>
+        <p>Send your cylinder size. We collect, refill and return it the same day where stock allows.</p>
       </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Doorstep Delivery</h3>
-        <p>Receive your fresh meal or parcel delivered straight to your door in Badagry.</p>
+      <div class="service">
+        <div class="tag">Pharmacy</div>
+        <h3>Chemist &amp; pharmacy runs</h3>
+        <p>Over-the-counter items picked up from a registered pharmacy near you and delivered discreetly.</p>
+      </div>
+      <div class="service">
+        <div class="tag">Groceries</div>
+        <h3>Market &amp; provisions</h3>
+        <p>Send a list. A rider shops it at the market or a nearby store and brings it to your door.</p>
+      </div>
+      <div class="service">
+        <div class="tag">Parcels</div>
+        <h3>Send something across town</h3>
+        <p>Documents, keys, a forgotten lunch. Point-to-point drop-offs within our coverage area.</p>
+      </div>
+      <div class="service">
+        <div class="tag">Errands</div>
+        <h3>Pay-and-pick-up</h3>
+        <p>Anything with a clear pickup point and a clear price. Ask us in the chat and we'll confirm.</p>
       </div>
     </div>
   </div>
 </section>
+
+<section id="how" class="band-1">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Four steps, all inside WhatsApp.</h2>
+      <p>No app to install and no account to create. The order runs as a normal chat,
+        and you are told at every handover.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Step 01</div>
+        <h3>Say hi</h3>
+        <p>Message us and pick what you need — food, gas, pharmacy, groceries or an errand.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 02</div>
+        <h3>Choose and confirm</h3>
+        <p>Pick your area, then your vendor and items. We confirm availability before you pay anything.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 03</div>
+        <h3>Share your location</h3>
+        <p>One tap sends your pin so the rider finds you first time. You get the full price before paying.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 04</div>
+        <h3>Track to your door</h3>
+        <p>We message you when it's being prepared, when a rider collects it, and when it arrives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two-col">
+    <div>
+      <div class="eyebrow">Coverage</div>
+      <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built for Badagry first.</h2>
+      <p style="color:var(--text-soft); margin-top:14px;">
+        We run zone by zone rather than claiming the whole state. Each zone has its own flat delivery
+        fee, shown to you before you pay. If your area isn't listed yet, message us — new zones open
+        as rider coverage grows.</p>
+      <div class="badge-row">
+        <span class="badge">Ajara</span>
+        <span class="badge">Ikoga</span>
+        <span class="badge">Age Mowo</span>
+        <span class="badge">Topo</span>
+        <span class="badge">Badagry Town</span>
+      </div>
+      <div class="note">
+        Delivery fees are set per zone and quoted in the chat before payment.
+        For long or unusual trips our team may adjust the fee — you'll always see the final
+        amount before you're asked to pay.
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2 style="font-size:1.2rem;">What you'll always get</h2>
+        <ul style="padding-left:18px; color:var(--text-soft); margin-top:14px;">
+          <li>The full price broken down before payment — items, packaging, service and delivery.</li>
+          <li>An order number to quote on your transfer.</li>
+          <li>The name and phone number of the rider bringing your order.</li>
+          <li>A message when it's confirmed, collected and delivered.</li>
+          <li>A chance to rate the rider, the item and the service afterwards.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-1">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <h2>Sell locally? Ride locally?</h2>
+        <p>We're adding vendors and riders across Badagry. Vendors get orders without building an app.
+          Riders get jobs routed to their own zone.</p>
+      </div>
+      <a class="btn" href="https://wa.me/2347053594258?text=I%20want%20to%20partner%20with%20Owa"
+         target="_blank" rel="noopener">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
         <h4 style="color:var(--teal);">Owa Delivery Services</h4>
-        <p style="max-width:34ch; margin-top:14px; font-size:0.92rem;">Registered business entity connecting local vendors to customers with fast delivery services in Badagry, Lagos, Nigeria.</p>
+        <p style="max-width:36ch; margin-top:14px;">A registered Nigerian business connecting local
+          vendors and riders with customers across Badagry, Lagos State.</p>
       </div>
       <div>
         <h4>Company</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
       <div>
-        <h4>Legal & Compliance</h4>
+        <h4>Legal</h4>
         <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="account-deletion.html">Account Deletion</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="account-deletion.html">Delete my data</a></li>
         </ul>
       </div>
       <div>
         <h4>Contact</h4>
         <ul>
-          <li>Phone: +234 705 359 4258</li>
-          <li>Email: info@owadelivery.com, everythingowa@gmail.com</li>
-          <li>House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Badagry, Lagos State, Nigeria</li>
+          <li><a href="tel:+2347053594258">+234 705 359 4258</a></li>
+          <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
+          <li>House Number 1, Foursquare Church Close, Agbo-Malu, 2nd M.T.N, Badagry, Lagos State</li>
         </ul>
       </div>
     </div>
@@ -256,4 +283,4 @@
 </footer>
 
 </body>
-</html>
+  </html>
