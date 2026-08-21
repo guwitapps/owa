@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Errands Delivered in Badagry</title>
 <meta name="description" content="Owa Delivery Services delivers food, cooking gas, pharmacy items, groceries and parcels across Badagry and Lagos. Order on WhatsApp and track it to your door.">
+<meta name="author" content="Owa Delivery Services">
+<meta name="developer" content="Guwit Technology Solutions Ltd (RC 9040112)">
 <link rel="canonical" href="https://owadelivery.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Owa Delivery Services — order anything local on WhatsApp">
@@ -13,6 +15,7 @@
 <meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png">
+<link rel="author" href="humans.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -21,19 +24,52 @@
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
-  "@type":"LocalBusiness",
-  "name":"Owa Delivery Services",
-  "url":"https://owadelivery.com",
-  "telephone":"+2347041649942",
-  "email":"info@owadelivery.com",
-  "address":{
-    "@type":"PostalAddress",
-    "streetAddress":"Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road, Badagry, Lagos",
-    "addressLocality":"Badagry",
-    "addressRegion":"Lagos State",
-    "addressCountry":"NG"
-  },
-  "areaServed":"Badagry, Lagos State, Nigeria"
+  "@graph":[
+    {
+      "@type":"LocalBusiness",
+      "@id":"https://owadelivery.com/#business",
+      "name":"Owa Delivery Services",
+      "alternateName":"Owa",
+      "description":"Local delivery of food, cooking gas, pharmacy items, groceries and parcels across Badagry, Lagos State, ordered on WhatsApp.",
+      "url":"https://owadelivery.com",
+      "telephone":"+2347041649942",
+      "email":"info@owadelivery.com",
+      "identifier":{
+        "@type":"PropertyValue",
+        "name":"CAC Business Name Registration Number",
+        "value":"BN 9517031"
+      },
+      "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road, Badagry, Lagos",
+        "addressLocality":"Badagry",
+        "addressRegion":"Lagos State",
+        "addressCountry":"NG"
+      },
+      "areaServed":"Badagry, Lagos State, Nigeria"
+    },
+    {
+      "@type":"WebSite",
+      "@id":"https://owadelivery.com/#website",
+      "url":"https://owadelivery.com",
+      "name":"Owa Delivery Services",
+      "inLanguage":"en-NG",
+      "publisher":{"@id":"https://owadelivery.com/#business"},
+      "creator":{"@id":"https://owadelivery.com/#developer"}
+    },
+    {
+      "@type":"Organization",
+      "@id":"https://owadelivery.com/#developer",
+      "name":"Guwit Technology Solutions Ltd",
+      "legalName":"Guwit Technology Solutions Ltd",
+      "identifier":{
+        "@type":"PropertyValue",
+        "name":"CAC Company Registration Number",
+        "value":"RC 9040112"
+      },
+      "address":{"@type":"PostalAddress","addressCountry":"NG"}
+    }
+  ]
 }
 </script>
 </head>
@@ -286,6 +322,10 @@
     <div class="footer-bottom">
       <span>© 2026 Owa Delivery Services (BN 9517031). All rights reserved.</span>
       <span class="mono">owadelivery.com</span>
+    </div>
+    <div class="footer-credit" style="margin-top:16px; font-size:0.8rem; line-height:1.6; color:var(--text-soft); opacity:0.75;">
+      Website and WhatsApp ordering system designed and developed by
+      <span style="color:var(--white); font-weight:500;">Guwit Technology Solutions Ltd</span> (RC 9040112).
     </div>
   </div>
 </footer>
