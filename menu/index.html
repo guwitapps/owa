@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Order menu — Owa Delivery</title>
+<meta name="description" content="Browse Owa Delivery vendors in Badagry, build your order, and send it in one WhatsApp message.">
+<link rel="icon" href="/assets/owa-logo.png">
+<meta name="theme-color" content="#0A6B3D">
+
+<!-- ===================================================================
+     SETUP — the only part you need to edit.
+
+     1. WA_NUMBER
+        Your WhatsApp Business number in full international form, digits
+        only, no + and no spaces.  e.g. 2348012345678
+
+     2. The four SHEET urls
+        In Google Sheets: File -> Share -> Publish to web.
+        Publish EACH TAB ON ITS OWN, as "Comma-separated values (.csv)".
+
+        DO NOT publish "Entire Document". Your Ops and Riders tabs hold
+        staff phone numbers, and publishing the whole file would put them
+        on the open web. Publish only the four tabs listed below.
+
+        Paste the URL Google gives you for each one.
+     =================================================================== -->
+<script>
+const CONFIG = {
+  WA_NUMBER: "2347053594258",
+
+  SHEETS: {
+    services:    "PASTE_SERVICETYPES_CSV_URL_HERE",
+    zones:       "PASTE_ZONES_CSV_URL_HERE",
+    restaurants: "PASTE_RESTAURANTS_CSV_URL_HERE",
+    menu:        "PASTE_MENUITEMS_CSV_URL_HERE"
+  },
+
+  BUSINESS: "Owa Delivery",
+  CURRENCY: "\u20A6",
+
+  // How long to trust the copy saved on the phone before refetching.
+  // The page still works offline past this; it just tries the network first.
+  CACHE_MINUTES: 30
+};
+</script>
+
+<style>
+/* -------------------------------------------------------------------
+   An order pad, not a website.
+
+   The page is a docket you fill in: rows on a pad with dotted leaders
+   running out to the price, the way a menu board is set. The one loud
+   element is the running total pinned in the thumb zone, because the
+   whole point of the page is watching it climb and then sending it.
+
+   Type is the system stack on purpose. A customer on patchy mobile data
+   should never wait on a webfont to read a menu, and a font file is a
+   second thing that can fail to load. Personality comes from weight and
+   spacing instead.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:#ffffff;
+  --pad:#f7f5ee;          /* the pad itself, warmer than the page */
+  --ink:#14261f;
+  --ink-soft:#5d6b64;
+  --rule:#e0ded3;
+  --green:#0a6b3d;        /* signage green */
+  --green-deep:#08512e;
+  --pepper:#d43a16;       /* scotch bonnet: prices, removals */
+  --yam:#f2c230;
+  --focus:#0a6b3d;
+  --pad-b:env(safe-area-inset-bottom,0px);
+
+  --f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--f);
+  color:var(--ink);
+  background:var(--paper);
+  font-size:17px;
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+  padding-bottom:calc(150px + var(--pad-b));
+}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.15}
+
+.wrap{max-width:34rem;margin:0 auto;padding:0 1.1rem}
+
+/* ---- masthead ---- */
+.top{
+  background:var(--green);
+  color:#fff;
+  padding:1.1rem 0 1rem;
+}
+.top .wrap{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.home{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none}
+.home img{border-radius:6px;background:#fff;padding:2px;flex:none}
+.mark{font-size:1.4rem;font-weight:800;letter-spacing:-0.03em}
+.top p{margin:0;font-size:.9rem;opacity:.85;flex:1 1 100%}
+
+/* ---- the trail of choices already made ---- */
+.trail{
+  display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
+  padding:.7rem 0;font-size:.85rem;color:var(--ink-soft);
+  border-bottom:1px solid var(--rule);
+}
+.trail button{
+  font:inherit;color:var(--green);background:none;border:0;padding:.15rem .1rem;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;border-radius:3px;
+}
+.trail span[aria-hidden]{opacity:.45}
+
+/* ---- steps ---- */
+.step{padding:1.4rem 0 .4rem}
+.step h2{font-size:1.28rem}
+.step .lede{margin:.35rem 0 1rem;color:var(--ink-soft);font-size:.95rem}
+
+/* choice list: full-bleed rows, generous tap target */
+.choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.choices li{border-bottom:1px solid var(--rule)}
+.choices button{
+  font:inherit;width:100%;text-align:left;background:none;border:0;
+  padding:.95rem .2rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;
+  color:inherit;min-height:56px;
+}
+.choices .name{font-weight:600;flex:1}
+.choices .sub{display:block;font-weight:400;font-size:.85rem;color:var(--ink-soft);margin-top:.1rem}
+.choices .go{color:var(--green);font-weight:700;font-size:1.1rem}
+.choices button:hover .name{color:var(--green)}
+
+/* ---- the pad ---- */
+.cat{
+  margin:1.5rem 0 .1rem;font-size:.95rem;font-weight:700;
+  color:var(--green-deep);
+}
+.pad{list-style:none;margin:0;padding:0}
+.row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:.2rem .8rem;
+  padding:.75rem 0 .7rem;
+  border-bottom:1px solid var(--rule);
+}
+.row.in{background:linear-gradient(90deg,rgba(242,194,48,.16),transparent 70%)}
+.item{min-width:0}
+.item .n{font-weight:600}
+.leader{
+  display:block;height:0;border-bottom:1px dotted var(--rule);
+  margin:.45rem .4rem .3rem;flex:1;
+}
+.line{display:flex;align-items:baseline;grid-column:1/2}
+.price{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.95rem;white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:.15rem;grid-column:2/3;grid-row:1/2}
+.stepper button{
+  font:inherit;font-size:1.25rem;line-height:1;font-weight:600;
+  width:44px;height:44px;border-radius:50%;
+  border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);
+  cursor:pointer;display:grid;place-items:center;
+}
+.stepper button.add{border-color:var(--green);color:var(--green)}
+.stepper button.less{border-color:var(--pepper);color:var(--pepper)}
+.stepper button:disabled{opacity:.3;cursor:default}
+.qty{
+  min-width:2.1rem;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;
+}
+.qty[data-zero="1"]{visibility:hidden}
+
+/* ---- packs ---- */
+.packs{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  margin:1.4rem 0 0;padding:.9rem 1rem;background:var(--pad);border-radius:10px;
+}
+.packs p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+.packs strong{display:block;color:var(--ink);font-size:1rem}
+
+/* ---- the docket ---- */
+.docket{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--paper);
+  border-top:2px solid var(--ink);
+  padding:.8rem 0 calc(.8rem + var(--pad-b));
+  box-shadow:0 -10px 30px rgba(20,38,31,.1);
+}
+.docket .wrap{display:grid;gap:.6rem}
+.tot{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.tot .lab{font-size:.9rem;color:var(--ink-soft)}
+.tot .lab b{display:block;color:var(--ink);font-size:.95rem;font-weight:600}
+.tot .amt{
+  font-size:1.85rem;font-weight:800;letter-spacing:-0.03em;
+  font-variant-numeric:tabular-nums;
+}
+.send{
+  font:inherit;font-size:1.05rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:.55rem;
+  width:100%;min-height:56px;padding:.85rem 1rem;
+  border:0;border-radius:10px;background:var(--green);color:#fff;
+  cursor:pointer;text-decoration:none;
+}
+.send[aria-disabled="true"]{background:var(--rule);color:#8d938f;cursor:default}
+.send svg{width:22px;height:22px;flex:none;fill:currentColor}
+.fine{margin:0;font-size:.78rem;color:var(--ink-soft);text-align:center}
+.fine a{color:var(--green);text-decoration:none}
+
+/* ---- states ---- */
+.state{padding:3rem 0;text-align:center;color:var(--ink-soft)}
+.state h2{color:var(--ink);font-size:1.15rem;margin-bottom:.5rem}
+.state p{margin:0 auto;max-width:26rem}
+.state button, .call{
+  font:inherit;font-weight:600;margin-top:1.1rem;display:inline-block;
+  padding:.7rem 1.2rem;border-radius:8px;border:1.5px solid var(--green);
+  background:none;color:var(--green);cursor:pointer;text-decoration:none;
+}
+.skel{height:1rem;background:var(--rule);border-radius:3px;margin:.85rem 0;opacity:.7}
+.skel:nth-child(2n){width:70%}
+
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+@media (prefers-reduced-motion:no-preference){
+  .amt{transition:color .18s ease}
+  .amt.bump{color:var(--green)}
+}
+@media (min-width:36rem){ body{font-size:18px} }
+</style>
+</head>
+
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="home" href="/index.html" aria-label="Owa Delivery home">
+      <img src="/assets/owa-logo.png" alt="" width="30" height="30" onerror="this.remove()">
+      <span class="mark" id="brand">Owa Delivery</span>
+    </a>
+    <p>Build your order here, then send it in one message.</p>
+  </div>
+</header>
+
+<nav class="wrap trail" id="trail" hidden aria-label="Your choices so far"></nav>
+
+<main class="wrap" id="main">
+  <div class="state" id="boot">
+    <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+    <p>Loading the menu…</p>
+  </div>
+</main>
+
+<div class="docket" id="docket" hidden>
+  <div class="wrap">
+    <div class="tot">
+      <span class="lab"><b id="dLines">Nothing yet</b>Delivery is added in the chat</span>
+      <span class="amt" id="dTotal" aria-live="polite">&#8358;0</span>
+    </div>
+    <a class="send" id="send" aria-disabled="true" role="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.2-4.4-4-4.5-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.4.8 1.3 1.6 2 1.1.9 1.9 1.2 2.1 1.3.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
+      <span id="sendLabel">Add something first</span>
+    </a>
+    <p class="fine" id="fine">Delivery fee and final price confirmed in the chat before you pay. &middot; <a href="/index.html">owadelivery.com</a></p>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- tiny helpers ---------- */
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, txt) => { const n = document.createElement(tag);
+  if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+const money = (n) => CONFIG.CURRENCY + Math.round(Number(n) || 0).toLocaleString("en-NG");
+const norm = (v) => String(v == null ? "" : v).trim();
+const low  = (v) => norm(v).toLowerCase();
+const on   = (r) => String(r && r.active != null ? r.active : "TRUE").toUpperCase() !== "FALSE";
+
+/* ---------- CSV ----------
+   Written out rather than pulled from a library: one fewer network request
+   on a slow connection, and menu rows genuinely contain commas
+   ("Rice, Beans and Plantain") and the odd quoted field. */
+function parseCSV(text){
+  const rows = []; let row = [], val = "", q = false;
+  const s = String(text).replace(/\r\n?/g, "\n");
+  for (let i = 0; i < s.length; i++){
+    const c = s[i];
+    if (q){
+      if (c === '"'){ if (s[i+1] === '"'){ val += '"'; i++; } else q = false; }
+      else val += c;
+    } else if (c === '"') q = true;
+    else if (c === ","){ row.push(val); val = ""; }
+    else if (c === "\n"){ row.push(val); rows.push(row); row = []; val = ""; }
+    else val += c;
+  }
+  if (val !== "" || row.length){ row.push(val); rows.push(row); }
+  if (!rows.length) return [];
+  const head = rows.shift().map(h => norm(h).toLowerCase().replace(/\s+/g, "_"));
+  return rows
+    .filter(r => r.some(c => norm(c) !== ""))
+    .map(r => { const o = {}; head.forEach((h, i) => { if (h) o[h] = norm(r[i]); }); return o; });
+}
+
+/* ---------- data ---------- */
+const CACHE_KEY = "owa.menu.v1";
+let DATA = null;
+
+function readCache(){
+  try{
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const c = JSON.parse(raw);
+    return c && c.data ? c : null;
+  }catch(e){ return null; }
+}
+function writeCache(data){
+  try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data })); }
+  catch(e){ /* private mode, or full. The page works without it. */ }
+}
+
+async function fetchAll(){
+  const keys = Object.keys(CONFIG.SHEETS);
+  const texts = await Promise.all(keys.map(async k => {
+    const url = CONFIG.SHEETS[k];
+    if (!/^https:\/\//i.test(url)) throw new Error("unset:" + k);
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) throw new Error("http:" + k + ":" + r.status);
+    return r.text();
+  }));
+  const out = {};
+  keys.forEach((k, i) => { out[k] = parseCSV(texts[i]); });
+  return out;
+}
+
+async function load(){
+  const cached = readCache();
+  const fresh = cached && (Date.now() - cached.at) < CONFIG.CACHE_MINUTES * 60000;
+  if (fresh){ DATA = cached.data; return; }
+  try{
+    DATA = await fetchAll();
+    writeCache(DATA);
+  }catch(err){
+    if (cached){ DATA = cached.data; return; }   // offline, but we have yesterday's
+    throw err;
+  }
+}
+
+/* ---------- state ---------- */
+const S = { service:null, zone:null, vendor:null, packs:1, qty:Object.create(null) };
+
+const services = () => (DATA.services || []).filter(on);
+const zones    = () => (DATA.zones || []).filter(on);
+
+const vendors = () => (DATA.restaurants || []).filter(r => {
+  if (!on(r)) return false;
+  const vz = low(r.zone_id), vs = low(r.service_id);
+  if (S.zone && vz && vz !== low(S.zone.zone_id)) return false;
+  if (S.service && vs && vs !== low(S.service.service_id)) return false;
+  return true;
+});
+
+const items = () => (DATA.menu || []).filter(m =>
+  on(m) && S.vendor && low(m.restaurant_id) === low(S.vendor.restaurant_id));
+
+const hasPacks = () =>
+  String((S.service && S.service.has_packs) != null ? S.service.has_packs : "TRUE")
+    .toUpperCase() !== "FALSE";
+
+const itemWord = () => norm(S.service && S.service.item_label_plural) || "items";
+const packWord = (n) => {
+  const one = norm(S.service && S.service.pack_label) || "pack";
+  const many = norm(S.service && S.service.pack_label_plural) || one + "s";
+  return n === 1 ? one : many;
+};
+
+const lines = () => items()
+  .filter(m => S.qty[m.item_id] > 0)
+  .map(m => ({ id: m.item_id, name: m.item_name,
+               price: Number(m.price) || 0, qty: S.qty[m.item_id] }));
+
+const total = () => lines().reduce((s, l) => s + l.price * l.qty, 0)
+  * (hasPacks() ? S.packs : 1);
+
+/* ---------- render ---------- */
+function render(){
+  const main = $("main");
+  main.innerHTML = "";
+  renderTrail();
+
+  if (!S.service && services().length > 1) return pick(
+    "What do you need?", "",
+    services().map(s => ({
+      name: s.service_name || s.service_id,
+      sub: s.service_tagline,
+      go: () => { S.service = s; render(); }
+    })));
+
+  if (!S.service && services().length === 1) S.service = services()[0];
+
+  if (!S.zone) return pick(
+    "Where are we delivering?", "Pick the area closest to you.",
+    zones().map(z => ({
+      name: z.zone_name || z.zone_id,
+      go: () => { S.zone = z; render(); }
+    })), "No areas are set up yet.");
+
+  if (!S.vendor){
+    const vs = vendors();
+    const word = norm(S.service && S.service.vendor_label_plural)
+      || (norm(S.service && S.service.vendor_label) ? norm(S.service.vendor_label) + "s" : "vendors");
+    return pick(
+      "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor"),
+      "Open now in " + (S.zone.zone_name || S.zone.zone_id) + ".",
+      vs.map(v => ({ name: v.restaurant_name || v.restaurant_id,
+                     sub: v.restaurant_address,
+                     go: () => { S.vendor = v; S.qty = Object.create(null); render(); } })),
+      "No " + word + " are open in " + (S.zone.zone_name || S.zone.zone_id) +
+      " right now. Try another area.");
+  }
+
+  renderMenu();
+  renderDocket();
+}
+
+function renderTrail(){
+  const t = $("trail"); t.innerHTML = "";
+  const crumbs = [];
+  if (S.service && services().length > 1)
+    crumbs.push([S.service.service_name || S.service.service_id,
+      () => { S.service = null; S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); }]);
+  if (S.zone) crumbs.push([S.zone.zone_name || S.zone.zone_id,
+    () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); }]);
+  if (S.vendor) crumbs.push([S.vendor.restaurant_name || S.vendor.restaurant_id,
+    () => { S.vendor = null; S.qty = Object.create(null); render(); }]);
+
+  t.hidden = crumbs.length === 0;
+  crumbs.forEach(([label, go], i) => {
+    if (i) { const sep = el("span", null, "›"); sep.setAttribute("aria-hidden", "true"); t.append(sep); }
+    const b = el("button", null, label);
+    b.type = "button";
+    b.addEventListener("click", go);
+    t.append(b);
+  });
+}
+
+function pick(title, lede, options, emptyMsg){
+  $("docket").hidden = true;
+  const sec = el("section", "step");
+  sec.append(el("h2", null, title));
+  if (lede) sec.append(el("p", "lede", lede));
+
+  if (!options.length){
+    const s = el("div", "state");
+    s.append(el("h2", null, "Nothing here yet"));
+    s.append(el("p", null, emptyMsg || "Please try again shortly."));
+    sec.append(s);
+    $("main").append(sec);
+    return;
+  }
+
+  const ul = el("ul", "choices");
+  options.forEach(o => {
+    const li = el("li");
+    const b = el("button"); b.type = "button";
+    const name = el("span", "name"); name.append(document.createTextNode(o.name));
+    if (o.sub) name.append(el("span", "sub", o.sub));
+    const go = el("span", "go", "›"); go.setAttribute("aria-hidden", "true");
+    b.append(name, go);
+    b.addEventListener("click", o.go);
+    li.append(b); ul.append(li);
+  });
+  sec.append(ul);
+  $("main").append(sec);
+}
+
+function renderMenu(){
+  const list = items();
+  const sec = el("section", "step");
+  sec.append(el("h2", null, S.vendor.restaurant_name || S.vendor.restaurant_id));
+  sec.append(el("p", "lede", list.length
+    ? "Tap + to add. Your total updates as you go."
+    : "This menu is empty at the moment."));
+
+  const groups = new Map();
+  list.forEach(m => {
+    const k = norm(m.category) || "";
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(m);
+  });
+
+  groups.forEach((rows, cat) => {
+    if (cat) sec.append(el("h3", "cat", cat));
+    const ul = el("ul", "pad");
+    rows.forEach(m => ul.append(itemRow(m)));
+    sec.append(ul);
+  });
+
+  if (hasPacks() && list.length){
+    const box = el("div", "packs");
+    const txt = el("p");
+    txt.append(el("strong", null, "How many " + packWord(2) + "?"));
+    txt.append(document.createTextNode("The whole order, repeated."));
+    const st = el("div", "stepper");
+    const less = el("button", "less", "\u2212"); less.type = "button";
+    less.setAttribute("aria-label", "One fewer " + packWord(1));
+    const q = el("span", "qty", String(S.packs));
+    const more = el("button", "add", "+"); more.type = "button";
+    more.setAttribute("aria-label", "One more " + packWord(1));
+    less.disabled = S.packs <= 1;
+    less.addEventListener("click", () => { S.packs = Math.max(1, S.packs - 1); render(); });
+    more.addEventListener("click", () => { S.packs = Math.min(20, S.packs + 1); render(); });
+    st.append(less, q, more);
+    box.append(txt, st);
+    sec.append(box);
+  }
+
+  $("main").append(sec);
+}
+
+function itemRow(m){
+  const qty = S.qty[m.item_id] || 0;
+  const li = el("li", "row" + (qty ? " in" : ""));
+
+  const line = el("div", "line");
+  const item = el("div", "item");
+  item.append(el("span", "n", m.item_name || m.item_id));
+  line.append(item);
+  line.append(el("span", "leader"));
+  line.append(el("span", "price", money(m.price)));
+
+  const st = el("div", "stepper");
+  const less = el("button", "less", "\u2212"); less.type = "button";
+  less.setAttribute("aria-label", "Remove one " + (m.item_name || "item"));
+  less.disabled = qty === 0;
+  const q = el("span", "qty", String(qty));
+  q.dataset.zero = qty === 0 ? "1" : "0";
+  q.setAttribute("aria-live", "polite");
+  const more = el("button", "add", "+"); more.type = "button";
+  more.setAttribute("aria-label", "Add one " + (m.item_name || "item"));
+
+  less.addEventListener("click", () => bump(m.item_id, -1));
+  more.addEventListener("click", () => bump(m.item_id, +1));
+  st.append(less, q, more);
+
+  li.append(line, st);
+  return li;
+}
+
+/* Only the touched row and the docket are redrawn, so the page never jumps
+   under the thumb mid-order. */
+function bump(id, by){
+  const next = Math.max(0, Math.min(20, (S.qty[id] || 0) + by));
+  if (next === 0) delete S.qty[id]; else S.qty[id] = next;
+
+  const rows = document.querySelectorAll(".pad .row");
+  const list = items();
+  rows.forEach((row, i) => {
+    const m = list[i];
+    if (!m || m.item_id !== id) return;
+    const fresh = itemRow(m);
+    row.replaceWith(fresh);
+  });
+  renderDocket(true);
+}
+
+function renderDocket(animate){
+  const d = $("docket");
+  d.hidden = false;
+  const ls = lines();
+  const n = ls.reduce((s, l) => s + l.qty, 0);
+  const amount = total();
+
+  $("dLines").textContent = n
+    ? n + " " + (n === 1 ? itemWord().replace(/s$/, "") : itemWord())
+      + (hasPacks() && S.packs > 1 ? " \u00d7 " + S.packs + " " + packWord(S.packs) : "")
+    : "Nothing yet";
+
+  const amt = $("dTotal");
+  amt.textContent = money(amount);
+  if (animate){ amt.classList.add("bump"); setTimeout(() => amt.classList.remove("bump"), 200); }
+
+  const send = $("send");
+  const label = $("sendLabel");
+  if (!ls.length){
+    send.setAttribute("aria-disabled", "true");
+    send.removeAttribute("href");
+    label.textContent = "Add something first";
+  } else {
+    send.setAttribute("aria-disabled", "false");
+    send.href = waLink();
+    label.textContent = "Send this order on WhatsApp";
+  }
+}
+
+/* ---------- the one message ---------- */
+function orderText(){
+  const ls = lines();
+  const packs = hasPacks() ? S.packs : 1;
+
+  const human = [
+    "\uD83D\uDED2 " + CONFIG.BUSINESS + " order",
+    "",
+    (S.vendor.restaurant_name || S.vendor.restaurant_id)
+      + " \u2014 " + (S.zone.zone_name || S.zone.zone_id),
+    ...ls.map(l => l.qty + " \u00d7 " + l.name),
+  ];
+  if (hasPacks() && packs > 1) human.push("\uD83D\uDCE6 " + packs + " " + packWord(packs));
+  human.push("", "Items: " + money(total()), "(delivery fee confirmed in the chat)", "", "");
+
+  // The machine line. No prices in it on purpose: this is editable text, so
+  // the bot looks every item up in the sheet and prices it there.
+  const code = "#OWA1"
+    + " s=" + (S.service ? S.service.service_id : "")
+    + " z=" + S.zone.zone_id
+    + " r=" + S.vendor.restaurant_id
+    + " p=" + packs
+    + " i=" + ls.map(l => l.id + "*" + l.qty).join(",");
+
+  return human.join("\n") + code;
+}
+
+function waLink(){
+  return "https://wa.me/" + CONFIG.WA_NUMBER.replace(/\D/g, "")
+    + "?text=" + encodeURIComponent(orderText());
+}
+
+/* ---------- boot ---------- */
+function failScreen(err){
+  $("docket").hidden = true;
+  $("main").innerHTML = "";
+  const s = el("div", "state");
+  const unset = String(err && err.message || "").startsWith("unset:");
+  s.append(el("h2", null, unset ? "This menu is not set up yet" : "The menu did not load"));
+  s.append(el("p", null, unset
+    ? "The four sheet links at the top of this page still need filling in."
+    : "Check your connection and try again. You can also order in the chat."));
+  const b = el("button", null, "Try again"); b.type = "button";
+  b.addEventListener("click", () => { boot(); });
+  s.append(b);
+  $("main").append(s);
+}
+
+async function boot(){
+  $("main").innerHTML = "";
+  $("main").append($("boot") || el("div"));
+  try{
+    await load();
+    if (CONFIG.BUSINESS) $("brand").textContent = CONFIG.BUSINESS;
+    render();
+  }catch(err){
+    failScreen(err);
+  }
+}
+boot();
+</script>
+</body>
+</html>
