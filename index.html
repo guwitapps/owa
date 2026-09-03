@@ -72,6 +72,14 @@
   ]
 }
 </script>
+
+<style>
+@media (max-width: 700px){
+  header .nav{position:relative}
+  .nav-links{z-index:60}
+  .nav-links a[href="menu/"]{color:var(--green);font-weight:800}
+}
+</style>
 </head>
 <body>
 
@@ -84,11 +92,12 @@
     </a>
     <nav class="nav-links" aria-label="Main">
       <a href="index.html" class="active">Home</a>
-      <a href="#services">What we deliver</a>
+      <a href="#services">Services</a>
+      <a href="menu/">Order</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <a class="btn" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+    <a class="btn" href="menu/">Start an order</a>
   </div>
 </header>
 
@@ -99,7 +108,7 @@
     <div>
       <div class="eyebrow">Badagry &amp; nearby areas</div>
       <h1>From Badagry's vendors to <em>your</em> door.</h1>
-      <p class="lede">Experience Badagry’s first automated WhatsApp delivery service. Just tap, follow the quick guided chat to order from your favorite vendors, and sit back while we bring it straight to you.</p>
+      <p class="lede">Choose what you need and where you are. Owa shows vendors that match your selected service and delivery area, then helps you build the order and send it through WhatsApp.</p>
       <div class="hero-cta">
         <a class="btn" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order." target="_blank" rel="noopener">
          <i class="fab fa-whatsapp"></i> Click Here To Order
@@ -158,7 +167,7 @@
       <div class="eyebrow">What we deliver</div>
       <h2>More than meals.</h2>
       <p>Owa started with food and now covers the errands that eat up a working day.
-        Same chat, same riders, same flat delivery fee for your area.</p>
+        Same chat, same riders, with delivery details confirmed for your selected zone.</p>
     </div>
     <div class="service-grid">
       <div class="service">
@@ -212,7 +221,7 @@
       <div class="step">
         <div class="step-num">Step 02</div>
         <h3>Choose and confirm</h3>
-        <p>Pick your area, then your vendor and items. We confirm availability before you pay anything.</p>
+        <p>Pick your area, then choose from vendors that serve both your selected service and zone.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 03</div>
@@ -232,23 +241,23 @@
   <div class="wrap two-col">
     <div>
       <div class="eyebrow">Coverage</div>
-      <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built for Badagry first.</h2>
+      <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built zone by zone in Badagry.</h2>
       <p style="color:var(--text-soft); margin-top:14px;">
         We run zone by zone rather than claiming the whole state. Each zone has its own flat delivery
         fee, shown to you before you pay. If your area isn't listed yet, message us — new zones open
         as rider coverage grows.</p>
       <div class="badge-row">
         <span class="badge">Ajara</span>
-        <span class="badge">Ikoga</span>
-        <span class="badge">Age Mowo</span>
-        <span class="badge">Topo</span>
-        <span class="badge">Mowo</span>
-        <span class="badge">Seme</span>
-        <span class="badge">Imeke</span>
+        <span class="badge">Ajido</span>
+        <span class="badge">Apa</span>
+        <span class="badge">Awhanjigoh</span>
         <span class="badge">Ibereko</span>
-         <span class="badge">Oko-Afo</span>
-        <span class="badge">Owode Apa</span>
-        <span class="badge">Badagry Town</span>
+        <span class="badge">Ikoga</span>
+        <span class="badge">Ilogbo-Araromi</span>
+        <span class="badge">Iworo Gbanko</span>
+        <span class="badge">Iya-Afin</span>
+        <span class="badge">Keta-East</span>
+        <span class="badge">Posukoh</span>
       </div>
       <div class="note">
         Delivery fees are set per zone and quoted in the chat before payment.
@@ -299,6 +308,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
+          <li><a href="menu/">Order</a></li>
           <li><a href="about.html">About us</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
