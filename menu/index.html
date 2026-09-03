@@ -7,24 +7,6 @@
 <meta name="description" content="Browse Owa Delivery vendors in Badagry, build your order, and send it in one WhatsApp message.">
 <link rel="icon" href="/assets/owa-logo.png">
 <meta name="theme-color" content="#0A6B3D">
-
-<!-- ===================================================================
-     SETUP — the only part you need to edit.
-
-     1. WA_NUMBER
-        Your WhatsApp Business number in full international form, digits
-        only, no + and no spaces.  e.g. 2348012345678
-
-     2. The four SHEET urls
-        In Google Sheets: File -> Share -> Publish to web.
-        Publish EACH TAB ON ITS OWN, as "Comma-separated values (.csv)".
-
-        DO NOT publish "Entire Document". Your Ops and Riders tabs hold
-        staff phone numbers, and publishing the whole file would put them
-        on the open web. Publish only the four tabs listed below.
-
-        Paste the URL Google gives you for each one.
-     =================================================================== -->
 <script>
 const CONFIG = {
   WA_NUMBER: "2347053594258",
@@ -46,20 +28,205 @@ const CONFIG = {
 </script>
 
 <style>
-:root{--paper:#fffdf8;--paper-2:#f5f2e9;--white:#fff;--ink:#14261f;--ink-soft:#617069;--rule:#dfddd3;--green:#0a6b3d;--green-deep:#07522f;--green-soft:#e8f3ed;--yam:#f2c230;--pepper:#d43a16;--shadow:0 18px 50px rgba(20,38,31,.09);--f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif:Georgia,"Times New Roman",serif;--safe:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}html,body{margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--ink);background:var(--paper);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;padding-bottom:calc(160px + var(--safe))}h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.035em;line-height:1.1}button,input{font:inherit}button{cursor:pointer}a{color:inherit}.wrap{width:min(1080px,calc(100% - 36px));margin:0 auto}
-.top{position:sticky;top:0;z-index:50;background:rgba(255,253,248,.96);backdrop-filter:blur(15px);color:var(--ink);border-bottom:1px solid var(--rule)}.top .wrap{min-height:76px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0}.home{display:flex;align-items:center;gap:10px;text-decoration:none}.home img{width:38px;height:38px;border-radius:9px;background:#fff;padding:2px}.mark{font-weight:900;font-size:1.08rem;letter-spacing:-.03em}.top-meta{margin-left:auto;color:var(--ink-soft);font-size:.82rem;text-align:right}.top-meta b{color:var(--green)}
-.trail{display:flex;flex-wrap:wrap;gap:6px 9px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);color:var(--ink-soft);font-size:.84rem}.trail button{color:var(--green);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;font-weight:700}.trail span{opacity:.4}
-main{padding-bottom:28px}.step{padding:34px 0 8px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;font-weight:900;color:var(--green);margin-bottom:10px;display:inline-flex;align-items:center;gap:8px}.eyebrow:before{content:"";width:24px;height:3px;border-radius:20px;background:var(--yam)}.step h1{font-size:clamp(2rem,5vw,3.25rem);max-width:18ch}.lede{margin:10px 0 22px;color:var(--ink-soft);max-width:68ch;font-size:1rem}
-.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.choice{display:flex;align-items:center;gap:15px;width:100%;text-align:left;background:var(--white);border:1px solid var(--rule);border-radius:18px;padding:18px 19px;min-height:92px;box-shadow:0 5px 20px rgba(20,38,31,.035);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}.choice:hover{transform:translateY(-2px);border-color:rgba(10,107,61,.45);box-shadow:0 12px 28px rgba(20,38,31,.07)}.choice-main{flex:1;min-width:0}.choice-name{display:block;font-weight:800;font-size:1.02rem}.choice-sub{display:block;color:var(--ink-soft);font-size:.87rem;margin-top:3px}.choice-arrow{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--green-soft);color:var(--green);font-size:1.25rem;font-weight:900;flex:none}
-.vendor-toolbar{display:flex;gap:10px;align-items:center;margin:18px 0 13px}.search{flex:1;border:1px solid var(--rule);border-radius:12px;background:var(--white);padding:12px 14px;min-height:48px;color:var(--ink);outline:none}.search:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(10,107,61,.11)}.mini-btn{border:1px solid var(--green);background:var(--white);color:var(--green);border-radius:12px;min-height:48px;padding:0 14px;font-weight:800}.mini-btn:hover{background:var(--green-soft)}.vendor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.vendor{background:var(--white);border:1px solid var(--rule);border-radius:18px;padding:19px;box-shadow:0 5px 20px rgba(20,38,31,.035);display:flex;flex-direction:column;min-height:205px}.vendor-top{display:flex;align-items:flex-start;justify-content:space-between;gap:9px}.vendor h3{font-size:1.08rem}.status{font-size:.68rem;font-weight:900;padding:5px 8px;border-radius:999px;white-space:nowrap}.status.available{background:var(--green-soft);color:var(--green)}.status.unavailable{background:#f8ebe7;color:var(--pepper)}.vendor p{color:var(--ink-soft);font-size:.86rem;margin:9px 0 0}.vendor .vendor-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:16px}.pill{background:var(--paper-2);border:1px solid var(--rule);border-radius:999px;padding:5px 8px;font-size:.72rem;color:var(--ink-soft)}.vendor-action{margin-top:13px;width:100%;min-height:46px;border:1px solid var(--green);border-radius:11px;background:var(--green);color:#fff;font-weight:900}.vendor-action:hover{background:var(--green-deep)}
-.state{padding:42px 18px;text-align:center;color:var(--ink-soft);border:1px dashed var(--rule);border-radius:18px;background:rgba(255,255,255,.7);margin-top:16px}.state h2{font-size:1.2rem;color:var(--ink);margin-bottom:7px}.state p{margin:0 auto;max-width:42ch}.state button{margin-top:15px;padding:10px 14px;border:1px solid var(--green);border-radius:10px;background:var(--white);color:var(--green);font-weight:800}
-.pad{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}.cat{margin:25px 0 7px;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--green)}.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}.row.in{background:linear-gradient(90deg,rgba(242,194,48,.16),transparent 80%)}.line{display:grid;grid-template-columns:minmax(0,auto) 1fr auto;align-items:baseline;gap:8px;min-width:0}.item{min-width:0}.item .n{font-weight:800}.leader{border-bottom:1px dotted var(--rule);height:0}.price{color:var(--ink-soft);font-size:.9rem;white-space:nowrap}.stepper{display:flex;align-items:center;gap:3px}.stepper button{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--rule);background:var(--white);color:var(--ink);font-size:1.25rem;display:grid;place-items:center}.stepper button.add{border-color:var(--green);color:var(--green)}.stepper button.less{border-color:var(--pepper);color:var(--pepper)}.stepper button:hover:not(:disabled){background:var(--paper-2)}.stepper button:disabled{opacity:.3;cursor:default}.qty{min-width:2rem;text-align:center;font-weight:900;font-variant-numeric:tabular-nums}.qty[data-zero="1"]{visibility:hidden}
-.packs{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:20px 0 5px;padding:16px 18px;background:var(--paper-2);border:1px solid var(--rule);border-radius:16px}.packs strong{display:block}.packs p{margin:3px 0 0;color:var(--ink-soft);font-size:.84rem}.info-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.info{border-radius:999px;padding:7px 10px;background:var(--green-soft);color:var(--green);font-size:.74rem;font-weight:800}
-.docket{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,253,248,.97);border-top:1px solid var(--ink);padding:12px 0 calc(12px + var(--safe));box-shadow:0 -15px 35px rgba(20,38,31,.1);backdrop-filter:blur(14px)}.docket .wrap{display:grid;grid-template-columns:1fr minmax(280px,430px);align-items:center;gap:16px}.tot{display:flex;justify-content:space-between;align-items:center;gap:14px}.tot .lab{font-size:.82rem;color:var(--ink-soft)}.tot .lab b{display:block;color:var(--ink);font-size:.92rem}.amt{font-size:1.65rem;font-weight:900;letter-spacing:-.03em;white-space:nowrap}.send{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;padding:12px 16px;border:0;border-radius:12px;background:var(--green);color:#fff;text-decoration:none;font-weight:900;box-shadow:0 8px 18px rgba(10,107,61,.15)}.send[aria-disabled="true"]{background:var(--rule);color:#8d938f;box-shadow:none}.fine{grid-column:1/-1;margin:-4px 0 0;text-align:center;color:var(--ink-soft);font-size:.71rem}.fine a{color:var(--green);text-decoration:none}.skel{height:14px;background:var(--rule);border-radius:5px;margin:11px 0;opacity:.65}.skel:nth-child(2){width:78%}.skel:nth-child(3){width:52%}:focus-visible{outline:3px solid var(--yam);outline-offset:3px}
-@media (max-width:900px){.vendor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.docket .wrap{grid-template-columns:1fr}.send{min-height:52px}}
-@media (max-width:680px){.wrap{width:min(100% - 24px,1080px)}.top .wrap{min-height:67px}.top-meta{width:100%;margin:0;text-align:left;font-size:.78rem}.choice-grid,.vendor-grid{grid-template-columns:1fr}.choice{min-height:82px}.step{padding-top:27px}.step h1{font-size:clamp(1.9rem,9vw,2.55rem)}.vendor-toolbar{align-items:stretch}.mini-btn{padding:0 11px}.row{gap:9px}.line{grid-template-columns:auto 1fr auto}.stepper button{width:40px;height:40px}.docket{padding-top:10px}.docket .wrap{gap:8px}.tot .lab{font-size:.76rem}.amt{font-size:1.5rem}.fine{font-size:.68rem}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.choice{transition:none}}
+/* -------------------------------------------------------------------
+   An order pad, not a website.
+
+   The page is a docket you fill in: rows on a pad with dotted leaders
+   running out to the price, the way a menu board is set. The one loud
+   element is the running total pinned in the thumb zone, because the
+   whole point of the page is watching it climb and then sending it.
+
+   Type is the system stack on purpose. A customer on patchy mobile data
+   should never wait on a webfont to read a menu, and a font file is a
+   second thing that can fail to load. Personality comes from weight and
+   spacing instead.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:#ffffff;
+  --pad:#f7f5ee;          /* the pad itself, warmer than the page */
+  --ink:#14261f;
+  --ink-soft:#5d6b64;
+  --rule:#e0ded3;
+  --green:#0a6b3d;        /* signage green */
+  --green-deep:#08512e;
+  --pepper:#d43a16;       /* scotch bonnet: prices, removals */
+  --yam:#f2c230;
+  --focus:#0a6b3d;
+  --pad-b:env(safe-area-inset-bottom,0px);
+
+  --f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--f);
+  color:var(--ink);
+  background:var(--paper);
+  font-size:17px;
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+  padding-bottom:calc(150px + var(--pad-b));
+}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.15}
+
+.wrap{max-width:34rem;margin:0 auto;padding:0 1.1rem}
+
+/* ---- masthead ---- */
+.top{
+  background:var(--green);
+  color:#fff;
+  padding:1.1rem 0 1rem;
+}
+.top .wrap{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.home{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none}
+.home img{border-radius:6px;background:#fff;padding:2px;flex:none}
+.mark{font-size:1.4rem;font-weight:800;letter-spacing:-0.03em}
+.top p{margin:0;font-size:.9rem;opacity:.85;flex:1 1 100%}
+
+/* ---- the trail of choices already made ---- */
+.trail{
+  display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
+  padding:.7rem 0;font-size:.85rem;color:var(--ink-soft);
+  border-bottom:1px solid var(--rule);
+}
+.trail button{
+  font:inherit;color:var(--green);background:none;border:0;padding:.15rem .1rem;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;border-radius:3px;
+}
+.trail span[aria-hidden]{opacity:.45}
+
+/* ---- steps ---- */
+.step{padding:1.4rem 0 .4rem}
+.step h2{font-size:1.28rem}
+.step .lede{margin:.35rem 0 1rem;color:var(--ink-soft);font-size:.95rem}
+
+/* choice list: full-bleed rows, generous tap target */
+.choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.choices li{border-bottom:1px solid var(--rule)}
+.choices button{
+  font:inherit;width:100%;text-align:left;background:none;border:0;
+  padding:.95rem .2rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;
+  color:inherit;min-height:56px;
+}
+.choices .name{font-weight:600;flex:1}
+.choices .sub{display:block;font-weight:400;font-size:.85rem;color:var(--ink-soft);margin-top:.1rem}
+.choices .go{color:var(--green);font-weight:700;font-size:1.1rem}
+.choices button:hover .name{color:var(--green)}
+
+/* ---- the pad ---- */
+.cat{
+  margin:1.5rem 0 .1rem;font-size:.95rem;font-weight:700;
+  color:var(--green-deep);
+}
+.pad{list-style:none;margin:0;padding:0}
+.row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:.2rem .8rem;
+  padding:.75rem 0 .7rem;
+  border-bottom:1px solid var(--rule);
+}
+.row.in{background:linear-gradient(90deg,rgba(242,194,48,.16),transparent 70%)}
+.item{min-width:0}
+.item .n{font-weight:600}
+.leader{
+  display:block;height:0;border-bottom:1px dotted var(--rule);
+  margin:.45rem .4rem .3rem;flex:1;
+}
+.line{display:flex;align-items:baseline;grid-column:1/2}
+.price{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.95rem;white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:.15rem;grid-column:2/3;grid-row:1/2}
+.stepper button{
+  font:inherit;font-size:1.25rem;line-height:1;font-weight:600;
+  width:44px;height:44px;border-radius:50%;
+  border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);
+  cursor:pointer;display:grid;place-items:center;
+}
+.stepper button.add{border-color:var(--green);color:var(--green)}
+.stepper button.less{border-color:var(--pepper);color:var(--pepper)}
+.stepper button:disabled{opacity:.3;cursor:default}
+.qty{
+  min-width:2.1rem;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;
+}
+.qty[data-zero="1"]{visibility:hidden}
+
+/* ---- packs ---- */
+.packs{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  margin:1.4rem 0 0;padding:.9rem 1rem;background:var(--pad);border-radius:10px;
+}
+.packs p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+.packs strong{display:block;color:var(--ink);font-size:1rem}
+
+/* ---- the docket ---- */
+.docket{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--paper);
+  border-top:2px solid var(--ink);
+  padding:.8rem 0 calc(.8rem + var(--pad-b));
+  box-shadow:0 -10px 30px rgba(20,38,31,.1);
+}
+.docket .wrap{display:grid;gap:.6rem}
+.tot{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.tot .lab{font-size:.9rem;color:var(--ink-soft)}
+.tot .lab b{display:block;color:var(--ink);font-size:.95rem;font-weight:600}
+.tot .amt{
+  font-size:1.85rem;font-weight:800;letter-spacing:-0.03em;
+  font-variant-numeric:tabular-nums;
+}
+.send{
+  font:inherit;font-size:1.05rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:.55rem;
+  width:100%;min-height:56px;padding:.85rem 1rem;
+  border:0;border-radius:10px;background:var(--green);color:#fff;
+  cursor:pointer;text-decoration:none;
+}
+.send[aria-disabled="true"]{background:var(--rule);color:#8d938f;cursor:default}
+.send svg{width:22px;height:22px;flex:none;fill:currentColor}
+.fine{margin:0;font-size:.78rem;color:var(--ink-soft);text-align:center}
+.fine a{color:var(--green);text-decoration:none}
+
+/* ---- states ---- */
+.state{padding:3rem 0;text-align:center;color:var(--ink-soft)}
+.state h2{color:var(--ink);font-size:1.15rem;margin-bottom:.5rem}
+.state p{margin:0 auto;max-width:26rem}
+.state button, .call{
+  font:inherit;font-weight:600;margin-top:1.1rem;display:inline-block;
+  padding:.7rem 1.2rem;border-radius:8px;border:1.5px solid var(--green);
+  background:none;color:var(--green);cursor:pointer;text-decoration:none;
+}
+.skel{height:1rem;background:var(--rule);border-radius:3px;margin:.85rem 0;opacity:.7}
+.skel:nth-child(2n){width:70%}
+
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+@media (prefers-reduced-motion:no-preference){
+  .amt{transition:color .18s ease}
+  .amt.bump{color:var(--green)}
+}
+@media (min-width:36rem){ body{font-size:18px} }
+
+  /* Vendor discovery: cards keep scope obvious and give mobile users a quick scan/search. */
+  .vendor-tools{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .7rem}
+  .vendor-search{flex:1;min-width:0;font:inherit;border:1px solid var(--rule);border-radius:10px;padding:.72rem .8rem;background:var(--paper);color:var(--ink)}
+  .vendor-search:focus{outline:3px solid rgba(10,107,61,.15);border-color:var(--green)}
+  .vendor-count{font-size:.78rem;color:var(--ink-soft);white-space:nowrap}
+  .change-zone{font:inherit;font-weight:700;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--green);padding:.72rem .75rem;white-space:nowrap}
+  .vendor-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+  .vendor-card{border:1px solid var(--rule);border-radius:14px;padding:.95rem;background:var(--paper)}
+  .vendor-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.65rem}
+  .vendor-card h3{font-size:1.05rem}
+  .vendor-address{margin:.45rem 0 0;color:var(--ink-soft);font-size:.84rem}
+  .vendor-status{font-size:.7rem;font-weight:800;padding:.25rem .4rem;border-radius:999px;background:#f7e9e6;color:var(--pepper);white-space:nowrap}
+  .vendor-status.available{background:#e8f3ed;color:var(--green)}
+  .vendor-meta{display:flex;gap:.4rem;margin-top:.7rem}
+  .vendor-pill{font-size:.72rem;padding:.28rem .5rem;border-radius:999px;background:var(--pad);color:var(--ink-soft)}
+  .vendor-open{width:100%;margin-top:.8rem;padding:.7rem;border:1px solid var(--green);border-radius:9px;background:var(--green);color:#fff;font:inherit;font-weight:800}
+  .vendor-open:disabled{background:var(--rule);border-color:var(--rule);color:#858c87}
+  @media (max-width: 560px){.vendor-tools{flex-wrap:wrap}.vendor-search{width:100%;flex-basis:100%}.vendor-cards{grid-template-columns:1fr}.vendor-count{margin-right:auto}}
+
 </style>
 </head>
 
@@ -67,10 +234,10 @@ main{padding-bottom:28px}.step{padding:34px 0 8px}.eyebrow{text-transform:upperc
 <header class="top">
   <div class="wrap">
     <a class="home" href="/index.html" aria-label="Owa Delivery home">
-      <img src="/assets/owa-logo.png" alt="" width="38" height="38" onerror="this.remove()">
-      <span class="mark">Owa Delivery</span>
+      <img src="/assets/owa-logo.png" alt="" width="30" height="30" onerror="this.remove()">
+      <span class="mark" id="brand">Owa Delivery</span>
     </a>
-    <div class="top-meta"><b>Order locally.</b> Choose your service and area to see matching vendors.</div>
+    <p>Build your order here, then send it in one message.</p>
   </div>
 </header>
 
@@ -181,36 +348,74 @@ async function load(){
 /* ---------- state ---------- */
 const S = { service:null, zone:null, vendor:null, packs:1, qty:Object.create(null) };
 
-const services = () => (DATA.services || []).filter(on);
-const zones    = () => (DATA.zones || []).filter(on);
 
-function splitValues(value){
-  return norm(value).split(/[,;|]/).map(v => low(v).trim()).filter(Boolean);
+function splitIds(v){
+  return norm(v).split(/[,;|]/).map(x => low(x).trim()).filter(Boolean);
 }
-function firstField(row, keys){
-  for (const key of keys) if (norm(row && row[key])) return row[key];
+function firstValue(row, keys){
+  for (const key of keys){
+    if (norm(row && row[key])) return row[key];
+  }
   return "";
 }
 function matchesId(row, keys, wanted){
-  const vals = splitValues(firstField(row, keys));
-  if (!vals.length) return false;
-  if (vals.includes("*") || vals.includes("all")) return true;
-  return vals.includes(low(wanted));
+  const raw = firstValue(row, keys);
+  const ids = splitIds(raw);
+  if (!ids.length) return false;
+  if (ids.includes("*") || ids.includes("all")) return true;
+  return ids.includes(low(wanted));
 }
-function servesZone(v){
-  return !!S.zone && matchesId(v, ["zone_ids","zone_id","zones","service_zones"], S.zone.zone_id);
+function servesZone(row){
+  return !!S.zone && matchesId(row, ["zone_ids","zone_id","zones","service_zones"], S.zone.zone_id);
 }
-function servesService(v){
-  return !!S.service && matchesId(v, ["service_ids","service_id","service_type","service"], S.service.service_id);
+function servesService(row){
+  return !!S.service && matchesId(row, ["service_ids","service_id","service_type","service"], S.service.service_id);
 }
-const vendors = () => (DATA.restaurants || []).filter(v => on(v) && servesZone(v) && servesService(v));
-const items = () => (DATA.menu || []).filter(m => on(m) && S.vendor && low(m.restaurant_id) === low(S.vendor.restaurant_id));
-const hasPacks = () => String((S.service && S.service.has_packs) != null ? S.service.has_packs : "TRUE").toUpperCase() !== "FALSE";
-const itemWord = () => norm(S.service && S.service.item_label_plural) || "items";
-const packWord = n => { const one=norm(S.service && S.service.pack_label)||"pack"; const many=norm(S.service && S.service.pack_label_plural)||one+"s"; return n===1?one:many; };
-const lines = () => items().filter(m => S.qty[m.item_id] > 0).map(m => ({id:m.item_id,name:m.item_name,price:Number(m.price)||0,qty:S.qty[m.item_id]}));
-const total = () => lines().reduce((s,l) => s+l.price*l.qty,0) * (hasPacks()?S.packs:1);
+function vendorAvailable(row){
+  const direct=firstValue(row,["accepting_orders","is_open","open"]);
+  if (direct) return !["false","closed","no","0"].includes(low(direct));
+  const status=low(row.status);
+  if (status) return !["closed","inactive","paused","offline","unavailable"].includes(status);
+  return true;
+}
 
+const services = () => (DATA.services || []).filter(on);
+const zones    = () => (DATA.zones || []).filter(on);
+
+const vendors = () => {
+  const seen = new Set();
+  return (DATA.restaurants || []).filter(r => {
+    if (!on(r) || !servesService(r) || !servesZone(r)) return false;
+    const id = norm(r.restaurant_id);
+    if (id && seen.has(low(id))) return false;
+    if (id) seen.add(low(id));
+    return true;
+  });
+};
+
+const items = () => (DATA.menu || []).filter(m =>
+  on(m) && S.vendor && low(m.restaurant_id) === low(S.vendor.restaurant_id));
+
+const hasPacks = () =>
+  String((S.service && S.service.has_packs) != null ? S.service.has_packs : "TRUE")
+    .toUpperCase() !== "FALSE";
+
+const itemWord = () => norm(S.service && S.service.item_label_plural) || "items";
+const packWord = (n) => {
+  const one = norm(S.service && S.service.pack_label) || "pack";
+  const many = norm(S.service && S.service.pack_label_plural) || one + "s";
+  return n === 1 ? one : many;
+};
+
+const lines = () => items()
+  .filter(m => S.qty[m.item_id] > 0)
+  .map(m => ({ id: m.item_id, name: m.item_name,
+               price: Number(m.price) || 0, qty: S.qty[m.item_id] }));
+
+const total = () => lines().reduce((s, l) => s + l.price * l.qty, 0)
+  * (hasPacks() ? S.packs : 1);
+
+/* ---------- render ---------- */
 function render(){
   const main = $("main");
   main.innerHTML = "";
@@ -237,14 +442,61 @@ function render(){
     const vs = vendors();
     const word = norm(S.service && S.service.vendor_label_plural)
       || (norm(S.service && S.service.vendor_label) ? norm(S.service.vendor_label) + "s" : "vendors");
-    return pick(
-      "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor"),
-      "Showing vendors that match this service and delivery area.",
-      vs.map(v => ({ name: v.restaurant_name || v.restaurant_id,
-                     sub: v.restaurant_address,
-                     go: () => { S.vendor = v; S.qty = Object.create(null); render(); } })),
-      "No " + word + " are open in " + (S.zone.zone_name || S.zone.zone_id) +
-      " right now. Try another area.");
+
+    const sec = el("section", "step");
+    sec.append(el("h2", null, "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor")));
+    sec.append(el("p", "lede",
+      (S.service.service_name || "This service") + " available in " + (S.zone.zone_name || S.zone.zone_id) +
+      ". We only show vendors that match both choices."
+    ));
+
+    if (!vs.length){
+      const s = el("div", "state");
+      s.append(el("h2", null, "No " + word + " available here"));
+      s.append(el("p", null, "There are no active vendors for this service in " +
+        (S.zone.zone_name || S.zone.zone_id) + " right now."));
+      const b = el("button", null, "Choose another area"); b.type = "button";
+      b.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
+      s.append(b); sec.append(s); $("main").append(sec); return;
+    }
+
+    const toolbar = el("div", "vendor-tools");
+    const search = el("input", "vendor-search");
+    search.type = "search"; search.placeholder = "Search vendors"; search.setAttribute("aria-label", "Search vendors");
+    const count = el("span", "vendor-count", vs.length + " available");
+    const change = el("button", "change-zone", "Change area"); change.type = "button";
+    change.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
+    toolbar.append(search, count, change); sec.append(toolbar);
+
+    const ul = el("ul", "vendor-cards");
+    const draw = () => {
+      ul.innerHTML = "";
+      const q = low(search.value);
+      const filtered = vs.filter(v => !q || low(v.restaurant_name).includes(q) || low(v.restaurant_address).includes(q));
+      count.textContent = filtered.length + " available";
+      if (!filtered.length){
+        const empty = el("li", "state");
+        empty.append(el("h2", null, "No vendor matches that search"));
+        empty.append(el("p", null, "Try another vendor name or clear the search."));
+        ul.append(empty); return;
+      }
+      filtered.forEach(v => {
+        const li = el("li", "vendor-card");
+        const top = el("div", "vendor-card-top");
+        top.append(el("h3", null, v.restaurant_name || v.restaurant_id));
+        top.append(el("span", vendorAvailable(v) ? "vendor-status available" : "vendor-status", vendorAvailable(v) ? "Available" : "Unavailable"));
+        li.append(top);
+        if (norm(v.restaurant_address)) li.append(el("p", "vendor-address", v.restaurant_address));
+        const meta = el("div", "vendor-meta");
+        meta.append(el("span", "vendor-pill", S.zone.zone_name || S.zone.zone_id));
+        li.append(meta);
+        const b = el("button", "vendor-open", vendorAvailable(v) ? "View menu" : "Unavailable"); b.type = "button"; b.disabled = !vendorAvailable(v);
+        b.addEventListener("click", () => { S.vendor = v; S.qty = Object.create(null); render(); });
+        li.append(b); ul.append(li);
+      });
+    };
+    search.addEventListener("input", draw);
+    draw(); sec.append(ul); $("main").append(sec); return;
   }
 
   renderMenu();
@@ -309,10 +561,6 @@ function renderMenu(){
   sec.append(el("p", "lede", list.length
     ? "Tap + to add. Your total updates as you go."
     : "This menu is empty at the moment."));
-  const info = el("div", "info-bar");
-  info.append(el("span", "info", S.service.service_name || S.service.service_id));
-  info.append(el("span", "info", S.zone.zone_name || S.zone.zone_id));
-  sec.append(info);
 
   const groups = new Map();
   list.forEach(m => {
