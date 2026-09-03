@@ -225,6 +225,26 @@ h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.15}
   .amt.bump{color:var(--green)}
 }
 @media (min-width:36rem){ body{font-size:18px} }
+
+  /* Vendor discovery: cards keep scope obvious and give mobile users a quick scan/search. */
+  .vendor-tools{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .7rem}
+  .vendor-search{flex:1;min-width:0;font:inherit;border:1px solid var(--rule);border-radius:10px;padding:.72rem .8rem;background:var(--paper);color:var(--ink)}
+  .vendor-search:focus{outline:3px solid rgba(10,107,61,.15);border-color:var(--green)}
+  .vendor-count{font-size:.78rem;color:var(--ink-soft);white-space:nowrap}
+  .change-zone{font:inherit;font-weight:700;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--green);padding:.72rem .75rem;white-space:nowrap}
+  .vendor-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+  .vendor-card{border:1px solid var(--rule);border-radius:14px;padding:.95rem;background:var(--paper)}
+  .vendor-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.65rem}
+  .vendor-card h3{font-size:1.05rem}
+  .vendor-address{margin:.45rem 0 0;color:var(--ink-soft);font-size:.84rem}
+  .vendor-status{font-size:.7rem;font-weight:800;padding:.25rem .4rem;border-radius:999px;background:#f7e9e6;color:var(--pepper);white-space:nowrap}
+  .vendor-status.available{background:#e8f3ed;color:var(--green)}
+  .vendor-meta{display:flex;gap:.4rem;margin-top:.7rem}
+  .vendor-pill{font-size:.72rem;padding:.28rem .5rem;border-radius:999px;background:var(--pad);color:var(--ink-soft)}
+  .vendor-open{width:100%;margin-top:.8rem;padding:.7rem;border:1px solid var(--green);border-radius:9px;background:var(--green);color:#fff;font:inherit;font-weight:800}
+  .vendor-open:disabled{background:var(--rule);border-color:var(--rule);color:#858c87}
+  @media (max-width: 560px){.vendor-tools{flex-wrap:wrap}.vendor-search{width:100%;flex-basis:100%}.vendor-cards{grid-template-columns:1fr}.vendor-count{margin-right:auto}}
+
 </style>
 </head>
 
@@ -300,7 +320,7 @@ function parseCSV(text){
 }
 
 /* ---------- data ---------- */
-const CACHE_KEY = "owa.menu.v1";
+const CACHE_KEY = "owa.menu.v2";
 let DATA = null;
 
 function readCache(){
@@ -346,16 +366,50 @@ async function load(){
 /* ---------- state ---------- */
 const S = { service:null, zone:null, vendor:null, packs:1, qty:Object.create(null) };
 
+
+function splitIds(v){
+  return norm(v).split(/[,;|]/).map(x => low(x).trim()).filter(Boolean);
+}
+function firstValue(row, keys){
+  for (const key of keys){
+    if (norm(row && row[key])) return row[key];
+  }
+  return "";
+}
+function matchesId(row, keys, wanted){
+  const raw = firstValue(row, keys);
+  const ids = splitIds(raw);
+  if (!ids.length) return false;
+  if (ids.includes("*") || ids.includes("all")) return true;
+  return ids.includes(low(wanted));
+}
+function servesZone(row){
+  return !!S.zone && matchesId(row, ["zone_ids","zone_id","zones","service_zones"], S.zone.zone_id);
+}
+function servesService(row){
+  return !!S.service && matchesId(row, ["service_ids","service_id","service_type","service"], S.service.service_id);
+}
+function vendorAvailable(row){
+  const direct=firstValue(row,["accepting_orders","is_open","open"]);
+  if (direct) return !["false","closed","no","0"].includes(low(direct));
+  const status=low(row.status);
+  if (status) return !["closed","inactive","paused","offline","unavailable"].includes(status);
+  return true;
+}
+
 const services = () => (DATA.services || []).filter(on);
 const zones    = () => (DATA.zones || []).filter(on);
 
-const vendors = () => (DATA.restaurants || []).filter(r => {
-  if (!on(r)) return false;
-  const vz = low(r.zone_id), vs = low(r.service_id);
-  if (S.zone && vz && vz !== low(S.zone.zone_id)) return false;
-  if (S.service && vs && vs !== low(S.service.service_id)) return false;
-  return true;
-});
+const vendors = () => {
+  const seen = new Set();
+  return (DATA.restaurants || []).filter(r => {
+    if (!on(r) || !servesService(r) || !servesZone(r)) return false;
+    const id = norm(r.restaurant_id);
+    if (id && seen.has(low(id))) return false;
+    if (id) seen.add(low(id));
+    return true;
+  });
+};
 
 const items = () => (DATA.menu || []).filter(m =>
   on(m) && S.vendor && low(m.restaurant_id) === low(S.vendor.restaurant_id));
@@ -406,14 +460,61 @@ function render(){
     const vs = vendors();
     const word = norm(S.service && S.service.vendor_label_plural)
       || (norm(S.service && S.service.vendor_label) ? norm(S.service.vendor_label) + "s" : "vendors");
-    return pick(
-      "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor"),
-      "Open now in " + (S.zone.zone_name || S.zone.zone_id) + ".",
-      vs.map(v => ({ name: v.restaurant_name || v.restaurant_id,
-                     sub: v.restaurant_address,
-                     go: () => { S.vendor = v; S.qty = Object.create(null); render(); } })),
-      "No " + word + " are open in " + (S.zone.zone_name || S.zone.zone_id) +
-      " right now. Try another area.");
+
+    const sec = el("section", "step");
+    sec.append(el("h2", null, "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor")));
+    sec.append(el("p", "lede",
+      (S.service.service_name || "This service") + " available in " + (S.zone.zone_name || S.zone.zone_id) +
+      ". We only show vendors that match both choices."
+    ));
+
+    if (!vs.length){
+      const s = el("div", "state");
+      s.append(el("h2", null, "No " + word + " available here"));
+      s.append(el("p", null, "There are no active vendors for this service in " +
+        (S.zone.zone_name || S.zone.zone_id) + " right now."));
+      const b = el("button", null, "Choose another area"); b.type = "button";
+      b.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
+      s.append(b); sec.append(s); $("main").append(sec); return;
+    }
+
+    const toolbar = el("div", "vendor-tools");
+    const search = el("input", "vendor-search");
+    search.type = "search"; search.placeholder = "Search vendors"; search.setAttribute("aria-label", "Search vendors");
+    const count = el("span", "vendor-count", vs.length + " available");
+    const change = el("button", "change-zone", "Change area"); change.type = "button";
+    change.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
+    toolbar.append(search, count, change); sec.append(toolbar);
+
+    const ul = el("ul", "vendor-cards");
+    const draw = () => {
+      ul.innerHTML = "";
+      const q = low(search.value);
+      const filtered = vs.filter(v => !q || low(v.restaurant_name).includes(q) || low(v.restaurant_address).includes(q));
+      count.textContent = filtered.length + " available";
+      if (!filtered.length){
+        const empty = el("li", "state");
+        empty.append(el("h2", null, "No vendor matches that search"));
+        empty.append(el("p", null, "Try another vendor name or clear the search."));
+        ul.append(empty); return;
+      }
+      filtered.forEach(v => {
+        const li = el("li", "vendor-card");
+        const top = el("div", "vendor-card-top");
+        top.append(el("h3", null, v.restaurant_name || v.restaurant_id));
+        top.append(el("span", vendorAvailable(v) ? "vendor-status available" : "vendor-status", vendorAvailable(v) ? "Available" : "Unavailable"));
+        li.append(top);
+        if (norm(v.restaurant_address)) li.append(el("p", "vendor-address", v.restaurant_address));
+        const meta = el("div", "vendor-meta");
+        meta.append(el("span", "vendor-pill", S.zone.zone_name || S.zone.zone_id));
+        li.append(meta);
+        const b = el("button", "vendor-open", vendorAvailable(v) ? "View menu" : "Unavailable"); b.type = "button"; b.disabled = !vendorAvailable(v);
+        b.addEventListener("click", () => { S.vendor = v; S.qty = Object.create(null); render(); });
+        li.append(b); ul.append(li);
+      });
+    };
+    search.addEventListener("input", draw);
+    draw(); sec.append(ul); $("main").append(sec); return;
   }
 
   renderMenu();
