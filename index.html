@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NG">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Errands Delivered in Badagry</title>
-<meta name="description" content="Owa Delivery Services delivers food, cooking gas, pharmacy items, groceries and parcels across Badagry and Lagos. Order on WhatsApp and track it to your door.">
+<meta name="description" content="Owa Delivery Services delivers food, cooking gas, pharmacy items, groceries and parcels across Badagry and Lagos. Browse the menu online, then order on WhatsApp.">
 <meta name="author" content="Owa Delivery Services">
 <meta name="developer" content="Guwit Technology Solutions Ltd (RC 9040112)">
 <link rel="canonical" href="https://owadelivery.com/">
@@ -13,14 +13,27 @@
 <meta property="og:description" content="Food, cooking gas, pharmacy items, groceries and errands delivered across Badagry and Lagos.">
 <meta property="og:url" content="https://owadelivery.com/">
 <meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
+<meta property="og:image:alt" content="Owa Delivery Services — local delivery in Badagry">
+<meta property="og:locale" content="en_NG">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png">
 <link rel="author" href="humans.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Literata:opsz,wght@7..72,400;7..72,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* Two small additions only. Everything else comes from assets/style.css.
+   Font Awesome was dropped: it was a render-blocking stylesheet from a third
+   party (about 100KB) loaded for a single WhatsApp glyph, which is a real cost
+   on mobile data. The glyph is now an inline SVG. */
+.skip-link{position:absolute;left:-9999px}
+.skip-link:focus{
+  left:1rem;top:1rem;z-index:99;padding:.6rem 1rem;border-radius:6px;
+  background:var(--teal,#0f7a63);color:#fff;text-decoration:none;
+}
+.btn svg{vertical-align:-.18em;margin-right:.15rem}
+</style>
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -34,6 +47,10 @@
       "url":"https://owadelivery.com",
       "telephone":"+2347041649942",
       "email":"info@owadelivery.com",
+      "currenciesAccepted":"NGN",
+      "paymentAccepted":"Bank transfer, Card",
+      "priceRange":"₦₦",
+      "hasMenu":"https://owadelivery.com/menu/",
       "identifier":{
         "@type":"PropertyValue",
         "name":"CAC Business Name Registration Number",
@@ -46,7 +63,31 @@
         "addressRegion":"Lagos State",
         "addressCountry":"NG"
       },
-      "areaServed":"Badagry, Lagos State, Nigeria"
+      "areaServed":[
+        {"@type":"Place","name":"Badagry Town"},
+        {"@type":"Place","name":"Ajara"},
+        {"@type":"Place","name":"Ikoga"},
+        {"@type":"Place","name":"Age Mowo"},
+        {"@type":"Place","name":"Topo"},
+        {"@type":"Place","name":"Mowo"},
+        {"@type":"Place","name":"Seme"},
+        {"@type":"Place","name":"Imeke"},
+        {"@type":"Place","name":"Ibereko"},
+        {"@type":"Place","name":"Oko-Afo"},
+        {"@type":"Place","name":"Owode Apa"}
+      ],
+      "potentialAction":{
+        "@type":"OrderAction",
+        "target":{
+          "@type":"EntryPoint",
+          "urlTemplate":"https://owadelivery.com/menu/",
+          "actionPlatform":[
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        },
+        "deliveryMethod":"http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"
+      }
     },
     {
       "@type":"WebSite",
@@ -72,50 +113,49 @@
   ]
 }
 </script>
-
-<style>
-@media (max-width: 700px){
-  header .nav{position:relative}
-  .nav-links{z-index:60}
-  .nav-links a[href="menu/"]{color:var(--green);font-weight:800}
-}
-</style>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
   <div class="nav wrap">
     <a href="index.html" class="logo">
-      <img src="assets/owa-logo.png" alt="Owa Delivery Services"
-           onerror="this.onerror=null;this.src='assets/owa-logo.svg'">
-      
-    </a>
+      <img src="assets/owa-logo.png" alt="Owa Delivery Services" width="34" height="34"
+           onerror="this.onerror=null;this.src='assets/owa-logo.svg'"></a>
     <nav class="nav-links" aria-label="Main">
-      <a href="index.html" class="active">Home</a>
-      <a href="#services">Services</a>
-      <a href="menu/">Order</a>
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="menu/">Menu</a>
+      <a href="#services">What we deliver</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <a class="btn" href="menu/">Start an order</a>
+    <a class="btn" href="menu/">See the menu</a>
   </div>
 </header>
 
-<main>
+<main id="main">
 
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">Badagry &amp; nearby areas</div>
       <h1>From Badagry's vendors to <em>your</em> door.</h1>
-      <p class="lede">Choose what you need and where you are. Owa shows vendors that match your selected service and delivery area, then helps you build the order and send it through WhatsApp.</p>
+      <p class="lede">Badagry’s first automated WhatsApp delivery service. Browse today’s vendors and
+        prices, build your order, and send it in one message — then sit back while we bring it to you.</p>
       <div class="hero-cta">
-        <a class="btn" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order." target="_blank" rel="noopener">
-         <i class="fab fa-whatsapp"></i> Click Here To Order
+        <!-- Primary: the menu. Browsing here is free for the business and
+             faster for the customer, and the order still finishes in WhatsApp. -->
+        <a class="btn" href="menu/">Browse the menu</a>
+        <a class="btn btn-ghost" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order."
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.2-4.4-4-4.5-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.4.8 1.3 1.6 2 1.1.9 1.9 1.2 2.1 1.3.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
+          Order in the chat
         </a>
-        
-        <a class="btn btn-ghost" href="#how">How it works</a>
       </div>
+      <p class="note" style="margin-top:16px;">
+        No app to install. <a href="#how">See how it works</a>.
+      </p>
       <div class="hero-stats">
         <div>
           <div class="stat-num">30+</div>
@@ -167,38 +207,50 @@
       <div class="eyebrow">What we deliver</div>
       <h2>More than meals.</h2>
       <p>Owa started with food and now covers the errands that eat up a working day.
-        Same chat, same riders, with delivery details confirmed for your selected zone.</p>
+        Same chat, same riders, and the delivery fee for your trip shown before you pay.</p>
     </div>
     <div class="service-grid">
+      <!-- Each card opens the menu already filtered to that service.
+           The ?service= value must match service_id on your ServiceTypes tab.
+           If one ever stops matching, the menu simply opens on the area step
+           instead, so a wrong id can never break the page. -->
       <div class="service">
         <div class="tag">Food</div>
         <h3>Restaurants &amp; kitchens</h3>
         <p>Browse menus from vendors that deliver to your area, build an order and pay on confirmation.</p>
+        <p><a href="menu/?service=food">See restaurants near you</a></p>
       </div>
       <div class="service">
         <div class="tag">Gas</div>
         <h3>Cooking gas refills</h3>
         <p>Send your cylinder size. We collect, refill and return it the same day where stock allows.</p>
+        <p><a href="menu/?service=gas">See gas prices</a></p>
       </div>
       <div class="service">
         <div class="tag">Pharmacy</div>
         <h3>Chemist &amp; pharmacy runs</h3>
         <p>Over-the-counter items picked up from a registered pharmacy near you and delivered discreetly.</p>
+        <p><a href="menu/?service=pharmacy">See pharmacy items</a></p>
       </div>
       <div class="service">
         <div class="tag">Groceries</div>
         <h3>Market &amp; provisions</h3>
         <p>Send a list. A rider shops it at the market or a nearby store and brings it to your door.</p>
+        <p><a href="menu/?service=groceries">See grocery vendors</a></p>
       </div>
       <div class="service">
         <div class="tag">Parcels</div>
         <h3>Send something across town</h3>
         <p>Documents, keys, a forgotten lunch. Point-to-point drop-offs within our coverage area.</p>
+        <p><a href="https://wa.me/2347053594258?text=I%20want%20to%20send%20a%20parcel."
+              target="_blank" rel="noopener">Tell us the two addresses</a></p>
       </div>
       <div class="service">
         <div class="tag">Errands</div>
         <h3>Pay-and-pick-up</h3>
         <p>Anything with a clear pickup point and a clear price. Ask us in the chat and we'll confirm.</p>
+        <p><a href="https://wa.me/2347053594258?text=I%20have%20an%20errand."
+              target="_blank" rel="noopener">Describe your errand</a></p>
       </div>
     </div>
   </div>
@@ -208,25 +260,28 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">How it works</div>
-      <h2>Four steps, all inside WhatsApp.</h2>
-      <p>No app to install and no account to create. The order runs as a normal chat,
-        and you are told at every handover.</p>
+      <h2>Two ways in. One chat.</h2>
+      <p>No app to install and no account to create. Pick your items on the website or in the chat —
+        either way the order finishes in WhatsApp and you are told at every handover.</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">Step 01</div>
-        <h3>Say hi</h3>
-        <p>Message us and pick what you need — food, gas, pharmacy, groceries or an errand.</p>
+        <h3>Pick your area and vendor</h3>
+        <p>On the menu page you see today's vendors and prices for your area. Prefer to type?
+          Send <span class="mono">hi</span> and we'll walk you through the same choices in the chat.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 02</div>
-        <h3>Choose and confirm</h3>
-        <p>Pick your area, then choose from vendors that serve both your selected service and zone.</p>
+        <h3>Send your order</h3>
+        <p>One tap sends your whole basket to WhatsApp as a single message. We confirm the vendor
+          has everything before you pay anything.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 03</div>
         <h3>Share your location</h3>
-        <p>One tap sends your pin so the rider finds you first time. You get the full price before paying.</p>
+        <p>One tap sends your pin. The delivery fee is worked out from your actual distance,
+          and you see the full price before paying.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 04</div>
@@ -241,27 +296,28 @@
   <div class="wrap two-col">
     <div>
       <div class="eyebrow">Coverage</div>
-      <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built zone by zone in Badagry.</h2>
+      <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built for Badagry first.</h2>
       <p style="color:var(--text-soft); margin-top:14px;">
-        We run zone by zone rather than claiming the whole state. Each zone has its own flat delivery
-        fee, shown to you before you pay. If your area isn't listed yet, message us — new zones open
-        as rider coverage grows.</p>
+        We run zone by zone rather than claiming the whole state. Each zone has its own delivery
+        rate, and your final fee is worked out from the distance to your door and shown before you
+        pay. If your area isn't listed yet, message us — new zones open as rider coverage grows.</p>
       <div class="badge-row">
         <span class="badge">Ajara</span>
-        <span class="badge">Ajido</span>
-        <span class="badge">Apa</span>
-        <span class="badge">Awhanjigoh</span>
-        <span class="badge">Ibereko</span>
         <span class="badge">Ikoga</span>
-        <span class="badge">Ilogbo-Araromi</span>
-        <span class="badge">Iworo Gbanko</span>
-        <span class="badge">Iya-Afin</span>
-        <span class="badge">Keta-East</span>
-        <span class="badge">Posukoh</span>
+        <span class="badge">Age Mowo</span>
+        <span class="badge">Topo</span>
+        <span class="badge">Mowo</span>
+        <span class="badge">Seme</span>
+        <span class="badge">Imeke</span>
+        <span class="badge">Ibereko</span>
+        <span class="badge">Oko-Afo</span>
+        <span class="badge">Owode Apa</span>
+        <span class="badge">Badagry Town</span>
       </div>
+      <p style="margin-top:18px;"><a class="btn btn-ghost" href="menu/">See what's available in your area</a></p>
       <div class="note">
-        Delivery fees are set per zone and quoted in the chat before payment.
-        For long or unusual trips our team may adjust the fee — you'll always see the final
+        Delivery rates are set per zone and the final fee is quoted in the chat before payment.
+        For long or unusual trips our team may adjust it — you'll always see the final
         amount before you're asked to pay.
       </div>
     </div>
@@ -285,8 +341,8 @@
     <div class="band">
       <div>
         <h2>Sell locally? Ride locally?</h2>
-        <p>We're adding vendors and riders across Badagry. Vendors get orders without building an app.
-          Riders get jobs routed to their own zone.</p>
+        <p>We're adding vendors and riders across Badagry. Vendors get orders without building an app,
+          and their menu goes live on our site the same day. Riders get jobs routed to their own zone.</p>
       </div>
       <a class="btn" href="https://wa.me/2347041649942?text=I%20want%20to%20partner%20with%20Owa"
          target="_blank" rel="noopener">Talk to us</a>
@@ -308,7 +364,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="menu/">Order</a></li>
+          <li><a href="menu/">Order menu</a></li>
           <li><a href="about.html">About us</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -342,4 +398,4 @@
 </footer>
 
 </body>
-  </html>
+</html>
