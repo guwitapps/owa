@@ -1,13 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NG">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Order menu — Owa Delivery</title>
-<meta name="description" content="Browse Owa Delivery vendors in Badagry, build your order, and send it in one WhatsApp message.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Order menu — Owa Delivery Services</title>
+<meta name="description" content="Pick your area in Badagry, choose a vendor and build your order. One tap sends it to WhatsApp.">
+<meta name="author" content="Owa Delivery Services">
+<meta name="developer" content="Guwit Technology Solutions Ltd (RC 9040112)">
+<link rel="canonical" href="https://owadelivery.com/menu/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Order menu — Owa Delivery Services">
+<meta property="og:description" content="Pick your area, choose a vendor, build your order. One tap sends it to WhatsApp.">
+<meta property="og:url" content="https://owadelivery.com/menu/">
 <meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
+<meta property="og:image:alt" content="Owa Delivery Services">
+<meta property="og:locale" content="en_NG">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.png">
-<meta name="theme-color" content="#0A6B3D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Literata:opsz,wght@7..72,400;7..72,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="preconnect" href="https://docs.google.com" crossorigin>
+
+<!-- ====================================================================
+     SETUP — the only block you ever need to edit.
+
+     WA_NUMBER   your WhatsApp ordering line, digits only, no + or spaces.
+
+     SHEETS      In Google Sheets: File > Share > Publish to web.
+                 Publish EACH TAB ON ITS OWN as "Comma-separated values".
+
+                 Never publish "Entire Document". Your Ops, Riders and
+                 Settings tabs hold staff phone numbers and configuration,
+                 and publishing the whole file would put them on the open web.
+     ==================================================================== -->
 <script>
 const CONFIG = {
   WA_NUMBER: "2347053594258",
@@ -22,265 +49,307 @@ const CONFIG = {
   BUSINESS: "Owa Delivery",
   CURRENCY: "\u20A6",
 
-  // How long to trust the copy saved on the phone before refetching.
-  // The page still works offline past this; it just tries the network first.
-  CACHE_MINUTES: 30
+  // Minutes to trust the copy saved on the customer's phone before refetching.
+  // Past this it tries the network first but still falls back to the saved
+  // copy, so the menu keeps working when their data drops out.
+  CACHE_MINUTES: 30,
+
+  // These must match the limits in the bot's 'Web: Resolve Order' node, or the
+  // page could build a basket the bot then trims.
+  MAX_LINES: 20,
+  MAX_QTY: 20,
+  MAX_PACKS: 20,
+
+  // Show a search box once a vendor's menu passes this many items.
+  SEARCH_AFTER: 12,
+
+  // A vendor row must SAY which area and which service it belongs to.
+  //
+  // With this on, a vendor whose zone_id or service_id is blank is treated as
+  // an unfinished row and hidden, rather than being read as "sells everything,
+  // everywhere". One blank cell read as a wildcard is what makes every vendor
+  // appear under every area and every service - the row matches all of them.
+  //
+  // Visit /menu/?debug=1 to see exactly which rows are being held back and why.
+  // Set this to false to go back to treating a blank cell as "all".
+  STRICT_IDS: true
 };
 </script>
 
 <style>
-/* -------------------------------------------------------------------
-   An order pad, not a website.
+/* --------------------------------------------------------------------
+   Menu-specific layer only.
 
-   The page is a docket you fill in: rows on a pad with dotted leaders
-   running out to the price, the way a menu board is set. The one loud
-   element is the running total pinned in the thumb zone, because the
-   whole point of the page is watching it climb and then sending it.
-
-   Type is the system stack on purpose. A customer on patchy mobile data
-   should never wait on a webfont to read a menu, and a font file is a
-   second thing that can fail to load. Personality comes from weight and
-   spacing instead.
-   ------------------------------------------------------------------- */
-:root{
-  --paper:#ffffff;
-  --pad:#f7f5ee;          /* the pad itself, warmer than the page */
-  --ink:#14261f;
-  --ink-soft:#5d6b64;
-  --rule:#e0ded3;
-  --green:#0a6b3d;        /* signage green */
-  --green-deep:#08512e;
-  --pepper:#d43a16;       /* scotch bonnet: prices, removals */
-  --yam:#f2c230;
-  --focus:#0a6b3d;
-  --pad-b:env(safe-area-inset-bottom,0px);
-
-  --f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+   Everything structural comes from the site's own stylesheet: .wrap,
+   .btn, .btn-ghost, .card, .badge, .eyebrow, header, footer. This block
+   adds only the pieces the rest of the site has no equivalent for - the
+   order pad and the docket - and takes its colours from the site's own
+   custom properties, with fallbacks so it still renders correctly if a
+   variable is ever renamed.
+   -------------------------------------------------------------------- */
+.menu-page{
+  --m-accent: var(--teal, #0f7a63);
+  --m-ink: var(--text, #17211f);
+  --m-soft: var(--text-soft, #5d6b66);
+  --m-rule: var(--line, rgba(23,33,31,.15));
+  --m-fill: rgba(15,122,99,.06);
+  --m-warn: var(--rust, #c0492a);
+  --m-mono: var(--mono, "IBM Plex Mono", ui-monospace, monospace);
+  --m-pad-b: env(safe-area-inset-bottom, 0px);
+  padding-bottom: calc(170px + var(--m-pad-b));
 }
-
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:var(--f);
-  color:var(--ink);
-  background:var(--paper);
-  font-size:17px;
-  line-height:1.45;
-  -webkit-text-size-adjust:100%;
-  padding-bottom:calc(150px + var(--pad-b));
-}
-h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.15}
-
-.wrap{max-width:34rem;margin:0 auto;padding:0 1.1rem}
-
-/* ---- masthead ---- */
-.top{
-  background:var(--green);
-  color:#fff;
-  padding:1.1rem 0 1rem;
-}
-.top .wrap{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-.home{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none}
-.home img{border-radius:6px;background:#fff;padding:2px;flex:none}
-.mark{font-size:1.4rem;font-weight:800;letter-spacing:-0.03em}
-.top p{margin:0;font-size:.9rem;opacity:.85;flex:1 1 100%}
 
 /* ---- the trail of choices already made ---- */
-.trail{
-  display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
-  padding:.7rem 0;font-size:.85rem;color:var(--ink-soft);
-  border-bottom:1px solid var(--rule);
+.m-trail{
+  display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;
+  padding:.85rem 0;font-size:.86rem;color:var(--m-soft);
+  border-bottom:1px solid var(--m-rule);
 }
-.trail button{
-  font:inherit;color:var(--green);background:none;border:0;padding:.15rem .1rem;
-  cursor:pointer;text-decoration:underline;text-underline-offset:3px;border-radius:3px;
+.m-trail button{
+  font:inherit;color:var(--m-accent);background:none;border:0;padding:.2rem .1rem;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;border-radius:4px;
 }
-.trail span[aria-hidden]{opacity:.45}
+.m-trail .sep{opacity:.4}
+.m-trail .now{color:var(--m-ink);font-weight:600}
 
-/* ---- steps ---- */
-.step{padding:1.4rem 0 .4rem}
-.step h2{font-size:1.28rem}
-.step .lede{margin:.35rem 0 1rem;color:var(--ink-soft);font-size:.95rem}
+/* ---- a step ---- */
+.m-step{padding:1.5rem 0 .5rem}
+.m-step h1,.m-step h2{font-size:clamp(1.35rem,3.4vw,1.8rem);margin:0}
+.m-step .m-lede{margin:.45rem 0 1.1rem;color:var(--m-soft)}
 
-/* choice list: full-bleed rows, generous tap target */
-.choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
-.choices li{border-bottom:1px solid var(--rule)}
-.choices button{
-  font:inherit;width:100%;text-align:left;background:none;border:0;
-  padding:.95rem .2rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;
-  color:inherit;min-height:56px;
+/* ---- choice rows ---- */
+.m-choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--m-rule)}
+.m-choices li{border-bottom:1px solid var(--m-rule)}
+.m-choices button{
+  font:inherit;width:100%;text-align:left;background:none;border:0;color:inherit;
+  padding:1rem .15rem;cursor:pointer;display:flex;align-items:center;gap:.85rem;
+  min-height:60px;
 }
-.choices .name{font-weight:600;flex:1}
-.choices .sub{display:block;font-weight:400;font-size:.85rem;color:var(--ink-soft);margin-top:.1rem}
-.choices .go{color:var(--green);font-weight:700;font-size:1.1rem}
-.choices button:hover .name{color:var(--green)}
+.m-choices .m-name{font-weight:600;flex:1;min-width:0}
+.m-choices .m-sub{
+  display:block;font-weight:400;font-size:.84rem;color:var(--m-soft);
+  margin-top:.15rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.m-choices .m-go{color:var(--m-accent);font-weight:700;font-size:1.15rem;flex:none}
+.m-choices button:hover .m-name,.m-choices button:focus-visible .m-name{color:var(--m-accent)}
 
-/* ---- the pad ---- */
-.cat{
-  margin:1.5rem 0 .1rem;font-size:.95rem;font-weight:700;
-  color:var(--green-deep);
+/* ---- section pills ---- */
+.m-cats{
+  position:sticky;top:0;z-index:10;
+  display:flex;gap:.4rem;overflow-x:auto;
+  margin:.5rem 0 0;padding:.7rem 0;
+  background:var(--bg, #ffffff);
+  border-bottom:1px solid var(--m-rule);
+  scrollbar-width:none;
 }
-.pad{list-style:none;margin:0;padding:0}
-.row{
-  display:grid;
-  grid-template-columns:1fr auto;
-  align-items:end;
-  gap:.2rem .8rem;
-  padding:.75rem 0 .7rem;
-  border-bottom:1px solid var(--rule);
+.m-cats::-webkit-scrollbar{display:none}
+.m-cats button{
+  font:inherit;font-size:.85rem;font-weight:600;white-space:nowrap;
+  padding:.45rem .9rem;border-radius:999px;cursor:pointer;
+  border:1.5px solid var(--m-rule);background:none;color:var(--m-soft);
 }
-.row.in{background:linear-gradient(90deg,rgba(242,194,48,.16),transparent 70%)}
-.item{min-width:0}
-.item .n{font-weight:600}
-.leader{
-  display:block;height:0;border-bottom:1px dotted var(--rule);
-  margin:.45rem .4rem .3rem;flex:1;
+.m-cats button[aria-pressed="true"]{
+  background:var(--m-accent);border-color:var(--m-accent);color:#fff;
 }
-.line{display:flex;align-items:baseline;grid-column:1/2}
-.price{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.95rem;white-space:nowrap}
-.stepper{display:flex;align-items:center;gap:.15rem;grid-column:2/3;grid-row:1/2}
-.stepper button{
-  font:inherit;font-size:1.25rem;line-height:1;font-weight:600;
-  width:44px;height:44px;border-radius:50%;
-  border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);
-  cursor:pointer;display:grid;place-items:center;
+
+/* ---- search ---- */
+.m-search{
+  display:flex;align-items:center;gap:.6rem;margin:1.1rem 0 .2rem;
+  padding:.7rem .95rem;border:1.5px solid var(--m-rule);border-radius:10px;
 }
-.stepper button.add{border-color:var(--green);color:var(--green)}
-.stepper button.less{border-color:var(--pepper);color:var(--pepper)}
-.stepper button:disabled{opacity:.3;cursor:default}
-.qty{
-  min-width:2.1rem;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;
+.m-search input{
+  font:inherit;font-size:1rem;border:0;background:none;color:inherit;
+  width:100%;min-width:0;outline:none;
 }
-.qty[data-zero="1"]{visibility:hidden}
+.m-search svg{width:18px;height:18px;fill:none;stroke:var(--m-soft);stroke-width:2;flex:none}
+
+/* ---- the order pad ---- */
+.m-cat-head{margin:1.7rem 0 .2rem;font-size:.95rem;font-weight:700;color:var(--m-accent)}
+.m-pad{list-style:none;margin:0;padding:0}
+.m-row{
+  display:grid;grid-template-columns:1fr auto;align-items:end;gap:.15rem .8rem;
+  padding:.8rem 0 .75rem;border-bottom:1px solid var(--m-rule);
+}
+.m-row.m-in{box-shadow:inset 3px 0 0 var(--m-accent);background:var(--m-fill);padding-left:.75rem}
+.m-line{display:flex;align-items:baseline;grid-column:1/2;min-width:0}
+.m-item{min-width:0}
+.m-item .m-n{font-weight:600;display:block}
+.m-leader{flex:1;height:0;border-bottom:1px dotted var(--m-rule);margin:.5rem .45rem .3rem}
+.m-price{
+  font-variant-numeric:tabular-nums;color:var(--m-soft);font-size:.95rem;
+  white-space:nowrap;font-family:var(--m-mono);
+}
+.m-stepper{display:flex;align-items:center;gap:.1rem;grid-column:2/3;grid-row:1/2}
+.m-stepper button{
+  font:inherit;font-size:1.3rem;line-height:1;font-weight:600;
+  width:44px;height:44px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;
+  border:1.5px solid var(--m-rule);background:none;color:var(--m-ink);
+}
+.m-stepper button.m-add{border-color:var(--m-accent);color:var(--m-accent)}
+.m-stepper button.m-less{border-color:var(--m-warn);color:var(--m-warn)}
+.m-stepper button:disabled{opacity:.3;cursor:default}
+.m-qty{
+  min-width:2.2rem;text-align:center;font-weight:700;
+  font-variant-numeric:tabular-nums;font-family:var(--m-mono);
+}
+.m-qty[data-zero="1"]{visibility:hidden}
 
 /* ---- packs ---- */
-.packs{
+.m-packs{
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  margin:1.4rem 0 0;padding:.9rem 1rem;background:var(--pad);border-radius:10px;
+  margin:1.6rem 0 0;padding:1rem;background:var(--m-fill);border-radius:12px;
 }
-.packs p{margin:0;font-size:.9rem;color:var(--ink-soft)}
-.packs strong{display:block;color:var(--ink);font-size:1rem}
+.m-packs p{margin:0;font-size:.86rem;color:var(--m-soft)}
+.m-packs strong{display:block;color:var(--m-ink);font-size:1rem;margin-bottom:.1rem}
 
 /* ---- the docket ---- */
-.docket{
-  position:fixed;left:0;right:0;bottom:0;z-index:20;
-  background:var(--paper);
-  border-top:2px solid var(--ink);
-  padding:.8rem 0 calc(.8rem + var(--pad-b));
-  box-shadow:0 -10px 30px rgba(20,38,31,.1);
+.m-docket{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:var(--bg, #ffffff);
+  border-top:2px solid var(--m-accent);
+  padding:.85rem 0 calc(.85rem + var(--m-pad-b));
+  box-shadow:0 -12px 32px rgba(23,33,31,.12);
 }
-.docket .wrap{display:grid;gap:.6rem}
-.tot{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
-.tot .lab{font-size:.9rem;color:var(--ink-soft)}
-.tot .lab b{display:block;color:var(--ink);font-size:.95rem;font-weight:600}
-.tot .amt{
-  font-size:1.85rem;font-weight:800;letter-spacing:-0.03em;
-  font-variant-numeric:tabular-nums;
+.m-docket .wrap{display:grid;gap:.6rem}
+.m-sum{display:grid;gap:.15rem;font-size:.84rem;color:var(--m-soft)}
+.m-srow{display:flex;justify-content:space-between;gap:1rem}
+.m-srow b{color:var(--m-ink);font-weight:600;font-family:var(--m-mono)}
+.m-tot{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding-top:.5rem;border-top:1px solid var(--m-rule);
 }
-.send{
-  font:inherit;font-size:1.05rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;gap:.55rem;
-  width:100%;min-height:56px;padding:.85rem 1rem;
-  border:0;border-radius:10px;background:var(--green);color:#fff;
-  cursor:pointer;text-decoration:none;
+.m-lab{font-size:.88rem;color:var(--m-soft)}
+.m-lab b{display:block;color:var(--m-ink);font-size:.95rem;font-weight:600}
+.m-amt{
+  font-size:1.7rem;font-weight:700;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;color:var(--m-ink);white-space:nowrap;
 }
-.send[aria-disabled="true"]{background:var(--rule);color:#8d938f;cursor:default}
-.send svg{width:22px;height:22px;flex:none;fill:currentColor}
-.fine{margin:0;font-size:.78rem;color:var(--ink-soft);text-align:center}
-.fine a{color:var(--green);text-decoration:none}
+.m-send{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;min-height:56px}
+.m-send[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.m-send svg{width:21px;height:21px;fill:currentColor;flex:none}
+.m-fine{margin:0;font-size:.76rem;color:var(--m-soft);text-align:center;line-height:1.5}
 
 /* ---- states ---- */
-.state{padding:3rem 0;text-align:center;color:var(--ink-soft)}
-.state h2{color:var(--ink);font-size:1.15rem;margin-bottom:.5rem}
-.state p{margin:0 auto;max-width:26rem}
-.state button, .call{
-  font:inherit;font-weight:600;margin-top:1.1rem;display:inline-block;
-  padding:.7rem 1.2rem;border-radius:8px;border:1.5px solid var(--green);
-  background:none;color:var(--green);cursor:pointer;text-decoration:none;
+.m-state{padding:3rem 0;text-align:center;color:var(--m-soft)}
+.m-state h2{color:var(--m-ink);font-size:1.2rem;margin:0 0 .55rem}
+.m-state p{margin:0 auto;max-width:34ch}
+.m-acts{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
+.m-skel{height:.95rem;background:var(--m-rule);border-radius:4px;margin:.9rem auto;max-width:26rem}
+.m-skel:nth-of-type(2){max-width:17rem}
+.m-diag{
+  margin:1.8rem 0;padding:1rem;border:1px dashed var(--m-warn);border-radius:10px;
+  font-size:.82rem;color:var(--m-ink);
 }
-.skel{height:1rem;background:var(--rule);border-radius:3px;margin:.85rem 0;opacity:.7}
-.skel:nth-child(2n){width:70%}
+.m-diag h3{margin:0 0 .5rem;font-size:.9rem;color:var(--m-warn)}
+.m-diag p{margin:.7rem 0 0;font-weight:600}
+.m-diag ul{margin:.3rem 0 0;padding-left:1.2rem}
+.m-diag code{font-family:var(--m-mono)}
 
-:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.m-skip{position:absolute;left:-9999px}
+.m-skip:focus{
+  left:1rem;top:1rem;z-index:99;padding:.6rem 1rem;
+  background:var(--m-accent);color:#fff;border-radius:6px;
+}
 
 @media (prefers-reduced-motion:no-preference){
-  .amt{transition:color .18s ease}
-  .amt.bump{color:var(--green)}
+  .m-amt{transition:color .18s ease}
+  .m-amt.m-bump{color:var(--m-accent)}
 }
-@media (min-width:36rem){ body{font-size:18px} }
-
-  /* Vendor discovery: cards keep scope obvious and give mobile users a quick scan/search. */
-  .vendor-tools{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .7rem}
-  .vendor-search{flex:1;min-width:0;font:inherit;border:1px solid var(--rule);border-radius:10px;padding:.72rem .8rem;background:var(--paper);color:var(--ink)}
-  .vendor-search:focus{outline:3px solid rgba(10,107,61,.15);border-color:var(--green)}
-  .vendor-count{font-size:.78rem;color:var(--ink-soft);white-space:nowrap}
-  .change-zone{font:inherit;font-weight:700;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--green);padding:.72rem .75rem;white-space:nowrap}
-  .vendor-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
-  .vendor-card{border:1px solid var(--rule);border-radius:14px;padding:.95rem;background:var(--paper)}
-  .vendor-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.65rem}
-  .vendor-card h3{font-size:1.05rem}
-  .vendor-address{margin:.45rem 0 0;color:var(--ink-soft);font-size:.84rem}
-  .vendor-status{font-size:.7rem;font-weight:800;padding:.25rem .4rem;border-radius:999px;background:#f7e9e6;color:var(--pepper);white-space:nowrap}
-  .vendor-status.available{background:#e8f3ed;color:var(--green)}
-  .vendor-meta{display:flex;gap:.4rem;margin-top:.7rem}
-  .vendor-pill{font-size:.72rem;padding:.28rem .5rem;border-radius:999px;background:var(--pad);color:var(--ink-soft)}
-  .vendor-open{width:100%;margin-top:.8rem;padding:.7rem;border:1px solid var(--green);border-radius:9px;background:var(--green);color:#fff;font:inherit;font-weight:800}
-  .vendor-open:disabled{background:var(--rule);border-color:var(--rule);color:#858c87}
-  @media (max-width: 560px){.vendor-tools{flex-wrap:wrap}.vendor-search{width:100%;flex-basis:100%}.vendor-cards{grid-template-columns:1fr}.vendor-count{margin-right:auto}}
-
 </style>
 </head>
+<body class="menu-page">
 
-<body>
-<header class="top">
-  <div class="wrap">
-    <a class="home" href="/index.html" aria-label="Owa Delivery home">
-      <img src="/assets/og-cover.png" alt="" width="30" height="30" onerror="this.remove()">
-      <span class="mark" id="brand">Owa Delivery</span>
+<a class="m-skip" href="#menu-main">Skip to the menu</a>
+
+<header>
+  <div class="nav wrap">
+    <a href="/index.html" class="logo">
+      <img src="/assets/owa-logo.png" alt="Owa Delivery Services" width="34" height="34"
+           onerror="this.onerror=null;this.src='/assets/owa-logo.svg'">
     </a>
-    <p>Build your order here, then send it in one message.</p>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/index.html">Home</a>
+      <a href="/menu/" class="active" aria-current="page">Menu</a>
+      <a href="/index.html#services">What we deliver</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <a class="btn" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order."
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.2-4.4-4-4.5-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.4.8 1.3 1.6 2 1.1.9 1.9 1.2 2.1 1.3.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
+      Chat instead
+    </a>
   </div>
 </header>
 
-<nav class="wrap trail" id="trail" hidden aria-label="Your choices so far"></nav>
-
-<main class="wrap" id="main">
-  <div class="state" id="boot">
-    <div class="skel"></div><div class="skel"></div><div class="skel"></div>
-    <p>Loading the menu…</p>
-  </div>
+<main id="menu-main">
+  <nav class="wrap m-trail" id="mTrail" hidden aria-label="Your choices so far"></nav>
+  <div class="wrap" id="mBody"></div>
 </main>
 
-<div class="docket" id="docket" hidden>
+<div class="m-docket" id="mDocket" hidden>
   <div class="wrap">
-    <div class="tot">
-      <span class="lab"><b id="dLines">Nothing yet</b>Delivery is added in the chat</span>
-      <span class="amt" id="dTotal" aria-live="polite">&#8358;0</span>
+    <div class="m-sum" id="mSum"></div>
+    <div class="m-tot">
+      <span class="m-lab"><b id="mCount">Nothing yet</b><span id="mNote">Delivery is quoted in the chat</span></span>
+      <span class="m-amt" id="mTotal" aria-live="polite">&#8358;0</span>
     </div>
-    <a class="send" id="send" aria-disabled="true" role="button">
+    <a class="btn m-send" id="mSend" aria-disabled="true" role="button">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.2-4.4-4-4.5-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.4.8 1.3 1.6 2 1.1.9 1.9 1.2 2.1 1.3.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
-      <span id="sendLabel">Add something first</span>
+      <span id="mSendLabel">Add something first</span>
     </a>
-    <p class="fine" id="fine">Delivery fee and final price confirmed in the chat before you pay. &middot; <a href="/index.html">owadelivery.com</a></p>
+    <p class="m-fine">Delivery is worked out from your exact distance and shown before you pay.</p>
   </div>
 </div>
 
 <script>
 "use strict";
 
-/* ---------- tiny helpers ---------- */
+/* =====================================================================
+   Helpers
+   ===================================================================== */
 const $ = (id) => document.getElementById(id);
-const el = (tag, cls, txt) => { const n = document.createElement(tag);
-  if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
-const money = (n) => CONFIG.CURRENCY + Math.round(Number(n) || 0).toLocaleString("en-NG");
+const el = (t, c, x) => { const n = document.createElement(t);
+  if (c) n.className = c; if (x != null) n.textContent = x; return n; };
 const norm = (v) => String(v == null ? "" : v).trim();
-const low  = (v) => norm(v).toLowerCase();
-const on   = (r) => String(r && r.active != null ? r.active : "TRUE").toUpperCase() !== "FALSE";
+const low = (v) => norm(v).toLowerCase();
+const money = (n) => CONFIG.CURRENCY + Math.round(Number(n) || 0).toLocaleString("en-NG");
+const cap = (s) => String(s || "").charAt(0).toUpperCase() + String(s || "").slice(1);
 
-/* ---------- CSV ----------
-   Written out rather than pulled from a library: one fewer network request
-   on a slow connection, and menu rows genuinely contain commas
-   ("Rice, Beans and Plantain") and the odd quoted field. */
+/* Sheet money columns arrive as 500, "500", "N500", "1,500.00". */
+const cash = (v) => {
+  const n = Number(String(v == null ? "" : v).replace(/,/g, "").replace(/[^\d.-]/g, ""));
+  return Number.isFinite(n) && n > 0 ? n : 0;
+};
+
+/* A row is live unless it explicitly says otherwise. Matches the bot. */
+const live = (r) => !["false", "no", "0"].includes(low(r && r.active));
+
+/* Zones and services may be written singular or plural, and a plural cell may
+   hold a list: "ibereko, mowo" or "ibereko;mowo". Both spellings are read, so
+   the page can never disagree with the sheet over a column name. */
+const idList = (row, singular, plural) => {
+  const raw = norm(row && (norm(row[plural]) !== "" ? row[plural] : row[singular]));
+  return raw ? raw.split(/[,;|]/).map(low).filter(Boolean) : [];
+};
+
+/* '*' or 'all' is how a vendor row says it genuinely covers everything - the
+   same wildcard the chat flow's 'B3: Build Restaurant List' honours. A BLANK
+   cell is not a wildcard: it means nobody has filled the column in yet, which
+   is why STRICT_IDS holds those rows back instead of matching them to
+   everything. Write '*' when you mean it and the page will believe you. */
+const WILD = (list) => list.includes("*") || list.includes("all");
+const covers = (list, want) => WILD(list) || list.length === 0 || list.includes(low(want));
+
+/* =====================================================================
+   Data
+   ===================================================================== */
+const CACHE_KEY = "owa.menu.v2";
+const PREF_KEY = "owa.menu.prefs.v1";
+let DATA = null;
+const WARN = [];
+
 function parseCSV(text){
   const rows = []; let row = [], val = "", q = false;
   const s = String(text).replace(/\r\n?/g, "\n");
@@ -289,35 +358,23 @@ function parseCSV(text){
     if (q){
       if (c === '"'){ if (s[i+1] === '"'){ val += '"'; i++; } else q = false; }
       else val += c;
-    } else if (c === '"') q = true;
+    }
+    else if (c === '"') q = true;
     else if (c === ","){ row.push(val); val = ""; }
     else if (c === "\n"){ row.push(val); rows.push(row); row = []; val = ""; }
     else val += c;
   }
   if (val !== "" || row.length){ row.push(val); rows.push(row); }
   if (!rows.length) return [];
-  const head = rows.shift().map(h => norm(h).toLowerCase().replace(/\s+/g, "_"));
-  return rows
-    .filter(r => r.some(c => norm(c) !== ""))
+  const head = rows.shift().map(h => low(h).replace(/\s+/g, "_"));
+  return rows.filter(r => r.some(c => norm(c) !== ""))
     .map(r => { const o = {}; head.forEach((h, i) => { if (h) o[h] = norm(r[i]); }); return o; });
 }
 
-/* ---------- data ---------- */
-const CACHE_KEY = "owa.menu.v2";
-let DATA = null;
-
-function readCache(){
-  try{
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const c = JSON.parse(raw);
-    return c && c.data ? c : null;
-  }catch(e){ return null; }
-}
-function writeCache(data){
-  try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data })); }
-  catch(e){ /* private mode, or full. The page works without it. */ }
-}
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem(k) || "null"); } catch(e){ return null; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){ /* private mode */ } }
+};
 
 async function fetchAll(){
   const keys = Object.keys(CONFIG.SHEETS);
@@ -330,409 +387,640 @@ async function fetchAll(){
   }));
   const out = {};
   keys.forEach((k, i) => { out[k] = parseCSV(texts[i]); });
+  if (!out.restaurants.length || !out.menu.length) throw new Error("empty");
   return out;
 }
 
 async function load(){
-  const cached = readCache();
-  const fresh = cached && (Date.now() - cached.at) < CONFIG.CACHE_MINUTES * 60000;
-  if (fresh){ DATA = cached.data; return; }
-  try{
-    DATA = await fetchAll();
-    writeCache(DATA);
-  }catch(err){
-    if (cached){ DATA = cached.data; return; }   // offline, but we have yesterday's
-    throw err;
-  }
+  const c = store.get(CACHE_KEY);
+  if (c && c.data && (Date.now() - c.at) < CONFIG.CACHE_MINUTES * 60000){ DATA = c.data; return; }
+  try { DATA = await fetchAll(); store.set(CACHE_KEY, { at: Date.now(), data: DATA }); }
+  catch(err){ if (c && c.data){ DATA = c.data; return; } throw err; }
 }
 
-/* ---------- state ---------- */
-const S = { service:null, zone:null, vendor:null, packs:1, qty:Object.create(null) };
+/* =====================================================================
+   THE FILTER CHAIN
 
+   One predicate per relationship, used by the lists AND by the counts.
+   Working a count out a second way is the classic source of "12 vendors"
+   printed next to a list of three, so nothing here recounts anything.
+   ===================================================================== */
+const allZones = () => (DATA.zones || []).filter(live);
+const allServices = () => (DATA.services || []).filter(live);
+const allVendors = () => (DATA.restaurants || []).filter(live);
+const allItems = () => (DATA.menu || []).filter(live);
 
-function splitIds(v){
-  return norm(v).split(/[,;|]/).map(x => low(x).trim()).filter(Boolean);
-}
-function firstValue(row, keys){
-  for (const key of keys){
-    if (norm(row && row[key])) return row[key];
-  }
-  return "";
-}
-function matchesId(row, keys, wanted){
-  const raw = firstValue(row, keys);
-  const ids = splitIds(raw);
-  if (!ids.length) return false;
-  if (ids.includes("*") || ids.includes("all")) return true;
-  return ids.includes(low(wanted));
-}
-function servesZone(row){
-  return !!S.zone && matchesId(row, ["zone_ids","zone_id","zones","service_zones"], S.zone.zone_id);
-}
-function servesService(row){
-  return !!S.service && matchesId(row, ["service_ids","service_id","service_type","service"], S.service.service_id);
-}
-function vendorAvailable(row){
-  const direct=firstValue(row,["accepting_orders","is_open","open"]);
-  if (direct) return !["false","closed","no","0"].includes(low(direct));
-  const status=low(row.status);
-  if (status) return !["closed","inactive","paused","offline","unavailable"].includes(status);
-  return true;
-}
+const itemsOf = (vendorId) => allItems().filter(m => low(m.restaurant_id) === low(vendorId));
 
-const services = () => (DATA.services || []).filter(on);
-const zones    = () => (DATA.zones || []).filter(on);
+/* A vendor with nothing on its menu is a dead end, so it is never offered. */
+const stocked = (v) => itemsOf(v.restaurant_id).length > 0;
 
-const vendors = () => {
-  const seen = new Set();
-  return (DATA.restaurants || []).filter(r => {
-    if (!on(r) || !servesService(r) || !servesZone(r)) return false;
-    const id = norm(r.restaurant_id);
-    if (id && seen.has(low(id))) return false;
-    if (id) seen.add(low(id));
-    return true;
-  });
-};
+const vendorZones = (v) => idList(v, "zone_id", "zone_ids");
+const vendorServices = (v) => idList(v, "service_id", "service_ids");
 
-const items = () => (DATA.menu || []).filter(m =>
-  on(m) && S.vendor && low(m.restaurant_id) === low(S.vendor.restaurant_id));
+/* A row that never says where it is or what it sells cannot be placed. Under
+   STRICT_IDS it is held back instead of matching everything. */
+const complete = (v) => !CONFIG.STRICT_IDS
+  || (vendorZones(v).length > 0 && vendorServices(v).length > 0);
+const wildZone = (v) => WILD(vendorZones(v));
+const wildService = (v) => WILD(vendorServices(v));
 
-const hasPacks = () =>
-  String((S.service && S.service.has_packs) != null ? S.service.has_packs : "TRUE")
-    .toUpperCase() !== "FALSE";
+const incomplete = () => allVendors().filter(v => stocked(v) && !complete(v));
 
-const itemWord = () => norm(S.service && S.service.item_label_plural) || "items";
-const packWord = (n) => {
-  const one = norm(S.service && S.service.pack_label) || "pack";
-  const many = norm(S.service && S.service.pack_label_plural) || one + "s";
-  return n === 1 ? one : many;
-};
+const vendorsIn = (zoneId, serviceId) => allVendors().filter(v =>
+  stocked(v) && complete(v)
+  && (!zoneId || covers(vendorZones(v), zoneId))
+  && (!serviceId || covers(vendorServices(v), serviceId)));
 
-const lines = () => items()
+/* Only areas that can actually be served, and only services that actually have
+   a stocked vendor in the chosen area. Every dead end is removed before the
+   customer can walk into it. */
+const zonesWithVendors = () => allZones().filter(z => vendorsIn(z.zone_id, null).length > 0);
+const servicesIn = (zoneId) => allServices().filter(s => vendorsIn(zoneId, s.service_id).length > 0);
+
+/* =====================================================================
+   State
+   ===================================================================== */
+const S = { zone: null, service: null, vendor: null, packs: 1,
+            qty: Object.create(null), cat: "", search: "" };
+
+const svcVal = (k, dflt) => { const v = norm(S.service && S.service[k]); return v === "" ? dflt : v; };
+const hasPacks = () => low(svcVal("has_packs", "TRUE")) !== "false";
+const itemWord = () => svcVal("item_label_plural", "items");
+const vendorWord = () => svcVal("vendor_label", "vendor");
+const packWord = (n) => n === 1 ? svcVal("pack_label", "pack")
+                                : svcVal("pack_label_plural", svcVal("pack_label", "pack") + "s");
+const packagingFee = () => cash(S.vendor && S.vendor.packaging_fee);
+
+const lines = () => (S.vendor ? itemsOf(S.vendor.restaurant_id) : [])
   .filter(m => S.qty[m.item_id] > 0)
-  .map(m => ({ id: m.item_id, name: m.item_name,
-               price: Number(m.price) || 0, qty: S.qty[m.item_id] }));
+  .map(m => ({ id: m.item_id, name: m.item_name, price: cash(m.price), qty: S.qty[m.item_id] }));
 
-const total = () => lines().reduce((s, l) => s + l.price * l.qty, 0)
-  * (hasPacks() ? S.packs : 1);
+const packs = () => hasPacks() ? Math.min(CONFIG.MAX_PACKS, Math.max(1, S.packs)) : 1;
+const goods = () => lines().reduce((s, l) => s + l.price * l.qty, 0) * packs();
+const packaging = () => packagingFee() * packs();
+const shown = () => goods() + packaging();
 
-/* ---------- render ---------- */
+/* =====================================================================
+   Deep links and the URL
+
+   A vendor can share their own menu, and each service card on the homepage
+   can open the menu already filtered:
+       /menu/?service=food
+       /menu/?zone=ibereko&vendor=R001
+   Anything that does not resolve is ignored rather than half-applied.
+   ===================================================================== */
+function applyUrl(){
+  const p = new URLSearchParams(location.search);
+  const pick = (rows, key, want) => rows.find(r => low(r[key]) === low(want)) || null;
+
+  const z = p.get("zone"), sv = p.get("service"), vd = p.get("vendor");
+  if (z) S.zone = pick(zonesWithVendors(), "zone_id", z);
+  if (!S.zone){
+    const saved = store.get(PREF_KEY);
+    if (saved && saved.zone) S.zone = pick(zonesWithVendors(), "zone_id", saved.zone);
+  }
+  if (sv && S.zone) S.service = pick(servicesIn(S.zone.zone_id), "service_id", sv);
+  if (vd && S.zone) S.vendor = pick(vendorsIn(S.zone.zone_id, S.service && S.service.service_id),
+                                    "restaurant_id", vd);
+
+  // A vendor named without a service: infer it, so the wording and the pack
+  // rules are still right for that service.
+  if (S.vendor && !S.service){
+    const ids = vendorServices(S.vendor);
+    if (ids.length === 1) S.service = allServices().find(s => low(s.service_id) === ids[0]) || null;
+  }
+}
+
+function syncUrl(){
+  const p = new URLSearchParams();
+  if (S.zone) p.set("zone", S.zone.zone_id);
+  if (S.service) p.set("service", S.service.service_id);
+  if (S.vendor) p.set("vendor", S.vendor.restaurant_id);
+  const dbg = new URLSearchParams(location.search).get("debug");
+  if (dbg) p.set("debug", dbg);
+  const q = p.toString();
+  history.replaceState(null, "", q ? "?" + q : location.pathname);
+  if (S.zone) store.set(PREF_KEY, { zone: S.zone.zone_id });
+}
+
+/* A basket survives an accidental reload, but only under the same vendor - a
+   basket from another kitchen must never reappear under this one. */
+const basketKey = () => "owa.basket." + low(S.vendor && S.vendor.restaurant_id);
+const saveBasket = () => { if (S.vendor) store.set(basketKey(), { qty: S.qty, packs: S.packs, at: Date.now() }); };
+
+function loadBasket(){
+  if (!S.vendor) return;
+  const b = store.get(basketKey());
+  if (!b || (Date.now() - (b.at || 0)) > 6 * 3600 * 1000) return;   // stale after 6 hours
+  const ids = new Set(itemsOf(S.vendor.restaurant_id).map(m => String(m.item_id)));
+  const kept = Object.create(null);
+  Object.keys(b.qty || {}).forEach(k => { if (ids.has(String(k))) kept[k] = b.qty[k]; });
+  S.qty = kept;
+  S.packs = Math.max(1, Math.min(CONFIG.MAX_PACKS, Number(b.packs) || 1));
+}
+
+/* =====================================================================
+   Render
+   ===================================================================== */
 function render(){
-  const main = $("main");
-  main.innerHTML = "";
+  const body = $("mBody");
+  body.innerHTML = "";
+  syncUrl();
   renderTrail();
 
-  if (!S.service && services().length > 1) return pick(
-    "What do you need?", "",
-    services().map(s => ({
-      name: s.service_name || s.service_id,
-      sub: s.service_tagline,
-      go: () => { S.service = s; render(); }
-    })));
-
-  if (!S.service && services().length === 1) S.service = services()[0];
-
-  if (!S.zone) return pick(
-    "Where are we delivering?", "Pick the area closest to you.",
-    zones().map(z => ({
-      name: z.zone_name || z.zone_id,
-      go: () => { S.zone = z; render(); }
-    })), "No areas are set up yet.");
-
-  if (!S.vendor){
-    const vs = vendors();
-    const word = norm(S.service && S.service.vendor_label_plural)
-      || (norm(S.service && S.service.vendor_label) ? norm(S.service.vendor_label) + "s" : "vendors");
-
-    const sec = el("section", "step");
-    sec.append(el("h2", null, "Choose a " + (norm(S.service && S.service.vendor_label) || "vendor")));
-    sec.append(el("p", "lede",
-      (S.service.service_name || "This service") + " available in " + (S.zone.zone_name || S.zone.zone_id) +
-      ". We only show vendors that match both choices."
-    ));
-
-    if (!vs.length){
-      const s = el("div", "state");
-      s.append(el("h2", null, "No " + word + " available here"));
-      s.append(el("p", null, "There are no active vendors for this service in " +
-        (S.zone.zone_name || S.zone.zone_id) + " right now."));
-      const b = el("button", null, "Choose another area"); b.type = "button";
-      b.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
-      s.append(b); sec.append(s); $("main").append(sec); return;
-    }
-
-    const toolbar = el("div", "vendor-tools");
-    const search = el("input", "vendor-search");
-    search.type = "search"; search.placeholder = "Search vendors"; search.setAttribute("aria-label", "Search vendors");
-    const count = el("span", "vendor-count", vs.length + " available");
-    const change = el("button", "change-zone", "Change area"); change.type = "button";
-    change.addEventListener("click", () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); });
-    toolbar.append(search, count, change); sec.append(toolbar);
-
-    const ul = el("ul", "vendor-cards");
-    const draw = () => {
-      ul.innerHTML = "";
-      const q = low(search.value);
-      const filtered = vs.filter(v => !q || low(v.restaurant_name).includes(q) || low(v.restaurant_address).includes(q));
-      count.textContent = filtered.length + " available";
-      if (!filtered.length){
-        const empty = el("li", "state");
-        empty.append(el("h2", null, "No vendor matches that search"));
-        empty.append(el("p", null, "Try another vendor name or clear the search."));
-        ul.append(empty); return;
-      }
-      filtered.forEach(v => {
-        const li = el("li", "vendor-card");
-        const top = el("div", "vendor-card-top");
-        top.append(el("h3", null, v.restaurant_name || v.restaurant_id));
-        top.append(el("span", vendorAvailable(v) ? "vendor-status available" : "vendor-status", vendorAvailable(v) ? "Available" : "Unavailable"));
-        li.append(top);
-        if (norm(v.restaurant_address)) li.append(el("p", "vendor-address", v.restaurant_address));
-        const meta = el("div", "vendor-meta");
-        meta.append(el("span", "vendor-pill", S.zone.zone_name || S.zone.zone_id));
-        li.append(meta);
-        const b = el("button", "vendor-open", vendorAvailable(v) ? "View menu" : "Unavailable"); b.type = "button"; b.disabled = !vendorAvailable(v);
-        b.addEventListener("click", () => { S.vendor = v; S.qty = Object.create(null); render(); });
-        li.append(b); ul.append(li);
-      });
-    };
-    search.addEventListener("input", draw);
-    draw(); sec.append(ul); $("main").append(sec); return;
-  }
-
-  renderMenu();
+  if (!S.zone) return stepZone(body);
+  if (!S.service) return stepService(body);
+  if (!S.vendor) return stepVendor(body);
+  stepMenu(body);
   renderDocket();
 }
 
+function goto(patch){
+  Object.assign(S, patch);
+  render();
+  window.scrollTo(0, 0);
+}
+
 function renderTrail(){
-  const t = $("trail"); t.innerHTML = "";
+  const t = $("mTrail"); t.innerHTML = "";
   const crumbs = [];
-  if (S.service && services().length > 1)
-    crumbs.push([S.service.service_name || S.service.service_id,
-      () => { S.service = null; S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); }]);
   if (S.zone) crumbs.push([S.zone.zone_name || S.zone.zone_id,
-    () => { S.zone = null; S.vendor = null; S.qty = Object.create(null); render(); }]);
+    () => goto({ zone: null, service: null, vendor: null, qty: Object.create(null), cat: "", search: "" })]);
+  if (S.service) crumbs.push([S.service.service_name || S.service.service_id,
+    () => goto({ service: null, vendor: null, qty: Object.create(null), cat: "", search: "" })]);
   if (S.vendor) crumbs.push([S.vendor.restaurant_name || S.vendor.restaurant_id,
-    () => { S.vendor = null; S.qty = Object.create(null); render(); }]);
+    () => goto({ vendor: null, qty: Object.create(null), cat: "", search: "" })]);
 
   t.hidden = crumbs.length === 0;
   crumbs.forEach(([label, go], i) => {
-    if (i) { const sep = el("span", null, "›"); sep.setAttribute("aria-hidden", "true"); t.append(sep); }
-    const b = el("button", null, label);
-    b.type = "button";
+    if (i){ const s = el("span", "sep", "\u203A"); s.setAttribute("aria-hidden", "true"); t.append(s); }
+    if (i === crumbs.length - 1){ t.append(el("span", "now", label)); return; }
+    const b = el("button", null, label); b.type = "button";
     b.addEventListener("click", go);
     t.append(b);
   });
 }
 
-function pick(title, lede, options, emptyMsg){
-  $("docket").hidden = true;
-  const sec = el("section", "step");
-  sec.append(el("h2", null, title));
-  if (lede) sec.append(el("p", "lede", lede));
+function chooser(host, heading, title, lede, options, empty){
+  $("mDocket").hidden = true;
+  const sec = el("section", "m-step");
+  sec.append(el(heading, null, title));
+  if (lede) sec.append(el("p", "m-lede", lede));
 
-  if (!options.length){
-    const s = el("div", "state");
-    s.append(el("h2", null, "Nothing here yet"));
-    s.append(el("p", null, emptyMsg || "Please try again shortly."));
-    sec.append(s);
-    $("main").append(sec);
-    return;
-  }
+  if (!options.length){ sec.append(emptyState(empty)); host.append(sec); return; }
 
-  const ul = el("ul", "choices");
+  const ul = el("ul", "m-choices");
   options.forEach(o => {
     const li = el("li");
     const b = el("button"); b.type = "button";
-    const name = el("span", "name"); name.append(document.createTextNode(o.name));
-    if (o.sub) name.append(el("span", "sub", o.sub));
-    const go = el("span", "go", "›"); go.setAttribute("aria-hidden", "true");
-    b.append(name, go);
+    const nm = el("span", "m-name");
+    nm.append(document.createTextNode(o.name));
+    if (o.sub) nm.append(el("span", "m-sub", o.sub));
+    const go = el("span", "m-go", "\u203A"); go.setAttribute("aria-hidden", "true");
+    b.append(nm, go);
     b.addEventListener("click", o.go);
     li.append(b); ul.append(li);
   });
   sec.append(ul);
-  $("main").append(sec);
+  host.append(sec);
+  if (WARN.length) host.append(diagnostics());
 }
 
-function renderMenu(){
-  const list = items();
-  const sec = el("section", "step");
-  sec.append(el("h2", null, S.vendor.restaurant_name || S.vendor.restaurant_id));
-  sec.append(el("p", "lede", list.length
-    ? "Tap + to add. Your total updates as you go."
-    : "This menu is empty at the moment."));
+function whatsappBtn(label, text){
+  const a = el("a", "btn", label);
+  a.href = "https://wa.me/" + CONFIG.WA_NUMBER.replace(/\D/g, "") + "?text=" + encodeURIComponent(text);
+  a.target = "_blank"; a.rel = "noopener";
+  return a;
+}
+
+function emptyState(text){
+  const s = el("div", "m-state");
+  s.append(el("h2", null, "Nothing here yet"));
+  s.append(el("p", null, text || "Please try again shortly."));
+  const acts = el("div", "m-acts");
+  acts.append(whatsappBtn("Ask us on WhatsApp", "Hi, I want to order."));
+  s.append(acts);
+
+  // An empty list caused by unfinished sheet rows looks identical to an empty
+  // list caused by having no vendors, and the two need completely different
+  // fixes. The customer still sees the friendly message above; this says which
+  // one it is, in the console and on ?debug=1, so it is never a guess.
+  const bad = incomplete();
+  if (bad.length){
+    const msg = bad.length + " vendor row(s) are hidden because zone_id or "
+      + "service_id is blank: " + bad.map(v => v.restaurant_id).join(", ")
+      + ". Fill those columns in the Restaurants tab.";
+    try { console.warn("[Owa menu] " + msg); } catch(e){}
+    if (new URLSearchParams(location.search).get("debug")) s.append(el("p", "m-lede", msg));
+  }
+  return s;
+}
+
+function stepZone(host){
+  chooser(host, "h1", "Where are we delivering?",
+    "Pick the area closest to your house. It sets the delivery rate for your order.",
+    zonesWithVendors().map(z => {
+      const n = vendorsIn(z.zone_id, null).length;
+      return { name: z.zone_name || z.zone_id,
+               sub: n + (n === 1 ? " vendor" : " vendors") + " delivering here",
+               go: () => goto({ zone: z, service: null, vendor: null }) };
+    }),
+    "No areas are open for online ordering yet. Message us and we will take your order directly.");
+}
+
+function stepService(host){
+  const where = S.zone.zone_name || S.zone.zone_id;
+  chooser(host, "h1", "What do you need?",
+    "Only what is available in " + where + " right now.",
+    servicesIn(S.zone.zone_id).map(s => {
+      const n = vendorsIn(S.zone.zone_id, s.service_id).length;
+      return { name: s.service_name || s.service_id,
+               sub: norm(s.service_tagline) || (n + (n === 1 ? " vendor" : " vendors")),
+               go: () => goto({ service: s, vendor: null }) };
+    }),
+    "Nothing is available in " + where + " for online ordering yet. Message us and we will sort it out.");
+}
+
+function stepVendor(host){
+  const vs = vendorsIn(S.zone.zone_id, S.service.service_id);
+  const where = S.zone.zone_name || S.zone.zone_id;
+  chooser(host, "h1", "Choose a " + vendorWord(),
+    vs.length + (vs.length === 1 ? " option" : " options") + " in " + where + ".",
+    vs.map(v => {
+      const items = itemsOf(v.restaurant_id);
+      const cats = [...new Set(items.map(m => norm(m.category)).filter(Boolean))];
+      const bits = [items.length + (items.length === 1 ? " item" : " items")];
+      if (cats.length) bits.push(cats.slice(0, 3).join(" \u00b7 "));
+      return { name: v.restaurant_name || v.restaurant_id,
+               sub: bits.join("   \u2014   "),
+               go: () => { S.vendor = v; S.qty = Object.create(null); S.packs = 1;
+                           S.cat = ""; S.search = ""; loadBasket();
+                           render(); window.scrollTo(0, 0); } };
+    }),
+    "No " + vendorWord() + " here is taking online orders at the moment.");
+}
+
+function stepMenu(host){
+  const all = itemsOf(S.vendor.restaurant_id);
+  const sec = el("section", "m-step");
+  sec.append(el("h1", null, S.vendor.restaurant_name || S.vendor.restaurant_id));
+
+  const meta = [];
+  const addr = norm(S.vendor.restaurant_address) || norm(S.vendor.address);
+  if (addr) meta.push(addr);
+  if (packagingFee() > 0) meta.push("Packaging " + money(packagingFee()) + " per " + packWord(1));
+  sec.append(el("p", "m-lede", meta.length ? meta.join("   \u00b7   ")
+    : "Tap + to add. Your total updates as you go."));
+  host.append(sec);
+
+  const cats = [...new Set(all.map(m => norm(m.category)).filter(Boolean))];
+
+  if (all.length > CONFIG.SEARCH_AFTER){
+    const box = el("div", "m-search");
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>';
+    const inp = document.createElement("input");
+    inp.type = "search"; inp.value = S.search;
+    inp.placeholder = "Search this menu";
+    inp.setAttribute("aria-label", "Search this menu");
+    inp.addEventListener("input", () => { S.search = inp.value; drawPad(); });
+    box.append(svg, inp);
+    host.append(box);
+  }
+
+  if (cats.length > 1){
+    const strip = el("div", "m-cats");
+    strip.setAttribute("role", "group");
+    strip.setAttribute("aria-label", "Menu sections");
+    [["", "All"], ...cats.map(c => [c, c])].forEach(([val, label]) => {
+      const b = el("button", null, label); b.type = "button";
+      b.dataset.cat = val;
+      b.setAttribute("aria-pressed", String(S.cat === val));
+      b.addEventListener("click", () => { S.cat = val; drawPad(); });
+      strip.append(b);
+    });
+    host.append(strip);
+  }
+
+  const padHost = el("div"); padHost.id = "mPadHost";
+  host.append(padHost);
+  drawPad();
+
+  if (WARN.length) host.append(diagnostics());
+}
+
+function visibleItems(){
+  const q = low(S.search);
+  return itemsOf(S.vendor.restaurant_id).filter(m => {
+    if (S.cat && norm(m.category) !== S.cat) return false;
+    if (!q) return true;
+    return low(m.item_name).includes(q) || low(m.category).includes(q);
+  });
+}
+
+function drawPad(){
+  const host = $("mPadHost");
+  if (!host) return;
+  host.innerHTML = "";
+
+  // Re-mark the section pills in place, so the strip does not jump under the thumb.
+  const strip = document.querySelector(".m-cats");
+  if (strip) [...strip.children].forEach(b =>
+    b.setAttribute("aria-pressed", String((b.dataset.cat || "") === S.cat)));
+
+  const rows = visibleItems();
+  if (!rows.length){
+    const s = el("div", "m-state");
+    s.append(el("h2", null, "Nothing matches"));
+    s.append(el("p", null, S.search ? "Try a different word, or clear the search."
+                                    : "This section is empty at the moment."));
+    host.append(s);
+    renderDocket();
+    return;
+  }
 
   const groups = new Map();
-  list.forEach(m => {
+  rows.forEach(m => {
     const k = norm(m.category) || "";
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(m);
   });
 
-  groups.forEach((rows, cat) => {
-    if (cat) sec.append(el("h3", "cat", cat));
-    const ul = el("ul", "pad");
-    rows.forEach(m => ul.append(itemRow(m)));
-    sec.append(ul);
+  groups.forEach((list, catName) => {
+    if (catName && !S.cat) host.append(el("h2", "m-cat-head", catName));
+    const ul = el("ul", "m-pad");
+    list.forEach(m => ul.append(itemRow(m)));
+    host.append(ul);
   });
 
-  if (hasPacks() && list.length){
-    const box = el("div", "packs");
+  if (hasPacks()){
+    const box = el("div", "m-packs");
     const txt = el("p");
     txt.append(el("strong", null, "How many " + packWord(2) + "?"));
-    txt.append(document.createTextNode("The whole order, repeated."));
-    const st = el("div", "stepper");
-    const less = el("button", "less", "\u2212"); less.type = "button";
-    less.setAttribute("aria-label", "One fewer " + packWord(1));
-    const q = el("span", "qty", String(S.packs));
-    const more = el("button", "add", "+"); more.type = "button";
-    more.setAttribute("aria-label", "One more " + packWord(1));
-    less.disabled = S.packs <= 1;
-    less.addEventListener("click", () => { S.packs = Math.max(1, S.packs - 1); render(); });
-    more.addEventListener("click", () => { S.packs = Math.min(20, S.packs + 1); render(); });
-    st.append(less, q, more);
-    box.append(txt, st);
-    sec.append(box);
+    txt.append(document.createTextNode("The whole order above, repeated."
+      + (packagingFee() > 0 ? " Packaging is charged per " + packWord(1) + "." : "")));
+    box.append(txt, stepper({
+      value: S.packs, min: 1, max: CONFIG.MAX_PACKS,
+      lessLabel: "One fewer " + packWord(1), moreLabel: "One more " + packWord(1),
+      change: (v) => { S.packs = v; saveBasket(); drawPad(); }
+    }));
+    host.append(box);
   }
 
-  $("main").append(sec);
+  renderDocket();
+}
+
+function stepper({ value, min, max, lessLabel, moreLabel, change }){
+  const st = el("div", "m-stepper");
+  const less = el("button", "m-less", "\u2212"); less.type = "button";
+  less.setAttribute("aria-label", lessLabel);
+  less.disabled = value <= min;
+  const q = el("span", "m-qty", String(value));
+  q.dataset.zero = value === 0 ? "1" : "0";
+  const more = el("button", "m-add", "+"); more.type = "button";
+  more.setAttribute("aria-label", moreLabel);
+  more.disabled = value >= max;
+  less.addEventListener("click", () => change(Math.max(min, value - 1)));
+  more.addEventListener("click", () => change(Math.min(max, value + 1)));
+  st.append(less, q, more);
+  return st;
 }
 
 function itemRow(m){
   const qty = S.qty[m.item_id] || 0;
-  const li = el("li", "row" + (qty ? " in" : ""));
+  const li = el("li", "m-row" + (qty ? " m-in" : ""));
+  li.dataset.item = m.item_id;
 
-  const line = el("div", "line");
-  const item = el("div", "item");
-  item.append(el("span", "n", m.item_name || m.item_id));
-  line.append(item);
-  line.append(el("span", "leader"));
-  line.append(el("span", "price", money(m.price)));
+  const line = el("div", "m-line");
+  const item = el("div", "m-item");
+  item.append(el("span", "m-n", m.item_name || m.item_id));
+  line.append(item, el("span", "m-leader"), el("span", "m-price", money(m.price)));
 
-  const st = el("div", "stepper");
-  const less = el("button", "less", "\u2212"); less.type = "button";
-  less.setAttribute("aria-label", "Remove one " + (m.item_name || "item"));
-  less.disabled = qty === 0;
-  const q = el("span", "qty", String(qty));
-  q.dataset.zero = qty === 0 ? "1" : "0";
-  q.setAttribute("aria-live", "polite");
-  const more = el("button", "add", "+"); more.type = "button";
-  more.setAttribute("aria-label", "Add one " + (m.item_name || "item"));
-
-  less.addEventListener("click", () => bump(m.item_id, -1));
-  more.addEventListener("click", () => bump(m.item_id, +1));
-  st.append(less, q, more);
-
-  li.append(line, st);
+  li.append(line, stepper({
+    value: qty, min: 0, max: CONFIG.MAX_QTY,
+    lessLabel: "Remove one " + (m.item_name || "item"),
+    moreLabel: "Add one " + (m.item_name || "item"),
+    change: (v) => setQty(m, v)
+  }));
   return li;
 }
 
-/* Only the touched row and the docket are redrawn, so the page never jumps
-   under the thumb mid-order. */
-function bump(id, by){
-  const next = Math.max(0, Math.min(20, (S.qty[id] || 0) + by));
-  if (next === 0) delete S.qty[id]; else S.qty[id] = next;
+function setQty(m, v){
+  // The bot accepts a fixed number of distinct lines. Stopping here is kinder
+  // than letting the basket be silently trimmed after it has been sent.
+  if (v > 0 && !S.qty[m.item_id] && lines().length >= CONFIG.MAX_LINES){
+    alert("That is as many different items as one order can hold ("
+      + CONFIG.MAX_LINES + "). Send this order, then start another.");
+    return;
+  }
+  if (v === 0) delete S.qty[m.item_id]; else S.qty[m.item_id] = v;
+  saveBasket();
 
-  const rows = document.querySelectorAll(".pad .row");
-  const list = items();
-  rows.forEach((row, i) => {
-    const m = list[i];
-    if (!m || m.item_id !== id) return;
-    const fresh = itemRow(m);
-    row.replaceWith(fresh);
-  });
+  const rows = document.querySelectorAll(".m-row");
+  for (const row of rows){
+    if (row.dataset.item === String(m.item_id)){ row.replaceWith(itemRow(m)); break; }
+  }
   renderDocket(true);
 }
 
 function renderDocket(animate){
-  const d = $("docket");
+  const d = $("mDocket");
+  if (!S.vendor){ d.hidden = true; return; }
   d.hidden = false;
+
   const ls = lines();
   const n = ls.reduce((s, l) => s + l.qty, 0);
-  const amount = total();
 
-  $("dLines").textContent = n
+  const sum = $("mSum"); sum.innerHTML = "";
+  if (ls.length){
+    const add = (label, value) => {
+      const r = el("div", "m-srow");
+      r.append(el("span", null, label), el("b", null, money(value)));
+      sum.append(r);
+    };
+    add(cap(itemWord()), goods());
+    if (packaging() > 0) add("Packaging (" + packs() + " \u00d7 " + money(packagingFee()) + ")", packaging());
+  }
+
+  $("mCount").textContent = n
     ? n + " " + (n === 1 ? itemWord().replace(/s$/, "") : itemWord())
-      + (hasPacks() && S.packs > 1 ? " \u00d7 " + S.packs + " " + packWord(S.packs) : "")
+      + (hasPacks() && packs() > 1 ? "   \u00d7 " + packs() + " " + packWord(packs()) : "")
     : "Nothing yet";
+  $("mNote").textContent = ls.length ? "Service charge and delivery added in the chat"
+                                     : "Delivery is quoted in the chat";
 
-  const amt = $("dTotal");
-  amt.textContent = money(amount);
-  if (animate){ amt.classList.add("bump"); setTimeout(() => amt.classList.remove("bump"), 200); }
+  const amt = $("mTotal");
+  amt.textContent = money(shown());
+  if (animate){ amt.classList.add("m-bump"); setTimeout(() => amt.classList.remove("m-bump"), 200); }
 
-  const send = $("send");
-  const label = $("sendLabel");
+  const send = $("mSend"), label = $("mSendLabel");
   if (!ls.length){
     send.setAttribute("aria-disabled", "true");
-    send.removeAttribute("href");
+    send.removeAttribute("href"); send.removeAttribute("target");
     label.textContent = "Add something first";
   } else {
     send.setAttribute("aria-disabled", "false");
     send.href = waLink();
+    send.target = "_blank"; send.rel = "noopener";
     label.textContent = "Send this order on WhatsApp";
   }
 }
 
-/* ---------- the one message ---------- */
+/* =====================================================================
+   The one message
+   ===================================================================== */
 function orderText(){
   const ls = lines();
-  const packs = hasPacks() ? S.packs : 1;
+  const p = packs();
 
-  const human = [
+  const out = [
     "\uD83D\uDED2 " + CONFIG.BUSINESS + " order",
     "",
     (S.vendor.restaurant_name || S.vendor.restaurant_id)
       + " \u2014 " + (S.zone.zone_name || S.zone.zone_id),
-    ...ls.map(l => l.qty + " \u00d7 " + l.name),
+    ...ls.map(l => l.qty + " \u00d7 " + l.name)
   ];
-  if (hasPacks() && packs > 1) human.push("\uD83D\uDCE6 " + packs + " " + packWord(packs));
-  human.push("", "Items: " + money(total()), "(delivery fee confirmed in the chat)", "", "");
+  if (hasPacks() && p > 1) out.push("\uD83D\uDCE6 " + p + " " + packWord(p));
+  out.push("");
+  out.push(cap(itemWord()) + ": " + money(goods()));
+  if (packaging() > 0) out.push("Packaging: " + money(packaging()));
+  out.push("(service charge and delivery confirmed in the chat)", "", "");
 
-  // The machine line. No prices in it on purpose: this is editable text, so
-  // the bot looks every item up in the sheet and prices it there.
+  // Ids and quantities only. No prices: this is editable text, so the bot looks
+  // every item up in the sheet and prices it there.
   const code = "#OWA1"
     + " s=" + (S.service ? S.service.service_id : "")
     + " z=" + S.zone.zone_id
     + " r=" + S.vendor.restaurant_id
-    + " p=" + packs
+    + " p=" + p
     + " i=" + ls.map(l => l.id + "*" + l.qty).join(",");
 
-  return human.join("\n") + code;
+  return out.join("\n") + code;
 }
 
-function waLink(){
-  return "https://wa.me/" + CONFIG.WA_NUMBER.replace(/\D/g, "")
-    + "?text=" + encodeURIComponent(orderText());
+const waLink = () => "https://wa.me/" + CONFIG.WA_NUMBER.replace(/\D/g, "")
+  + "?text=" + encodeURIComponent(orderText());
+
+/* =====================================================================
+   Sheet check
+
+   Visible only with ?debug=1, so a customer never sees it. It names the
+   sheet problems that quietly make a menu look wrong - a vendor with no
+   area, an item pointing at a vendor that is not there, a price that is not
+   a number - which are far easier to fix when something points at them.
+   ===================================================================== */
+function audit(){
+  WARN.length = 0;
+  if (!new URLSearchParams(location.search).get("debug")) return;
+
+  const zoneIds = new Set(allZones().map(z => low(z.zone_id)));
+  const svcIds = new Set(allServices().map(s => low(s.service_id)));
+  const vendIds = new Set(allVendors().map(v => low(v.restaurant_id)));
+  const add = (title, ids) => { if (ids.length) WARN.push([title, ids]); };
+
+  add(CONFIG.STRICT_IDS
+      ? "Vendors HIDDEN because zone_id is blank - fill it in on the Restaurants tab"
+      : "Vendors with a blank zone_id, so they appear in EVERY area",
+    allVendors().filter(v => vendorZones(v).length === 0).map(v => v.restaurant_id));
+  add(CONFIG.STRICT_IDS
+      ? "Vendors HIDDEN because service_id is blank - fill it in on the Restaurants tab"
+      : "Vendors with a blank service_id, so they appear under EVERY service",
+    allVendors().filter(v => vendorServices(v).length === 0).map(v => v.restaurant_id));
+  add("Vendors pointing at a zone that is not in the Zones tab",
+    allVendors().filter(v => !wildZone(v) && vendorZones(v).some(z => !zoneIds.has(z)))
+      .map(v => v.restaurant_id));
+  add("Vendors pointing at a service that is not in the ServiceTypes tab",
+    allVendors().filter(v => !wildService(v) && vendorServices(v).some(s => !svcIds.has(s)))
+      .map(v => v.restaurant_id));
+  add("Vendors covering EVERY area via '*' - correct only if they really do",
+    allVendors().filter(wildZone).map(v => v.restaurant_id));
+  add("Vendors hidden because they have no active menu items",
+    allVendors().filter(v => !stocked(v)).map(v => v.restaurant_id));
+  add("Items whose restaurant_id matches no active vendor",
+    allItems().filter(m => !vendIds.has(low(m.restaurant_id))).map(m => m.item_id));
+  add("Items with a missing or unreadable price",
+    allItems().filter(m => cash(m.price) <= 0).map(m => m.item_id));
+
+  const seen = new Set(), dupes = [];
+  allItems().forEach(m => { const k = low(m.item_id);
+    if (seen.has(k)) dupes.push(m.item_id); else seen.add(k); });
+  add("Duplicate item_id values - only the first is reachable", dupes);
 }
 
-/* ---------- boot ---------- */
+function diagnostics(){
+  const box = el("div", "m-diag");
+  box.append(el("h3", null, "Sheet check: " + WARN.length
+    + (WARN.length === 1 ? " thing to look at" : " things to look at")));
+  WARN.forEach(([title, ids]) => {
+    box.append(el("p", null, title));
+    const ul = el("ul");
+    ids.slice(0, 25).forEach(i => { const li = el("li"); li.append(el("code", null, String(i))); ul.append(li); });
+    if (ids.length > 25) ul.append(el("li", null, "\u2026and " + (ids.length - 25) + " more"));
+    box.append(ul);
+  });
+  return box;
+}
+
+/* =====================================================================
+   Boot
+   ===================================================================== */
 function failScreen(err){
-  $("docket").hidden = true;
-  $("main").innerHTML = "";
-  const s = el("div", "state");
-  const unset = String(err && err.message || "").startsWith("unset:");
-  s.append(el("h2", null, unset ? "This menu is not set up yet" : "The menu did not load"));
+  $("mDocket").hidden = true;
+  $("mTrail").hidden = true;
+  const body = $("mBody"); body.innerHTML = "";
+  const code = String((err && err.message) || "");
+  const unset = code.startsWith("unset:");
+  const empty = code === "empty";
+
+  const s = el("div", "m-state");
+  s.append(el("h2", null, unset ? "This menu is not connected yet"
+    : empty ? "The menu is empty" : "The menu did not load"));
   s.append(el("p", null, unset
-    ? "The four sheet links at the top of this page still need filling in."
-    : "Check your connection and try again. You can also order in the chat."));
-  const b = el("button", null, "Try again"); b.type = "button";
-  b.addEventListener("click", () => { boot(); });
-  s.append(b);
-  $("main").append(s);
+    ? "The sheet links at the top of this page still need filling in."
+    : empty ? "No vendors or items came back from the sheet. Check that the Restaurants and MenuItems tabs are still published."
+    : "Check your connection and try again \u2014 or just order in the chat, it works the same."));
+
+  const acts = el("div", "m-acts");
+  acts.append(whatsappBtn("Order on WhatsApp", "Hi, I want to order."));
+  const again = el("button", "btn btn-ghost", "Try again");
+  again.type = "button";
+  again.addEventListener("click", boot);
+  acts.append(again);
+  s.append(acts);
+  body.append(s);
 }
 
 async function boot(){
-  $("main").innerHTML = "";
-  $("main").append($("boot") || el("div"));
+  const body = $("mBody");
+  body.innerHTML = "";
+  const wait = el("div", "m-state");
+  wait.setAttribute("aria-busy", "true");
+  wait.append(el("div", "m-skel"), el("div", "m-skel"), el("div", "m-skel"),
+              el("p", null, "Loading today's menu\u2026"));
+  body.append(wait);
+
   try{
     await load();
-    if (CONFIG.BUSINESS) $("brand").textContent = CONFIG.BUSINESS;
+    audit();
+    applyUrl();
+    if (S.vendor) loadBasket();
     render();
   }catch(err){
     failScreen(err);
   }
 }
+
+window.addEventListener("popstate", () => {
+  S.zone = S.service = S.vendor = null;
+  S.qty = Object.create(null); S.packs = 1; S.cat = ""; S.search = "";
+  applyUrl();
+  if (S.vendor) loadBasket();
+  render();
+});
+
 boot();
 </script>
 </body>
