@@ -1,0 +1,14 @@
+/* TEAM */
+  Business: Owa Delivery Services (BN 9517031)
+  Location: Badagry, Lagos State, Nigeria
+  Contact: info@owadelivery.com
+  Phone: +234 704 164 9942
+
+/* DEVELOPER */
+  Built by: Guwit Technology Solutions Ltd (RC 9040112)
+  Scope: Website and WhatsApp ordering system
+
+/* SITE */
+  Language: English (Nigeria)
+  Standards: HTML5, CSS3, vanilla JavaScript
+  Components: No frameworks, no trackers, no cookies

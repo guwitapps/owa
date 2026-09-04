@@ -1,0 +1,7 @@
+# Owa Delivery Services — https://owadelivery.com
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /menu/?debug=
+
+Sitemap: https://owadelivery.com/sitemap.xml
