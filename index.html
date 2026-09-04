@@ -3,54 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Errands Delivered in Badagry</title>
-<meta name="description" content="Owa Delivery Services delivers food, cooking gas, pharmacy items, groceries and parcels across Badagry and Lagos. Browse the menu online, then order on WhatsApp.">
+<title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Groceries Delivered in Badagry, Lagos</title>
+<meta name="description" content="Order food, cooking gas, pharmacy items, groceries and parcels in Badagry, Lagos. Build your order on the menu page and send it in one message. You pay only after we confirm the vendor has everything.">
 <meta name="author" content="Owa Delivery Services">
 <meta name="developer" content="Guwit Technology Solutions Ltd (RC 9040112)">
+<meta name="theme-color" content="#0B0B0B">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="geo.region" content="NG-LA">
+<meta name="geo.placename" content="Badagry, Lagos">
 <link rel="canonical" href="https://owadelivery.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Owa Delivery Services — order anything local on WhatsApp">
-<meta property="og:description" content="Food, cooking gas, pharmacy items, groceries and errands delivered across Badagry and Lagos.">
+<meta property="og:site_name" content="Owa Delivery Services">
+<meta property="og:title" content="Owa Delivery Services — food, gas, pharmacy and groceries delivered in Badagry">
+<meta property="og:description" content="Build your order on the menu page and send it in one message. You pay only after we confirm the vendor has everything.">
 <meta property="og:url" content="https://owadelivery.com/">
 <meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
 <meta property="og:image:alt" content="Owa Delivery Services — local delivery in Badagry">
 <meta property="og:locale" content="en_NG">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.png">
-<link rel="author" href="humans.txt">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="author" href="/humans.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Literata:opsz,wght@7..72,400;7..72,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<style>
-/* Two small additions only. Everything else comes from assets/style.css.
-   Font Awesome was dropped: it was a render-blocking stylesheet from a third
-   party (about 100KB) loaded for a single WhatsApp glyph, which is a real cost
-   on mobile data. The glyph is now an inline SVG. */
-.skip-link{position:absolute;left:-9999px}
-.skip-link:focus{
-  left:1rem;top:1rem;z-index:99;padding:.6rem 1rem;border-radius:6px;
-  background:var(--teal,#0f7a63);color:#fff;text-decoration:none;
-}
-.btn svg{vertical-align:-.18em;margin-right:.15rem}
-</style>
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="prefetch" href="/menu/">
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@graph":[
     {
-      "@type":"LocalBusiness",
+      "@type":["LocalBusiness","DeliveryService"],
       "@id":"https://owadelivery.com/#business",
       "name":"Owa Delivery Services",
       "alternateName":"Owa",
-      "description":"Local delivery of food, cooking gas, pharmacy items, groceries and parcels across Badagry, Lagos State, ordered on WhatsApp.",
-      "url":"https://owadelivery.com",
+      "description":"Local delivery of food, cooking gas, pharmacy items, groceries and parcels across Badagry, Lagos State. Orders are built on the website and completed on WhatsApp.",
+      "url":"https://owadelivery.com/",
       "telephone":"+2347041649942",
       "email":"info@owadelivery.com",
       "currenciesAccepted":"NGN",
-      "paymentAccepted":"Bank transfer, Card",
+      "paymentAccepted":"Bank transfer",
       "priceRange":"₦₦",
       "hasMenu":"https://owadelivery.com/menu/",
+      "image":"https://owadelivery.com/assets/og-cover.png",
+      "logo":"https://owadelivery.com/assets/owa-logo.png",
       "identifier":{
         "@type":"PropertyValue",
         "name":"CAC Business Name Registration Number",
@@ -58,11 +55,17 @@
       },
       "address":{
         "@type":"PostalAddress",
-        "streetAddress":"Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road, Badagry, Lagos",
+        "streetAddress":"Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road",
         "addressLocality":"Badagry",
         "addressRegion":"Lagos State",
         "addressCountry":"NG"
       },
+      "openingHoursSpecification":[{
+        "@type":"OpeningHoursSpecification",
+        "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens":"08:00",
+        "closes":"21:00"
+      }],
       "areaServed":[
         {"@type":"Place","name":"Badagry Town"},
         {"@type":"Place","name":"Ajara"},
@@ -92,11 +95,52 @@
     {
       "@type":"WebSite",
       "@id":"https://owadelivery.com/#website",
-      "url":"https://owadelivery.com",
+      "url":"https://owadelivery.com/",
       "name":"Owa Delivery Services",
       "inLanguage":"en-NG",
       "publisher":{"@id":"https://owadelivery.com/#business"},
       "creator":{"@id":"https://owadelivery.com/#developer"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://owadelivery.com/#faq",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"How do I place an order with Owa Delivery Services?",
+          "acceptedAnswer":{"@type":"Answer","text":"Open the menu page, pick your area, choose a service and a vendor, then add your items. When you are finished, one tap sends the whole order to our WhatsApp line as a single message."}
+        },
+        {
+          "@type":"Question",
+          "name":"What does the price include?",
+          "acceptedAnswer":{"@type":"Answer","text":"Your total is made up of four lines: the vendor's own price for the items, packaging charged per pack where the service uses packs, a service charge shown as a percentage of the items and packaging, and a flat delivery fee for your zone. Our team may adjust the delivery fee for unusual trips, and you always see the final figure before paying."}
+        },
+        {
+          "@type":"Question",
+          "name":"When do I pay, and how?",
+          "acceptedAnswer":{"@type":"Answer","text":"You pay after we confirm with the vendor that everything is available and send you the priced confirmation. Payment is by bank transfer to the account shown in that confirmation. Quote your order number as the transfer narration and send the receipt. We do not collect card or bank details on the website."}
+        },
+        {
+          "@type":"Question",
+          "name":"Which areas of Badagry do you deliver to?",
+          "acceptedAnswer":{"@type":"Answer","text":"Badagry Town, Ajara, Ikoga, Age Mowo, Topo, Mowo, Seme, Imeke, Ibereko, Oko-Afo and Owode Apa. Each area has its own flat delivery rate. New areas open as rider coverage grows."}
+        },
+        {
+          "@type":"Question",
+          "name":"How long does delivery take?",
+          "acceptedAnswer":{"@type":"Answer","text":"Delivery times are estimates rather than guarantees. Traffic, weather and how long the vendor takes to prepare your order all affect them."}
+        },
+        {
+          "@type":"Question",
+          "name":"Can I cancel an order?",
+          "acceptedAnswer":{"@type":"Answer","text":"Yes, free of charge, before the vendor starts preparing. Once preparation has started, perishable and prepared items usually cannot be cancelled because the vendor has already incurred the cost. If we cannot fulfil your order, you are not charged and any payment already made is refunded in full."}
+        },
+        {
+          "@type":"Question",
+          "name":"Do I need to install an app?",
+          "acceptedAnswer":{"@type":"Answer","text":"No. You browse and build the order on this website, and the order is completed in a normal WhatsApp conversation. There is no app to install and no account or password to create."}
+        }
+      ]
     },
     {
       "@type":"Organization",
@@ -120,17 +164,18 @@
 
 <header>
   <div class="nav wrap">
-    <a href="index.html" class="logo">
-      <img src="assets/owa-logo.png" alt="Owa Delivery Services" width="34" height="34"
-           onerror="this.onerror=null;this.src='assets/owa-logo.svg'"></a>
+    <a href="/" class="logo" aria-label="Owa Delivery Services — home">
+      <img src="/assets/owa-logo.png" alt="Owa Delivery Services" width="36" height="36"
+           onerror="this.onerror=null;this.src='/assets/owa-logo.svg'"></a>
     <nav class="nav-links" aria-label="Main">
-      <a href="index.html" class="active" aria-current="page">Home</a>
-      <a href="menu/">Menu</a>
+      <a href="/" class="active" aria-current="page">Home</a>
+      <a href="/menu/">Order menu</a>
       <a href="#services">What we deliver</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="#how">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
     </nav>
-    <a class="btn" href="menu/">See the menu</a>
+    <a class="btn" href="/menu/">Start an order</a>
   </div>
 </header>
 
@@ -140,34 +185,34 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">Badagry &amp; nearby areas</div>
-      <h1>From Badagry's vendors to <em>your</em> door.</h1>
-      <p class="lede">Badagry’s first automated WhatsApp delivery service. Browse today’s vendors and
-        prices, build your order, and send it in one message — then sit back while we bring it to you.</p>
+      <h1>From Badagry's vendors to your door.</h1>
+      <p class="lede">Badagry's first automated WhatsApp delivery service. Browse today's vendors and
+        prices, build your order here, and send it in one message — then sit back while we bring it to you.</p>
       <div class="hero-cta">
-        <!-- Primary: the menu. Browsing here is free for the business and
-             faster for the customer, and the order still finishes in WhatsApp. -->
-        <a class="btn" href="menu/">Browse the menu</a>
-        <a class="btn btn-ghost" href="https://wa.me/2347053594258?text=Hi%2C%20I%20want%20to%20order."
-           target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.2-4.4-4-4.5-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.4.8 1.3 1.6 2 1.1.9 1.9 1.2 2.1 1.3.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
-          Order in the chat
-        </a>
+        <!-- One way in. The order is built here first, so the message that
+             reaches WhatsApp is already complete: vendor, area, items and
+             quantities. Nothing has to be typed out or guessed at in the chat. -->
+        <a class="btn" href="/menu/">Start an order</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <p class="note" style="margin-top:16px;">
-        No app to install. <a href="#how">See how it works</a>.
+      <p class="note" style="margin-top:20px;">
+        No app to install, no account to create. You pay only after we confirm the vendor has
+        everything — and you see the full price first.
       </p>
       <div class="hero-stats">
+        <!-- Keep "30+" in step with the Restaurants tab of your sheet.
+             If the live vendor count ever drops below it, change the number. -->
         <div>
           <div class="stat-num">30+</div>
           <div class="stat-label">Local vendors</div>
         </div>
         <div>
-          <div class="stat-num">6</div>
-          <div class="stat-label">Service types</div>
+          <div class="stat-num">11</div>
+          <div class="stat-label">Areas covered</div>
         </div>
         <div>
           <div class="stat-num">~30 min</div>
-          <div class="stat-label">Typical delivery</div>
+          <div class="stat-label">Typical, not guaranteed</div>
         </div>
       </div>
     </div>
@@ -175,7 +220,7 @@
     <!-- Signature: one route, several kinds of stop. This is the whole business in one image. -->
     <div class="route-box">
       <svg class="route-svg" viewBox="0 0 410 250" xmlns="http://www.w3.org/2000/svg" role="img"
-           aria-label="A single delivery route passing a kitchen, a pharmacy, a gas depot and a market before arriving at the customer's door.">
+           aria-label="A single delivery route passing a restaurant, a pharmacy and a gas depot before arriving at the customer's door.">
         <path class="route-line" d="M24,196 C 88,150 96,74 156,66 S 250,132 292,86 S 356,52 384,104" />
 
         <circle class="route-stop" cx="24"  cy="196" r="6"/>
@@ -207,50 +252,55 @@
       <div class="eyebrow">What we deliver</div>
       <h2>More than meals.</h2>
       <p>Owa started with food and now covers the errands that eat up a working day.
-        Same chat, same riders, and the delivery fee for your trip shown before you pay.</p>
+        Same riders, same order flow, and the delivery fee for your area shown before you pay.</p>
     </div>
     <div class="service-grid">
       <!-- Each card opens the menu already filtered to that service.
            The ?service= value must match service_id on your ServiceTypes tab.
            If one ever stops matching, the menu simply opens on the area step
-           instead, so a wrong id can never break the page. -->
+           instead, so a wrong id can never break the page.
+
+           Parcels and errands need a row on the ServiceTypes tab and at least
+           one stocked vendor row, or those two cards will land on the area
+           step with the service unset. If you are not running them through
+           the sheet yet, delete those two cards rather than leave them
+           pointing at a service that is not there. -->
       <div class="service">
         <div class="tag">Food</div>
         <h3>Restaurants &amp; kitchens</h3>
-        <p>Browse menus from vendors that deliver to your area, build an order and pay on confirmation.</p>
-        <p><a href="menu/?service=food">See restaurants near you</a></p>
+        <p>Browse menus from vendors that deliver to your area and build your order item by item.</p>
+        <p class="service-link"><a href="/menu/?service=food">See restaurants near you</a></p>
       </div>
       <div class="service">
         <div class="tag">Gas</div>
         <h3>Cooking gas refills</h3>
-        <p>Send your cylinder size. We collect, refill and return it the same day where stock allows.</p>
-        <p><a href="menu/?service=gas">See gas prices</a></p>
+        <p>Choose your cylinder size. We collect, refill and return it the same day where stock allows.</p>
+        <p class="service-link"><a href="/menu/?service=gas">See gas prices</a></p>
       </div>
       <div class="service">
         <div class="tag">Pharmacy</div>
         <h3>Chemist &amp; pharmacy runs</h3>
-        <p>Over-the-counter items picked up from a registered pharmacy near you and delivered discreetly.</p>
-        <p><a href="menu/?service=pharmacy">See pharmacy items</a></p>
+        <p>Over-the-counter items collected from a registered pharmacy near you and delivered discreetly.
+          Prescription medicines are subject to the pharmacy's own requirements.</p>
+        <p class="service-link"><a href="/menu/?service=pharmacy">See pharmacy items</a></p>
       </div>
       <div class="service">
         <div class="tag">Groceries</div>
         <h3>Market &amp; provisions</h3>
-        <p>Send a list. A rider shops it at the market or a nearby store and brings it to your door.</p>
-        <p><a href="menu/?service=groceries">See grocery vendors</a></p>
+        <p>Pick your provisions from a nearby store or market vendor and a rider shops the list for you.</p>
+        <p class="service-link"><a href="/menu/?service=groceries">See grocery vendors</a></p>
       </div>
       <div class="service">
         <div class="tag">Parcels</div>
         <h3>Send something across town</h3>
         <p>Documents, keys, a forgotten lunch. Point-to-point drop-offs within our coverage area.</p>
-        <p><a href="https://wa.me/2347053594258?text=I%20want%20to%20send%20a%20parcel."
-              target="_blank" rel="noopener">Tell us the two addresses</a></p>
+        <p class="service-link"><a href="/menu/?service=parcels">Start a parcel</a></p>
       </div>
       <div class="service">
         <div class="tag">Errands</div>
         <h3>Pay-and-pick-up</h3>
-        <p>Anything with a clear pickup point and a clear price. Ask us in the chat and we'll confirm.</p>
-        <p><a href="https://wa.me/2347053594258?text=I%20have%20an%20errand."
-              target="_blank" rel="noopener">Describe your errand</a></p>
+        <p>Anything with a clear pickup point and a clear price, confirmed with you before we go.</p>
+        <p class="service-link"><a href="/menu/?service=errands">Start an errand</a></p>
       </div>
     </div>
   </div>
@@ -260,48 +310,118 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">How it works</div>
-      <h2>Two ways in. One chat.</h2>
-      <p>No app to install and no account to create. Pick your items on the website or in the chat —
-        either way the order finishes in WhatsApp and you are told at every handover.</p>
+      <h2>Build it here. Finish it in the chat.</h2>
+      <p>No app to install and no account to create. You choose everything on the menu page, and the
+        finished order arrives on WhatsApp as one message our team can act on straight away.</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">Step 01</div>
         <h3>Pick your area and vendor</h3>
-        <p>On the menu page you see today's vendors and prices for your area. Prefer to type?
-          Send <span class="mono">hi</span> and we'll walk you through the same choices in the chat.</p>
+        <p>The menu shows only the vendors that deliver to your area, and only what they have listed
+          today. Your area also sets the delivery rate for the order.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 02</div>
-        <h3>Send your order</h3>
-        <p>One tap sends your whole basket to WhatsApp as a single message. We confirm the vendor
-          has everything before you pay anything.</p>
+        <h3>Add your items</h3>
+        <p>Tap to add, tap again for more. The running total for items and packaging updates as you
+          go, so nothing about the price is a surprise later.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 03</div>
-        <h3>Share your location</h3>
-        <p>One tap sends your pin. The delivery fee is worked out from your actual distance,
-          and you see the full price before paying.</p>
+        <h3>Send the order</h3>
+        <p>One tap sends the whole basket to WhatsApp as a single message. We check with the vendor
+          that everything is available, then send you the full priced confirmation.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 04</div>
-        <h3>Track to your door</h3>
-        <p>We message you when it's being prepared, when a rider collects it, and when it arrives.</p>
+        <h3>Pay and track to your door</h3>
+        <p>Pay by transfer quoting your order number. We message you when the vendor starts, when a
+          rider collects it, and when it arrives.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<!-- =====================================================================
+     The terms, in the words the terms actually use.
+
+     Every figure and rule in this section is lifted from terms.html, so the
+     two can be read side by side without contradicting each other. If you
+     change a rule, change it in BOTH places.
+     ===================================================================== -->
+<section id="the-rules">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Before you order</div>
+      <h2>The rules, in plain words.</h2>
+      <p>The short version of our terms of service. Nothing here replaces
+        <a href="/terms.html" style="color:var(--teal);">the full terms</a> — it just puts the parts that
+        affect your order where you can see them before you place one.</p>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 style="font-size:1.1rem;">What your total is made of</h3>
+        <ul class="price-lines">
+          <li><span>The vendor's own price for what you ordered</span> <b>Items</b></li>
+          <li><span>Charged per pack, where the service uses packs</span> <b>Packaging</b></li>
+          <li><span>A percentage of the items and packaging, shown as a percentage in your confirmation</span> <b>Service charge</b></li>
+          <li><span>A flat fee for your zone. Our team may adjust it for unusual trips</span> <b>Delivery fee</b></li>
+        </ul>
+        <div class="note">
+          Prices come from the vendor and can change without notice. The figure in your confirmation
+          is the figure you pay, and you see it before any money moves.
+        </div>
+      </div>
+
+      <div class="terms-grid">
+        <div class="terms-item">
+          <h3>Nothing is charged until you confirm</h3>
+          <p>An order is only binding once we have checked availability with the vendor and you have
+            received the priced confirmation. Until then nothing is charged and nothing is committed.</p>
+        </div>
+        <div class="terms-item">
+          <h3>Payment is by bank transfer</h3>
+          <p>To the account in your confirmation, quoting your order number as the narration. We never
+            ask for card details, and none are collected on this website.</p>
+        </div>
+        <div class="terms-item">
+          <h3>Cancelling</h3>
+          <p>Free before the vendor starts preparing. After that, prepared and perishable items usually
+            cannot be cancelled. If we cannot fulfil your order, you are refunded in full.</p>
+        </div>
+        <div class="terms-item">
+          <h3>If something is wrong</h3>
+          <p>Tell us within 24 hours of delivery, in the same conversation, quoting your order number.
+            Missing, damaged or incorrect items are resolved case by case.</p>
+        </div>
+        <div class="terms-item">
+          <h3>We are an intermediary</h3>
+          <p>The items are prepared or supplied by independent vendors. We are responsible for handling
+            your order carefully in transit, not for how a vendor prepared it.</p>
+        </div>
+        <div class="terms-item">
+          <h3>Someone has to receive it</h3>
+          <p>Delivery times are estimates, not guarantees. If nobody can take the order and the rider
+            cannot reach you, it may be returned and the delivery fee still applies.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-1">
   <div class="wrap two-col">
     <div>
       <div class="eyebrow">Coverage</div>
       <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built for Badagry first.</h2>
       <p style="color:var(--text-soft); margin-top:14px;">
-        We run zone by zone rather than claiming the whole state. Each zone has its own delivery
-        rate, and your final fee is worked out from the distance to your door and shown before you
-        pay. If your area isn't listed yet, message us — new zones open as rider coverage grows.</p>
+        We run zone by zone rather than claiming the whole state. Each zone has its own flat delivery
+        rate, and you see that figure in your confirmation before you pay. If your area isn't listed
+        yet, tell us — new zones open as rider coverage grows.</p>
       <div class="badge-row">
+        <span class="badge">Badagry Town</span>
         <span class="badge">Ajara</span>
         <span class="badge">Ikoga</span>
         <span class="badge">Age Mowo</span>
@@ -312,26 +432,87 @@
         <span class="badge">Ibereko</span>
         <span class="badge">Oko-Afo</span>
         <span class="badge">Owode Apa</span>
-        <span class="badge">Badagry Town</span>
       </div>
-      <p style="margin-top:18px;"><a class="btn btn-ghost" href="menu/">See what's available in your area</a></p>
+      <p style="margin-top:22px;"><a class="btn btn-ghost" href="/menu/">See what's available in your area</a></p>
       <div class="note">
-        Delivery rates are set per zone and the final fee is quoted in the chat before payment.
-        For long or unusual trips our team may adjust it — you'll always see the final
-        amount before you're asked to pay.
+        Delivery is a flat rate set per zone. For long or unusual trips our team may adjust it — and
+        you will always see the final amount before you are asked to pay.
       </div>
     </div>
     <div>
       <div class="card">
         <h2 style="font-size:1.2rem;">What you'll always get</h2>
         <ul style="padding-left:18px; color:var(--text-soft); margin-top:14px;">
-          <li>The full price broken down before payment — items, packaging, service and delivery.</li>
+          <li>The full price broken down before payment — items, packaging, service charge and delivery.</li>
           <li>An order number to quote on your transfer.</li>
           <li>The name and phone number of the rider bringing your order.</li>
           <li>A message when it's confirmed, collected and delivered.</li>
-          <li>A chance to rate the rider, the item and the service afterwards.</li>
+          <li>A chance to rate the rider, the item and the service afterwards. Ratings stay internal
+            and are never published against your name.</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap narrow">
+    <div class="section-head">
+      <div class="eyebrow">Questions</div>
+      <h2>Asked often enough to answer here.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>How do I place an order?</summary>
+        <p>Open the <a href="/menu/">menu page</a>, pick your area, choose a service and a vendor, then
+          add your items. When you're finished, one tap sends the whole order to our WhatsApp line as a
+          single message — vendor, area, items and quantities already filled in.</p>
+      </details>
+      <details>
+        <summary>When do I pay, and how?</summary>
+        <p>After we confirm with the vendor that everything is available and send you the priced
+          confirmation. Payment is by bank transfer to the account shown in that confirmation. Quote
+          your order number as the transfer narration and send us the receipt. We do not collect card
+          or bank details on this website.</p>
+      </details>
+      <details>
+        <summary>What exactly am I paying for?</summary>
+        <p>Four lines: the vendor's price for the items; packaging, charged per pack where the service
+          uses packs; a service charge, shown as a percentage of the items and packaging; and a flat
+          delivery fee for your zone, which our team may adjust for unusual trips. The full breakdown
+          is in your confirmation before you transfer anything.</p>
+      </details>
+      <details>
+        <summary>How long will it take?</summary>
+        <p>Around thirty minutes is typical, but delivery times are estimates rather than guarantees.
+          Traffic, weather and how long the vendor takes to prepare your order all affect them.</p>
+      </details>
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>Free of charge before the vendor starts preparing. Once preparation has started, prepared
+          and perishable items usually cannot be cancelled, because the vendor has already incurred the
+          cost. If we cannot fulfil your order at all, you are not charged and anything already paid is
+          refunded in full.</p>
+      </details>
+      <details>
+        <summary>Something was missing or damaged. What now?</summary>
+        <p>Reply in the same WhatsApp conversation as the order within 24 hours of delivery and quote
+          your order number. We may ask for a photograph. Problems are resolved case by case, usually by
+          refund or replacement.</p>
+      </details>
+      <details>
+        <summary>Do I have to share my location?</summary>
+        <p>No. Sharing a location pin is optional and there is always the option to continue with a
+          typed address instead. When you do share one, it is attached to that order, used to help the
+          rider find you, and not used to follow you between orders. Our
+          <a href="/privacy.html">privacy policy</a> sets out the detail.</p>
+      </details>
+      <details>
+        <summary>Which areas do you cover?</summary>
+        <p>Badagry Town, Ajara, Ikoga, Age Mowo, Topo, Mowo, Seme, Imeke, Ibereko, Oko-Afo and Owode
+          Apa. The <a href="/menu/">menu page</a> only shows areas that have a vendor actually
+          delivering there, so what you see is what is genuinely available.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -344,8 +525,7 @@
         <p>We're adding vendors and riders across Badagry. Vendors get orders without building an app,
           and their menu goes live on our site the same day. Riders get jobs routed to their own zone.</p>
       </div>
-      <a class="btn" href="https://wa.me/2347041649942?text=I%20want%20to%20partner%20with%20Owa"
-         target="_blank" rel="noopener">Talk to us</a>
+      <a class="btn" href="/contact.html">Talk to us</a>
     </div>
   </div>
 </section>
@@ -363,18 +543,18 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="menu/">Order menu</a></li>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/menu/">Order menu</a></li>
+          <li><a href="/about.html">About us</a></li>
+          <li><a href="/contact.html">Contact</a></li>
         </ul>
       </div>
       <div>
         <h4>Legal</h4>
         <ul>
-          <li><a href="privacy.html">Privacy policy</a></li>
-          <li><a href="terms.html">Terms of service</a></li>
-          <li><a href="account-deletion.html">Delete my data</a></li>
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="/terms.html">Terms of service</a></li>
+          <li><a href="/account-deletion.html">Delete my data</a></li>
         </ul>
       </div>
       <div>
@@ -383,6 +563,7 @@
           <li><a href="tel:+2347041649942">+234 704 164 9942</a></li>
           <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
           <li>Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road, Badagry, Lagos</li>
+          <li>Support hours: 8:00am – 9:00pm daily (WAT)</li>
         </ul>
       </div>
     </div>
@@ -390,12 +571,13 @@
       <span>© 2026 Owa Delivery Services (BN 9517031). All rights reserved.</span>
       <span class="mono">owadelivery.com</span>
     </div>
-    <div class="footer-credit" style="margin-top:16px; font-size:0.8rem; line-height:1.6; color:var(--text-soft); opacity:0.75;">
+    <div class="footer-credit">
       Website and WhatsApp ordering system designed and developed by
-      <span style="color:var(--white); font-weight:500;">Guwit Technology Solutions Ltd</span> (RC 9040112).
+      <strong>Guwit Technology Solutions Ltd</strong> (RC 9040112).
     </div>
   </div>
 </footer>
 
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
