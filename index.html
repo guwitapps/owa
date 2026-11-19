@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owa Delivery Services — Food, Gas, Pharmacy &amp; Groceries Delivered in Badagry, Lagos</title>
-<meta name="description" content="Order food, cooking gas, pharmacy items, groceries and parcels in Badagry, Lagos. Build your order on the menu page and send it in one message. You pay only after we confirm the vendor has everything.">
+<title>Owa Delivery Services — Food, Cooking Gas, Laundry &amp; Errands Delivered in Badagry, Lagos</title>
+<meta name="description" content="Order food, cooking gas, laundry and errands in Badagry, Lagos. Choose on our menu, pay only after the shop confirms, and follow your order to your door. Open every day 7am to 9pm.">
 <meta name="author" content="Owa Delivery Services">
 <meta name="developer" content="Guwit Technology Solutions Ltd (RC 9040112)">
 <meta name="theme-color" content="#0B0B0B">
@@ -14,8 +14,8 @@
 <link rel="canonical" href="https://owadelivery.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Owa Delivery Services">
-<meta property="og:title" content="Owa Delivery Services — food, gas, pharmacy and groceries delivered in Badagry">
-<meta property="og:description" content="Build your order on the menu page and send it in one message. You pay only after we confirm the vendor has everything.">
+<meta property="og:title" content="Owa Delivery Services — food, gas, laundry and errands delivered in Badagry">
+<meta property="og:description" content="Choose on our menu, pay only after the shop confirms, and follow your order to your door. Open every day 7am to 9pm.">
 <meta property="og:url" content="https://owadelivery.com/">
 <meta property="og:image" content="https://owadelivery.com/assets/og-cover.png">
 <meta property="og:image:alt" content="Owa Delivery Services — local delivery in Badagry">
@@ -27,132 +27,213 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Literata:opsz,wght@7..72,400;7..72,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
-<link rel="prefetch" href="/menu/">
 
 <script type="application/ld+json">
 {
-  "@context":"https://schema.org",
-  "@graph":[
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@type":["LocalBusiness","DeliveryService"],
-      "@id":"https://owadelivery.com/#business",
-      "name":"Owa Delivery Services",
-      "alternateName":"Owa",
-      "description":"Local delivery of food, cooking gas, pharmacy items, groceries and parcels across Badagry, Lagos State. Orders are built on the website and completed on WhatsApp.",
-      "url":"https://owadelivery.com/",
-      "telephone":"+2347041649942",
-      "email":"info@owadelivery.com",
-      "currenciesAccepted":"NGN",
-      "paymentAccepted":"Bank transfer",
-      "priceRange":"₦₦",
-      "hasMenu":"https://owadelivery.com/menu/",
-      "image":"https://owadelivery.com/assets/og-cover.png",
-      "logo":"https://owadelivery.com/assets/owa-logo.png",
-      "identifier":{
-        "@type":"PropertyValue",
-        "name":"CAC Business Name Registration Number",
-        "value":"BN 9517031"
-      },
-      "address":{
-        "@type":"PostalAddress",
-        "streetAddress":"Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road",
-        "addressLocality":"Badagry",
-        "addressRegion":"Lagos State",
-        "addressCountry":"NG"
-      },
-      "openingHoursSpecification":[{
-        "@type":"OpeningHoursSpecification",
-        "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-        "opens":"08:00",
-        "closes":"21:00"
-      }],
-      "areaServed":[
-        {"@type":"Place","name":"Badagry Town"},
-        {"@type":"Place","name":"Ajara"},
-        {"@type":"Place","name":"Ikoga"},
-        {"@type":"Place","name":"Age Mowo"},
-        {"@type":"Place","name":"Topo"},
-        {"@type":"Place","name":"Mowo"},
-        {"@type":"Place","name":"Seme"},
-        {"@type":"Place","name":"Imeke"},
-        {"@type":"Place","name":"Ibereko"},
-        {"@type":"Place","name":"Oko-Afo"},
-        {"@type":"Place","name":"Owode Apa"}
+      "@type": [
+        "LocalBusiness",
+        "DeliveryService"
       ],
-      "potentialAction":{
-        "@type":"OrderAction",
-        "target":{
-          "@type":"EntryPoint",
-          "urlTemplate":"https://owadelivery.com/menu/",
-          "actionPlatform":[
+      "@id": "https://owadelivery.com/#business",
+      "name": "Owa Delivery Services",
+      "alternateName": "Owa",
+      "description": "Local delivery of food, cooking gas, laundry and errands across Badagry, Lagos State. Order on the web menu or start on WhatsApp; follow every order on its own page.",
+      "url": "https://owadelivery.com/",
+      "telephone": "+2347041649942",
+      "email": "info@owadelivery.com",
+      "currenciesAccepted": "NGN",
+      "paymentAccepted": "Card, Bank transfer, USSD",
+      "priceRange": "₦₦",
+      "hasMenu": "https://app.owadelivery.com/",
+      "image": "https://owadelivery.com/assets/og-cover.png",
+      "logo": "https://owadelivery.com/assets/owa-logo.png",
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "CAC Business Name Registration Number",
+        "value": "BN 9517031"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road",
+        "addressLocality": "Badagry",
+        "addressRegion": "Lagos State",
+        "addressCountry": "NG"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "07:00",
+          "closes": "21:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "Ajara"
+        },
+        {
+          "@type": "Place",
+          "name": "Ajido"
+        },
+        {
+          "@type": "Place",
+          "name": "Apa"
+        },
+        {
+          "@type": "Place",
+          "name": "Awhanjigoh"
+        },
+        {
+          "@type": "Place",
+          "name": "Ibereko"
+        },
+        {
+          "@type": "Place",
+          "name": "Ikoga"
+        },
+        {
+          "@type": "Place",
+          "name": "Ilogbo-Araromi"
+        },
+        {
+          "@type": "Place",
+          "name": "Iworo Gbanko"
+        },
+        {
+          "@type": "Place",
+          "name": "Iya-Afin"
+        },
+        {
+          "@type": "Place",
+          "name": "Keta-East"
+        },
+        {
+          "@type": "Place",
+          "name": "Posukoh"
+        }
+      ],
+      "potentialAction": {
+        "@type": "OrderAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://app.owadelivery.com/",
+          "actionPlatform": [
             "http://schema.org/DesktopWebPlatform",
             "http://schema.org/MobileWebPlatform"
           ]
         },
-        "deliveryMethod":"http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"
+        "deliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"
       }
     },
     {
-      "@type":"WebSite",
-      "@id":"https://owadelivery.com/#website",
-      "url":"https://owadelivery.com/",
-      "name":"Owa Delivery Services",
-      "inLanguage":"en-NG",
-      "publisher":{"@id":"https://owadelivery.com/#business"},
-      "creator":{"@id":"https://owadelivery.com/#developer"}
+      "@type": "WebSite",
+      "@id": "https://owadelivery.com/#website",
+      "url": "https://owadelivery.com/",
+      "name": "Owa Delivery Services",
+      "inLanguage": "en-NG",
+      "publisher": {
+        "@id": "https://owadelivery.com/#business"
+      },
+      "creator": {
+        "@id": "https://owadelivery.com/#developer"
+      }
     },
     {
-      "@type":"FAQPage",
-      "@id":"https://owadelivery.com/#faq",
-      "mainEntity":[
+      "@type": "FAQPage",
+      "@id": "https://owadelivery.com/#faq",
+      "mainEntity": [
         {
-          "@type":"Question",
-          "name":"How do I place an order with Owa Delivery Services?",
-          "acceptedAnswer":{"@type":"Answer","text":"Open the menu page, pick your area, choose a service and a vendor, then add your items. When you are finished, one tap sends the whole order to our WhatsApp line as a single message."}
+          "@type": "Question",
+          "name": "How do I place an order with Owa Delivery Services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open the menu at app.owadelivery.com (or send Hi to Owa on WhatsApp for your own order link), pick your area, a shop and your items, type your address and tap Place order. Without a smartphone, call 0704 164 9942 and we take the order by phone."
+          }
         },
         {
-          "@type":"Question",
-          "name":"What does the price include?",
-          "acceptedAnswer":{"@type":"Answer","text":"Your total is made up of four lines: the vendor's own price for the items, packaging charged per pack where the service uses packs, a service charge shown as a percentage of the items and packaging, and a flat delivery fee for your zone. Our team may adjust the delivery fee for unusual trips, and you always see the final figure before paying."}
+          "@type": "Question",
+          "name": "What does the price include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Four lines: the vendor's own price for the items, packaging charged per pack where the service uses packs, a service charge as a percentage of the items and packaging, and a delivery fee worked out from the distance when you share your location, or a flat fee for your area. Our team confirms the delivery fee, and you always see the final total before paying."
+          }
         },
         {
-          "@type":"Question",
-          "name":"When do I pay, and how?",
-          "acceptedAnswer":{"@type":"Answer","text":"You pay after we confirm with the vendor that everything is available and send you the priced confirmation. Payment is by bank transfer to the account shown in that confirmation. Quote your order number as the transfer narration and send the receipt. We do not collect card or bank details on the website."}
+          "@type": "Question",
+          "name": "When do I pay, and how?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After the shop confirms it has everything and our team confirms the delivery fee. We give you a missed call and the Pay button appears on your order page: card, bank transfer or USSD through Paystack. We never see your card details. Phone orders without internet pay by bank transfer."
+          }
         },
         {
-          "@type":"Question",
-          "name":"Which areas of Badagry do you deliver to?",
-          "acceptedAnswer":{"@type":"Answer","text":"Badagry Town, Ajara, Ikoga, Age Mowo, Topo, Mowo, Seme, Imeke, Ibereko, Oko-Afo and Owode Apa. Each area has its own flat delivery rate. New areas open as rider coverage grows."}
+          "@type": "Question",
+          "name": "When is Owa open?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every day from 7am to 9pm, Lagos time. The last orders are taken at 8pm."
+          }
         },
         {
-          "@type":"Question",
-          "name":"How long does delivery take?",
-          "acceptedAnswer":{"@type":"Answer","text":"Delivery times are estimates rather than guarantees. Traffic, weather and how long the vendor takes to prepare your order all affect them."}
+          "@type": "Question",
+          "name": "Which areas of Badagry do you deliver to?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ajara, Ajido, Apa, Awhanjigoh, Ibereko, Ikoga, Ilogbo-Araromi, Iworo Gbanko, Iya-Afin, Keta-East and Posukoh. New areas open as rider coverage grows."
+          }
         },
         {
-          "@type":"Question",
-          "name":"Can I cancel an order?",
-          "acceptedAnswer":{"@type":"Answer","text":"Yes, free of charge, before the vendor starts preparing. Once preparation has started, perishable and prepared items usually cannot be cancelled because the vendor has already incurred the cost. If we cannot fulfil your order, you are not charged and any payment already made is refunded in full."}
+          "@type": "Question",
+          "name": "How long does delivery take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Delivery times are estimates rather than guarantees. Traffic, weather and how long the vendor takes to prepare your order all affect them."
+          }
         },
         {
-          "@type":"Question",
-          "name":"Do I need to install an app?",
-          "acceptedAnswer":{"@type":"Answer","text":"No. You browse and build the order on this website, and the order is completed in a normal WhatsApp conversation. There is no app to install and no account or password to create."}
+          "@type": "Question",
+          "name": "Can I cancel an order?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, free of charge, before the vendor starts preparing. Once preparation has started, perishable and prepared items usually cannot be cancelled because the vendor has already incurred the cost. If we cannot fulfil your order, you are not charged and any payment already made is refunded in full."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to install an app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The menu and your order page work in your phone's browser, with no account or password. You can add Owa to your home screen in one tap and turn on free alerts if you like."
+          }
         }
       ]
     },
     {
-      "@type":"Organization",
-      "@id":"https://owadelivery.com/#developer",
-      "name":"Guwit Technology Solutions Ltd",
-      "legalName":"Guwit Technology Solutions Ltd",
-      "identifier":{
-        "@type":"PropertyValue",
-        "name":"CAC Company Registration Number",
-        "value":"RC 9040112"
+      "@type": "Organization",
+      "@id": "https://owadelivery.com/#developer",
+      "name": "Guwit Technology Solutions Ltd",
+      "legalName": "Guwit Technology Solutions Ltd",
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "CAC Company Registration Number",
+        "value": "RC 9040112"
       },
-      "address":{"@type":"PostalAddress","addressCountry":"NG"}
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "NG"
+      }
     }
   ]
 }
@@ -169,13 +250,13 @@
            onerror="this.onerror=null;this.src='/assets/owa-logo.svg'"></a>
     <nav class="nav-links" aria-label="Main">
       <a href="/" class="active" aria-current="page">Home</a>
-      <a href="/menu/">Order menu</a>
+      <a href="https://app.owadelivery.com/">Order menu</a>
       <a href="#services">What we deliver</a>
       <a href="#how">How it works</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
     </nav>
-    <a class="btn" href="/menu/">Start an order</a>
+    <a class="btn" href="https://app.owadelivery.com/">Start an order</a>
   </div>
 </header>
 
@@ -186,25 +267,20 @@
     <div>
       <div class="eyebrow">Badagry &amp; nearby areas</div>
       <h1>From Badagry's vendors to your door.</h1>
-      <p class="lede">Badagry's first automated WhatsApp delivery service. Browse today's vendors and
-        prices, build your order here, and send it in one message — then sit back while we bring it to you.</p>
+      <p class="lede">Order food, cooking gas, laundry and errands from local vendors. Choose on our menu,
+        pay only after the shop confirms, and follow your order to your door.</p>
       <div class="hero-cta">
-        <!-- One way in. The order is built here first, so the message that
-             reaches WhatsApp is already complete: vendor, area, items and
-             quantities. Nothing has to be typed out or guessed at in the chat. -->
-        <a class="btn" href="/menu/">Start an order</a>
-        <a class="btn btn-ghost" href="#how">See how it works</a>
+        <a class="btn" href="https://app.owadelivery.com/">Start an order</a>
+        <a class="btn btn-ghost" href="https://wa.me/2347053594258?text=Hi">Order on WhatsApp</a>
       </div>
       <p class="note" style="margin-top:20px;">
-        No app to install, no account to create. You pay only after we confirm the vendor has
-        everything — and you see the full price first.
+        🕖 <strong>Open every day, 7am – 9pm</strong> (last orders 8pm). No account or password.
+        No smartphone? Call <a href="tel:+2347041649942">0704 164 9942</a> and we take your order by phone.
       </p>
       <div class="hero-stats">
-        <!-- Keep "30+" in step with the Restaurants tab of your sheet.
-             If the live vendor count ever drops below it, change the number. -->
         <div>
-          <div class="stat-num">30+</div>
-          <div class="stat-label">Local vendors</div>
+          <div class="stat-num">7am–9pm</div>
+          <div class="stat-label">Open every day</div>
         </div>
         <div>
           <div class="stat-num">11</div>
@@ -220,14 +296,14 @@
     <!-- Signature: one route, several kinds of stop. This is the whole business in one image. -->
     <div class="route-box">
       <svg class="route-svg" viewBox="0 0 410 250" xmlns="http://www.w3.org/2000/svg" role="img"
-           aria-label="A single delivery route passing a restaurant, a pharmacy and a gas depot before arriving at the customer's door.">
+           aria-label="A single delivery route passing a restaurant, a laundry and a gas depot before arriving at the customer's door.">
         <path class="route-line" d="M24,196 C 88,150 96,74 156,66 S 250,132 292,86 S 356,52 384,104" />
 
         <circle class="route-stop" cx="24"  cy="196" r="6"/>
         <text class="stop-label" x="6"   y="218">Restaurant</text>
 
         <circle class="route-stop" cx="156" cy="66"  r="6"/>
-        <text class="stop-label" x="132" y="50">Pharmacy</text>
+        <text class="stop-label" x="136" y="50">Laundry</text>
 
         <circle class="route-stop" cx="292" cy="86"  r="6"/>
         <text class="stop-label" x="276" y="70">Gas</text>
@@ -251,58 +327,39 @@
     <div class="section-head">
       <div class="eyebrow">What we deliver</div>
       <h2>More than meals.</h2>
-      <p>Owa started with food and now covers the errands that eat up a working day.
-        Same riders, same order flow, and the delivery fee for your area shown before you pay.</p>
+      <p>Owa started with food and now covers the errands that eat up a working day. Same riders, same
+        order steps, and the full price shown before you pay.</p>
     </div>
     <div class="service-grid">
-      <!-- Each card opens the menu already filtered to that service.
-           The ?service= value must match service_id on your ServiceTypes tab.
-           If one ever stops matching, the menu simply opens on the area step
-           instead, so a wrong id can never break the page.
-
-           Parcels and errands need a row on the ServiceTypes tab and at least
-           one stocked vendor row, or those two cards will land on the area
-           step with the service unset. If you are not running them through
-           the sheet yet, delete those two cards rather than leave them
-           pointing at a service that is not there. -->
+      <!-- Each card opens the live menu (app.owadelivery.com) on that service. The ?service= value is the
+           service code in the Ops console (Areas & services). A code that is switched off simply opens the
+           menu at the start, so a wrong code can never break the page. -->
       <div class="service">
         <div class="tag">Food</div>
         <h3>Restaurants &amp; kitchens</h3>
         <p>Browse menus from vendors that deliver to your area and build your order item by item.</p>
-        <p class="service-link"><a href="/menu/?service=food">See restaurants near you</a></p>
+        <p class="service-link"><a href="https://app.owadelivery.com/?service=food">See restaurants near you</a></p>
       </div>
       <div class="service">
         <div class="tag">Gas</div>
         <h3>Cooking gas refills</h3>
-        <p>Choose your cylinder size. We collect, refill and return it the same day where stock allows.</p>
-        <p class="service-link"><a href="/menu/?service=gas">See gas prices</a></p>
+        <p>Choose how many kg. A rider collects your cylinder, has it refilled and brings it back.</p>
+        <p class="service-link"><a href="https://app.owadelivery.com/?service=gas">See gas prices</a></p>
       </div>
       <div class="service">
-        <div class="tag">Pharmacy</div>
-        <h3>Chemist &amp; pharmacy runs</h3>
-        <p>Over-the-counter items collected from a registered pharmacy near you and delivered discreetly.
-          Prescription medicines are subject to the pharmacy's own requirements.</p>
-        <p class="service-link"><a href="/menu/?service=pharmacy">See pharmacy items</a></p>
-      </div>
-      <div class="service">
-        <div class="tag">Groceries</div>
-        <h3>Market &amp; provisions</h3>
-        <p>Pick your provisions from a nearby store or market vendor and a rider shops the list for you.</p>
-        <p class="service-link"><a href="/menu/?service=groceries">See grocery vendors</a></p>
-      </div>
-      <div class="service">
-        <div class="tag">Parcels</div>
-        <h3>Send something across town</h3>
-        <p>Documents, keys, a forgotten lunch. Point-to-point drop-offs within our coverage area.</p>
-        <p class="service-link"><a href="/menu/?service=parcels">Start a parcel</a></p>
+        <div class="tag">Laundry</div>
+        <h3>Laundry pick-up &amp; return</h3>
+        <p>Your clothes collected from you, washed by a local laundry, and brought back to your door.</p>
+        <p class="service-link"><a href="https://app.owadelivery.com/?service=laundry">See laundry prices</a></p>
       </div>
       <div class="service">
         <div class="tag">Errands</div>
         <h3>Pay-and-pick-up</h3>
         <p>Anything with a clear pickup point and a clear price, confirmed with you before we go.</p>
-        <p class="service-link"><a href="/menu/?service=errands">Start an errand</a></p>
+        <p class="service-link"><a href="https://app.owadelivery.com/?service=errands">Start an errand</a></p>
       </div>
     </div>
+    <p class="note" style="margin-top:18px;">Pharmacy runs are coming soon.</p>
   </div>
 </section>
 
@@ -310,45 +367,48 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">How it works</div>
-      <h2>Build it here. Finish it in the chat.</h2>
-      <p>No app to install and no account to create. You choose everything on the menu page, and the
-        finished order arrives on WhatsApp as one message our team can act on straight away.</p>
+      <h2>Choose, pay, and follow it to your door.</h2>
+      <p>Send <strong>Hi</strong> to Owa on WhatsApp for your order link, or open the menu straight away.
+        Your order page shows every step, and a free missed call from Owa tells you when something needs you.</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">Step 01</div>
-        <h3>Pick your area and vendor</h3>
-        <p>The menu shows only the vendors that deliver to your area, and only what they have listed
-          today. Your area also sets the delivery rate for the order.</p>
+        <h3>Choose your area and shop</h3>
+        <p>The menu shows only the shops that deliver to your area, and only what they have today.
+          Prices and the delivery fee are shown as you go.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 02</div>
-        <h3>Add your items</h3>
-        <p>Tap to add, tap again for more. The running total for items and packaging updates as you
-          go, so nothing about the price is a surprise later.</p>
+        <h3>Place the order</h3>
+        <p>We check with the shop that everything is available, and our team confirms your delivery
+          fee. You pay nothing until then.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 03</div>
-        <h3>Send the order</h3>
-        <p>One tap sends the whole basket to WhatsApp as a single message. We check with the vendor
-          that everything is available, then send you the full priced confirmation.</p>
+        <h3>Pay when we flash you</h3>
+        <p>A missed call from Owa means it is time to pay. Tap <strong>Pay</strong> on your order page:
+          card, bank transfer or USSD, through Paystack.</p>
       </div>
       <div class="step">
         <div class="step-num">Step 04</div>
-        <h3>Pay and track to your door</h3>
-        <p>Pay by transfer quoting your order number. We message you when the vendor starts, when a
-          rider collects it, and when it arrives.</p>
+        <h3>Follow it to your door</h3>
+        <p>Your order page shows when the shop is preparing it and who your rider is. We flash you when
+          the rider is coming. Tap <strong>I got it</strong> when it arrives.</p>
       </div>
+    </div>
+    <div class="note" style="margin-top:22px;">
+      <strong>No internet on your phone?</strong> Call <a href="tel:+2347041649942">0704 164 9942</a>.
+      We take your order on the phone, flash you from the same number when there is news, and you pay
+      by bank transfer.
     </div>
   </div>
 </section>
 
 <!-- =====================================================================
      The terms, in the words the terms actually use.
-
-     Every figure and rule in this section is lifted from terms.html, so the
-     two can be read side by side without contradicting each other. If you
-     change a rule, change it in BOTH places.
+     Every rule in this section matches terms.html. If you change a rule,
+     change it in BOTH places.
      ===================================================================== -->
 <section id="the-rules">
   <div class="wrap">
@@ -366,25 +426,25 @@
         <ul class="price-lines">
           <li><span>The vendor's own price for what you ordered</span> <b>Items</b></li>
           <li><span>Charged per pack, where the service uses packs</span> <b>Packaging</b></li>
-          <li><span>A percentage of the items and packaging, shown as a percentage in your confirmation</span> <b>Service charge</b></li>
-          <li><span>A flat fee for your zone. Our team may adjust it for unusual trips</span> <b>Delivery fee</b></li>
+          <li><span>A percentage of the items and packaging, shown on your order</span> <b>Service charge</b></li>
+          <li><span>From the distance when you share your location, or a flat fee for your area. Our team confirms it before you pay</span> <b>Delivery fee</b></li>
         </ul>
         <div class="note">
-          Prices come from the vendor and can change without notice. The figure in your confirmation
-          is the figure you pay, and you see it before any money moves.
+          Prices come from the vendor and can change without notice. The total on your Pay button is
+          the total you pay, and you see it before any money moves.
         </div>
       </div>
 
       <div class="terms-grid">
         <div class="terms-item">
-          <h3>Nothing is charged until you confirm</h3>
-          <p>An order is only binding once we have checked availability with the vendor and you have
-            received the priced confirmation. Until then nothing is charged and nothing is committed.</p>
+          <h3>Nothing is charged until the shop confirms</h3>
+          <p>We first check with the shop that everything is available and confirm your delivery fee.
+            Only then do you get the Pay button. If the shop cannot do it, you are not charged.</p>
         </div>
         <div class="terms-item">
-          <h3>Payment is by bank transfer</h3>
-          <p>To the account in your confirmation, quoting your order number as the narration. We never
-            ask for card details, and none are collected on this website.</p>
+          <h3>Paying</h3>
+          <p>With the Pay button: card, bank transfer or USSD, through Paystack. We never see your card
+            details. Phone orders without internet pay by bank transfer to Owa's account.</p>
         </div>
         <div class="terms-item">
           <h3>Cancelling</h3>
@@ -393,8 +453,8 @@
         </div>
         <div class="terms-item">
           <h3>If something is wrong</h3>
-          <p>Tell us within 24 hours of delivery, in the same conversation, quoting your order number.
-            Missing, damaged or incorrect items are resolved case by case.</p>
+          <p>Tell us within 24 hours of delivery: tap <strong>There is a problem</strong> on your order
+            page, or call us, quoting your order number. We resolve it case by case.</p>
         </div>
         <div class="terms-item">
           <h3>We are an intermediary</h3>
@@ -417,26 +477,25 @@
       <div class="eyebrow">Coverage</div>
       <h2 style="font-size:clamp(1.6rem,3.2vw,2.1rem);">Built for Badagry first.</h2>
       <p style="color:var(--text-soft); margin-top:14px;">
-        We run zone by zone rather than claiming the whole state. Each zone has its own flat delivery
-        rate, and you see that figure in your confirmation before you pay. If your area isn't listed
-        yet, tell us — new zones open as rider coverage grows.</p>
+        We run area by area rather than claiming the whole state, and an area only opens when a rider
+        covers it. If your area isn't listed yet, tell us — new areas open as rider coverage grows.</p>
       <div class="badge-row">
-        <span class="badge">Badagry Town</span>
         <span class="badge">Ajara</span>
-        <span class="badge">Ikoga</span>
-        <span class="badge">Age Mowo</span>
-        <span class="badge">Topo</span>
-        <span class="badge">Mowo</span>
-        <span class="badge">Seme</span>
-        <span class="badge">Imeke</span>
+        <span class="badge">Ajido</span>
+        <span class="badge">Apa</span>
+        <span class="badge">Awhanjigoh</span>
         <span class="badge">Ibereko</span>
-        <span class="badge">Oko-Afo</span>
-        <span class="badge">Owode Apa</span>
+        <span class="badge">Ikoga</span>
+        <span class="badge">Ilogbo-Araromi</span>
+        <span class="badge">Iworo Gbanko</span>
+        <span class="badge">Iya-Afin</span>
+        <span class="badge">Keta-East</span>
+        <span class="badge">Posukoh</span>
       </div>
-      <p style="margin-top:22px;"><a class="btn btn-ghost" href="/menu/">See what's available in your area</a></p>
+      <p style="margin-top:22px;"><a class="btn btn-ghost" href="https://app.owadelivery.com/">See what's available in your area</a></p>
       <div class="note">
-        Delivery is a flat rate set per zone. For long or unusual trips our team may adjust it — and
-        you will always see the final amount before you are asked to pay.
+        Share your location on the menu for the exact delivery fee. Without it, your area's flat fee
+        applies. Either way you see the final amount before you are asked to pay.
       </div>
     </div>
     <div>
@@ -444,11 +503,10 @@
         <h2 style="font-size:1.2rem;">What you'll always get</h2>
         <ul style="padding-left:18px; color:var(--text-soft); margin-top:14px;">
           <li>The full price broken down before payment — items, packaging, service charge and delivery.</li>
-          <li>An order number to quote on your transfer.</li>
+          <li>One order number, like <span class="mono">OWA-K7F3P</span>, on your order page and your Paystack receipt.</li>
           <li>The name and phone number of the rider bringing your order.</li>
-          <li>A message when it's confirmed, collected and delivered.</li>
-          <li>A chance to rate the rider, the item and the service afterwards. Ratings stay internal
-            and are never published against your name.</li>
+          <li>Every update on your order page, and a free missed call when something needs you.</li>
+          <li>A person to talk to: <a href="tel:+2347041649942">0704 164 9942</a>, 7am – 9pm every day.</li>
         </ul>
       </div>
     </div>
@@ -464,23 +522,34 @@
     <div class="faq">
       <details>
         <summary>How do I place an order?</summary>
-        <p>Open the <a href="/menu/">menu page</a>, pick your area, choose a service and a vendor, then
-          add your items. When you're finished, one tap sends the whole order to our WhatsApp line as a
-          single message — vendor, area, items and quantities already filled in.</p>
+        <p>Open the <a href="https://app.owadelivery.com/">menu</a> (or send <strong>Hi</strong> to Owa on
+          WhatsApp for your own order link), pick your area, a shop and your items, type your address and
+          tap <strong>Place order</strong>. No smartphone? Call 0704 164 9942 and we take it by phone.</p>
       </details>
       <details>
         <summary>When do I pay, and how?</summary>
-        <p>After we confirm with the vendor that everything is available and send you the priced
-          confirmation. Payment is by bank transfer to the account shown in that confirmation. Quote
-          your order number as the transfer narration and send us the receipt. We do not collect card
-          or bank details on this website.</p>
+        <p>After the shop confirms it has everything and our team confirms the delivery fee. We give you a
+          missed call, and the <strong>Pay</strong> button appears on your order page: card, bank transfer
+          or USSD, through Paystack. You have 30 minutes to pay. Phone orders without internet pay by bank
+          transfer, and our team confirms it.</p>
       </details>
       <details>
         <summary>What exactly am I paying for?</summary>
         <p>Four lines: the vendor's price for the items; packaging, charged per pack where the service
-          uses packs; a service charge, shown as a percentage of the items and packaging; and a flat
-          delivery fee for your zone, which our team may adjust for unusual trips. The full breakdown
-          is in your confirmation before you transfer anything.</p>
+          uses packs; a service charge, shown as a percentage of the items and packaging; and a delivery
+          fee, from the distance if you shared your location or a flat fee for your area. The full
+          breakdown is on your order before you pay.</p>
+      </details>
+      <details>
+        <summary>What does a missed call from Owa mean?</summary>
+        <p>That you have news about your order: it is time to pay, the rider is coming, or the order could
+          not go ahead. Open your order page (or WhatsApp) to see it. The call costs you nothing, and
+          works even when your data is off.</p>
+      </details>
+      <details>
+        <summary>When are you open?</summary>
+        <p>Every day from 7am to 9pm (Lagos time). The last orders are taken at 8pm, so every order can be
+          delivered before we close.</p>
       </details>
       <details>
         <summary>How long will it take?</summary>
@@ -496,22 +565,27 @@
       </details>
       <details>
         <summary>Something was missing or damaged. What now?</summary>
-        <p>Reply in the same WhatsApp conversation as the order within 24 hours of delivery and quote
-          your order number. We may ask for a photograph. Problems are resolved case by case, usually by
-          refund or replacement.</p>
+        <p>Within 24 hours of delivery, tap <strong>There is a problem</strong> on your order page or call
+          0704 164 9942, quoting your order number. We may ask for a photograph. Problems are resolved case
+          by case, usually by refund or replacement.</p>
+      </details>
+      <details>
+        <summary>Do I need to install an app?</summary>
+        <p>No. The menu and your order page work in your phone's browser. If you like, you can add Owa to
+          your home screen in one tap (the page shows you how) and turn on free alerts. Nothing to download
+          from the Play Store, no password.</p>
       </details>
       <details>
         <summary>Do I have to share my location?</summary>
-        <p>No. Sharing a location pin is optional and there is always the option to continue with a
-          typed address instead. When you do share one, it is attached to that order, used to help the
-          rider find you, and not used to follow you between orders. Our
+        <p>No. Sharing your location is optional; a typed address and landmark are enough. If you share it,
+          the delivery fee is worked out from the real distance and the rider finds you faster. Our
           <a href="/privacy.html">privacy policy</a> sets out the detail.</p>
       </details>
       <details>
         <summary>Which areas do you cover?</summary>
-        <p>Badagry Town, Ajara, Ikoga, Age Mowo, Topo, Mowo, Seme, Imeke, Ibereko, Oko-Afo and Owode
-          Apa. The <a href="/menu/">menu page</a> only shows areas that have a vendor actually
-          delivering there, so what you see is what is genuinely available.</p>
+        <p>Ajara, Ajido, Apa, Awhanjigoh, Ibereko, Ikoga, Ilogbo-Araromi, Iworo Gbanko, Iya-Afin, Keta-East
+          and Posukoh. The <a href="https://app.owadelivery.com/">menu</a> only shows areas that have a shop
+          and a rider actually delivering there, so what you see is genuinely available.</p>
       </details>
     </div>
   </div>
@@ -522,8 +596,8 @@
     <div class="band">
       <div>
         <h2>Sell locally? Ride locally?</h2>
-        <p>We're adding vendors and riders across Badagry. Vendors get orders without building an app,
-          and their menu goes live on our site the same day. Riders get jobs routed to their own zone.</p>
+        <p>We're adding vendors and riders across Badagry. Vendors get orders on a simple Owa page with a
+          missed call for every order, no app to build. Riders get jobs in their own area.</p>
       </div>
       <a class="btn" href="/contact.html">Talk to us</a>
     </div>
@@ -544,7 +618,7 @@
         <h4>Company</h4>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/menu/">Order menu</a></li>
+          <li><a href="https://app.owadelivery.com/">Order menu</a></li>
           <li><a href="/about.html">About us</a></li>
           <li><a href="/contact.html">Contact</a></li>
         </ul>
@@ -563,7 +637,7 @@
           <li><a href="tel:+2347041649942">+234 704 164 9942</a></li>
           <li><a href="mailto:info@owadelivery.com">info@owadelivery.com</a></li>
           <li>Tebum Kitchen and Lounge, Abisoye Street, Along Mowo-Ikoga Road, Badagry, Lagos</li>
-          <li>Support hours: 8:00am – 9:00pm daily (WAT)</li>
+          <li>Open daily 7:00am – 9:00pm (WAT), last orders 8:00pm</li>
         </ul>
       </div>
     </div>
@@ -572,7 +646,7 @@
       <span class="mono">owadelivery.com</span>
     </div>
     <div class="footer-credit">
-      Website and WhatsApp ordering system designed and developed by
+      Website, ordering system and WhatsApp service designed and developed by
       <strong>Guwit Technology Solutions Ltd</strong> (RC 9040112).
     </div>
   </div>
